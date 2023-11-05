@@ -40,6 +40,7 @@ public class Player {
         texture = null;
         state = PlayerState.IDLE;
         name = "";
+        inventory = new Inventory();
     }
 
     /**
@@ -50,6 +51,7 @@ public class Player {
         this.texture = texture;
         state = PlayerState.IDLE;
         this.name = name;
+        inventory = new Inventory();
     }
 
     /**
@@ -57,7 +59,7 @@ public class Player {
      * (so its sprite is changed)
      */
     public void enterPuzzle(){
-        this.state = PlayerState.PUZZLING;
+        this.state = PlayerState.EXPLORING;
     }
 
     /**
@@ -125,5 +127,13 @@ public class Player {
 
     public int[] getPosition() {
         return position;
+    }
+
+    public void pickUpItem(Object item){
+        inventory.addItem(item);
+    }
+
+    public boolean getRidOfItem(Object item){
+        return inventory.removeItemByObject(item);
     }
 }

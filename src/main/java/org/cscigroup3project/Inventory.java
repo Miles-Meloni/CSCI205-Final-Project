@@ -12,16 +12,46 @@
  * Package: org.cscigroup3project
  * Class: Inventory
  *
- * Description:
+ * Description: Class for the inventory of a player
  *
  * ****************************************
  */
 package org.cscigroup3project;
 
+import java.util.ArrayList;
+
 public class Inventory {
 
+    private ArrayList<Object> items;
+
+    /**
+     * Empty constructor
+     */
     public Inventory(){
-        //TODO the whole class
-        return;
+        items = new ArrayList<Object>();
     }
+
+    /**
+     * Constructor with initial items
+     * @param initialItems the initial items in the inventory
+     */
+    public Inventory(ArrayList<Object> initialItems){
+        items = initialItems;
+    }
+
+    public void addItem(Object item){
+        items.add(item);
+    }
+
+    public boolean removeItemByObject(Object item){
+        return items.remove(item);
+    }
+
+    public Object removeItemByIndex(int index){
+        return items.remove(index);
+    }
+
+
+
+
 }
