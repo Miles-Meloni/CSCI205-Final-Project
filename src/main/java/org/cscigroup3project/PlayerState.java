@@ -18,7 +18,7 @@
  */
 package org.cscigroup3project;
 
-public enum CharacterState {
+public enum PlayerState {
     IDLE,
     MOVING,
     PUZZLING,

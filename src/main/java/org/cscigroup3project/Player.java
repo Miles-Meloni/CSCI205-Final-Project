@@ -10,61 +10,61 @@
  *
  * Project: csci205_final_project
  * Package: org.cscigroup3project
- * Class: Character
+ * Class: Player
  *
- * Description: Basic class containing a character object
+ * Description: Basic class containing a player object
  *
  * ****************************************
  */
 package org.cscigroup3project;
 
-public class Character {
+public class Player {
 
-    /** Store the position of the character */
+    /** Store the position of the player */
     private int[] position;
-    /** The texture of the character */
+    /** The texture of the player */
     private Texture texture;
-    /** The current state of the character */
-    private CharacterState state;
-    /** The name of the character */
+    /** The current state of the player */
+    private PlayerState state;
+    /** The name of the player */
     private String name;
-    /** Inventory for the character */
+    /** Inventory for the player */
     private Inventory inventory;
 
 
     /**
      * Default constructor
      */
-    public Character(){
+    public Player(){
         position = new int[]{0,0};
         texture = null;
-        state = CharacterState.IDLE;
+        state = PlayerState.IDLE;
         name = "";
     }
 
     /**
      * Full constructor
      */
-    public Character(int[] position, Texture texture, String name){
+    public Player(int[] position, Texture texture, String name){
         this.position = position;
         this.texture = texture;
-        state = CharacterState.IDLE;
+        state = PlayerState.IDLE;
         this.name = name;
     }
 
     /**
-     * Have the character enter a puzzle
+     * Have the player enter a puzzle
      * (so its sprite is changed)
      */
     public void enterPuzzle(){
-        this.state = CharacterState.PUZZLING;
+        this.state = PlayerState.PUZZLING;
     }
 
     /**
-     * Have the character move
+     * Have the player move
      */
     public void move(Direction movementDirection){
-        state = CharacterState.MOVING;
+        state = PlayerState.MOVING;
         if (movementDirection == Direction.UP){
             moveUp();
         }
@@ -103,11 +103,11 @@ public class Character {
         return name;
     }
 
-    public void setState(CharacterState state) {
+    public void setState(PlayerState state) {
         this.state = state;
     }
 
-    public CharacterState getState() {
+    public PlayerState getState() {
         return state;
     }
 
