@@ -18,26 +18,28 @@
  */
 package org.cscigroup3project.MVC.model;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 
 public class Texture {
 
     /** File containing the data for the texture */
-    private File textureFile;
+    private Image textureFile;
 
     /**
      * Create the new texture
      * @param textureFile the data for the new texture
      */
-    public Texture(File textureFile){
+    public Texture(Image textureFile){
         this.textureFile = textureFile;
     }
 
-    public void setTextureFile(File textureFile) {
+    public void setTextureFile(Image textureFile) {
         this.textureFile = textureFile;
     }
 
-    public File getTextureFile() {
+    public Image getTextureFile() {
         return textureFile;
     }
 }

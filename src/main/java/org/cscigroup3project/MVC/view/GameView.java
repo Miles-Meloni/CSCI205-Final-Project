@@ -18,11 +18,12 @@
  */
 package org.cscigroup3project.MVC.view;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
-import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
+import org.cscigroup3project.MVC.model.Texture;
 
 public class GameView {
 
@@ -33,7 +34,8 @@ public class GameView {
     private StackPane root;
 
     /** Player representation ({@link javafx.scene.shape.Circle} for now) */
-    private Circle player;
+    private Player player;
+    private ImageView playerView;
 
 
 
@@ -50,9 +52,23 @@ public class GameView {
     public void initSceneGraph(){
         this.root = new StackPane();
 
-        this.player = new Circle(50);
+        //TODO move a lot of the below code from the view to the model
 
-        this.root.getChildren().add(player);
+        // get image from resources and create player
+        Image playerImage = new Image("cscigroup3project/TestPlayer.png");
+        this.player = new Player(new double[]{0,0}, new Texture(playerImage), "DemoPlayer");
+
+        // set up the ImageView of the player with a hardcoded height and width, and set its image
+        //TODO remove hardcoding from here
+        this.playerView = new ImageView();
+        this.playerView.setImage(playerImage);
+        this.playerView.setFitHeight(100);
+        this.playerView.setFitWidth(100);
+
+        playerView.setTranslateX(player.getxPos());
+        playerView.setTranslateY(player.getyPos());
+
+        this.root.getChildren().add(playerView);
     }
 
     /**
@@ -64,5 +80,13 @@ public class GameView {
 
     public StackPane getRoot() {
         return root;
+    }
+
+    public ImageView getPlayerView() {
+        return playerView;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
