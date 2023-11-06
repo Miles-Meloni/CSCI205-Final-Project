@@ -36,6 +36,7 @@ public class GameView {
     /** Player representation ({@link javafx.scene.shape.Circle} for now) */
     private Player player;
     private ImageView playerView;
+    private ImageView wallView;
 
 
 
@@ -55,7 +56,7 @@ public class GameView {
         //TODO move a lot of the below code from the view to the model
 
         // get image from resources and create player
-        Image playerImage = new Image("cscigroup3project/TestPlayer.png");
+        Image playerImage = new Image("cscigroup3project/AmogusTest.png");
         this.player = new Player(new double[]{0,0}, new Texture(playerImage), "DemoPlayer");
 
         // set up the ImageView of the player with a hardcoded height and width, and set its image
@@ -65,10 +66,22 @@ public class GameView {
         this.playerView.setFitHeight(100);
         this.playerView.setFitWidth(100);
 
-        playerView.setTranslateX(player.getxPos());
-        playerView.setTranslateY(player.getyPos());
+        this.playerView.setTranslateX(player.getxPos());
+        this.playerView.setTranslateY(player.getyPos());
+
+        Image wallImage = new Image("cscigroup3project/TestWall.png");
+
+        this.wallView = new ImageView();
+        this.wallView.setImage(wallImage);
+        this.wallView.setFitHeight(50);
+        this.wallView.setFitWidth(400);
+        this.wallView.setTranslateX(100);
+        this.wallView.setTranslateY(100);
+
+
 
         this.root.getChildren().add(playerView);
+        this.root.getChildren().add(wallView);
     }
 
     /**

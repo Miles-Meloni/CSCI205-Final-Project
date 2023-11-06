@@ -101,7 +101,7 @@ public class Player {
      * Move the player up by one unit and update the corresponding property.
      */
     private void moveUp() {
-        yPos -= 1;
+        yPos -= 4;
         yProperty.set(yPos);
     }
 
@@ -109,7 +109,7 @@ public class Player {
      * Move the player down by one unit and update the corresponding property.
      */
     private void moveDown() {
-        yPos += 1;
+        yPos += 4;
         yProperty.set(yPos);
     }
 
@@ -117,7 +117,7 @@ public class Player {
      * Move the player left by one unit and update the corresponding property.
      */
     private void moveLeft() {
-        xPos -= 1;
+        xPos -= 4;
         xProperty.set(xPos);
     }
 
@@ -125,7 +125,7 @@ public class Player {
      * Move the player right by one unit and update the corresponding property.
      */
     private void moveRight() {
-        xPos += 1;
+        xPos += 4;
         xProperty.set(xPos);
     }
 
