@@ -20,9 +20,17 @@
 package org.cscigroup3project.MVC;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.cscigroup3project.MVC.controller.GameController;
+import org.cscigroup3project.MVC.model.GameModel;
+import org.cscigroup3project.MVC.view.GameView;
 
 public class GameMain extends Application {
+
+    private GameModel theModel;
+    private GameView theView;
+    private GameController theController;
 
     public static void main(String[] args) {
         launch(args);
@@ -30,6 +38,15 @@ public class GameMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        Scene scene = new Scene(theView.getRoot());
+
+        this.theController = new GameController(this.theModel, this.theView);
+
+        primaryStage.setTitle("Basic Game Sim");
+        primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
+        primaryStage.show();
 
     }
 }

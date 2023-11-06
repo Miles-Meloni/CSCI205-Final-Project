@@ -18,13 +18,24 @@
  */
 package org.cscigroup3project.MVC.view;
 
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.GameModel;
+import org.cscigroup3project.MVC.model.Player;
 
 public class GameView {
 
     /** Model for the traffic light program */
     private GameModel theModel;
+
+    /** Root note for the view */
+    private StackPane root;
+
+    /** Player representation ({@link javafx.scene.shape.Circle} for now) */
+    private Circle player;
+
+
 
     public GameView(GameModel theModel){
         this.theModel = theModel;
@@ -37,7 +48,11 @@ public class GameView {
      * Initialize the scene graph by creating the GUI componenets
      */
     public void initSceneGraph(){
+        this.root = new StackPane();
 
+        this.player = new Circle(50);
+
+        this.root.getChildren().add(player);
     }
 
     /**
@@ -47,4 +62,7 @@ public class GameView {
 
     }
 
+    public StackPane getRoot() {
+        return root;
+    }
 }
