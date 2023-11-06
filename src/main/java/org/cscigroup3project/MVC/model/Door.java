@@ -6,18 +6,18 @@
  * Name: Hunter Gehman
  * Section: 02 - 10 am
  * Date: 11/5/2023
- * Time: 6:32 PM
+ * Time: 6:33 PM
  *
  * Project: csci205_final_project
  * Package: org.cscigroup3project
- * Class: Walls
+ * Class: Door
  *
- * Description: Basic wall class for the game
+ * Description: Basic class for a door object in the game
  *
  * ****************************************
  */
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
-public class Wall {
-    // TODO: whole class
+public class Door {
+    //TODO: The whole class
 }

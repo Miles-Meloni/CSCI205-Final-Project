@@ -16,12 +16,19 @@
  *
  * ****************************************
  */
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
 import java.io.File;
 
 public class Texture {
+
+    /** File containing the data for the texture */
     private File textureFile;
+
+    /**
+     * Create the new texture
+     * @param textureFile the data for the new texture
+     */
     public Texture(File textureFile){
         this.textureFile = textureFile;
     }

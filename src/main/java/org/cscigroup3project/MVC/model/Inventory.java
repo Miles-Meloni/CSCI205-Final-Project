@@ -16,12 +16,13 @@
  *
  * ****************************************
  */
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
 import java.util.ArrayList;
 
 public class Inventory {
 
+    /** All items contained by the inventory */
     private ArrayList<Object> items;
 
     /**

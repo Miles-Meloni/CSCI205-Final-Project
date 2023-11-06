@@ -16,7 +16,7 @@
  *
  * ****************************************
  */
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
 public class Player {
 
@@ -55,10 +55,10 @@ public class Player {
     }
 
     /**
-     * Have the player enter a puzzle
+     * Have the player enter an object / inventory
      * (so its sprite is changed)
      */
-    public void enterPuzzle(){
+    public void enterInterface(){
         this.state = PlayerState.EXPLORING;
     }
 
@@ -97,6 +97,7 @@ public class Player {
         this.position[0] += 1;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -104,6 +105,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
 
     public void setState(PlayerState state) {
         this.state = state;
@@ -113,6 +115,7 @@ public class Player {
         return state;
     }
 
+
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
@@ -121,6 +124,7 @@ public class Player {
         return texture;
     }
 
+
     public void setPosition(int[] position) {
         this.position = position;
     }
@@ -128,6 +132,7 @@ public class Player {
     public int[] getPosition() {
         return position;
     }
+
 
     public void pickUpItem(Object item){
         inventory.addItem(item);

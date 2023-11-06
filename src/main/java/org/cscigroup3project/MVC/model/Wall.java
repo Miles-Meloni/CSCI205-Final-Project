@@ -5,21 +5,19 @@
  *
  * Name: Hunter Gehman
  * Section: 02 - 10 am
- * Date: 11/4/2023
- * Time: 10:12 PM
+ * Date: 11/5/2023
+ * Time: 6:32 PM
  *
  * Project: csci205_final_project
  * Package: org.cscigroup3project
- * Class: Texture
+ * Class: Walls
  *
- * Description: Class to store the texture of an object
+ * Description: Basic wall class for the game
  *
  * ****************************************
  */
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
-public enum PlayerState {
-    IDLE,
-    MOVING,
-    EXPLORING,
+public class Wall {
+    //TODO: whole class
 }

@@ -1,4 +1,4 @@
-package org.cscigroup3project;
+package org.cscigroup3project.MVC.model;
 
 public enum Direction {
     UP,
