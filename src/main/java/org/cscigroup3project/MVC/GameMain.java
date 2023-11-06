@@ -39,14 +39,21 @@ public class GameMain extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        Scene scene = new Scene(theView.getRoot());
+        Scene scene = new Scene(theView.getRoot(), 600, 400);
 
-        this.theController = new GameController(this.theModel, this.theView);
+        this.theController = new GameController(this.theModel, this.theView, scene);
 
         primaryStage.setTitle("Basic Game Sim");
         primaryStage.setScene(scene);
-        primaryStage.sizeToScene();
         primaryStage.show();
 
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        //Initialize the mModel and View
+        this.theModel = new GameModel();
+        this.theView = new GameView(this.theModel);
     }
 }

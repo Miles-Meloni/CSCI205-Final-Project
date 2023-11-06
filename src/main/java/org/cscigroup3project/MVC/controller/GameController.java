@@ -18,8 +18,13 @@
  */
 package org.cscigroup3project.MVC.controller;
 
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.view.GameView;
+
 
 /**
  * The class implementing the logic and user interactions
@@ -29,6 +34,7 @@ public class GameController {
 
     private GameModel theModel;
     private GameView theView;
+    private Scene theScene;
 
     /**
      * Constructor for the GameController
@@ -36,20 +42,27 @@ public class GameController {
      * @param theModel the game's model
      * @param theView the game's view
      */
-    public GameController(GameModel theModel, GameView theView){
+    public GameController(GameModel theModel, GameView theView, Scene theScene){
         this.theModel = theModel;
         this.theView = theView;
+        this.theScene = theScene;
 
-        initBindigns();
+        initBindings();
         initEventHandlers();
     }
 
     private void initEventHandlers() {
+        this.theScene.setOnKeyPressed(this::handleKeyPress);
+    }
+
+    private void initBindings() {
         //TODO all
     }
 
-    private void initBindigns() {
-        //TODO all
+    public void handleKeyPress(KeyEvent event){
+        if (event.getCode() == KeyCode.DOWN){
+            System.out.println("DOWN ARROW PRESSED");
+        }
     }
 
 }

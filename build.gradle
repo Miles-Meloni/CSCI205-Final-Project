@@ -45,8 +45,8 @@ dependencies {
 }
 
 application {
-    mainModule = "csci205_final_project"
-    mainClassName = "org.cscigroup3project.Main"
+    mainModule = "csci205_final_project.MVC"
+    mainClassName = "org.cscigroup3project.MVC.GameMain"
 
     if (project.hasProperty("mainClass")) {
         getMainClass().set(project.getProperty("mainClass"))
