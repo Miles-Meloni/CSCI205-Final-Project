@@ -19,6 +19,13 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.image.Image;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * A class representing a player object in the game.
@@ -40,6 +47,12 @@ public class Player {
     /** Inventory for the player */
     private Inventory inventory;
 
+    /** Direction of the player*/
+    private Direction direction;
+
+    /**Player sprites array */
+    private ArrayList<Texture> textures;
+
     /**
      * Default constructor for a player.
      */
@@ -52,16 +65,20 @@ public class Player {
         state = PlayerState.IDLE;
         name = "";
         inventory = new Inventory();
+        direction = Direction.DOWN;
+
+        generateSprites();
+
+
     }
 
     /**
      * Constructor for a player with specified initial position, texture, and name.
      *
      * @param position The initial position of the player.
-     * @param texture  The texture of the player.
      * @param name     The name of the player.
      */
-    public Player(double[] position, Texture texture, String name) {
+    public Player(double[] position, String name) {
         xPos = position[0];
         yPos = position[1];
         xProperty = new SimpleDoubleProperty(xPos);
@@ -70,6 +87,31 @@ public class Player {
         state = PlayerState.IDLE;
         this.name = name;
         inventory = new Inventory();
+
+        generateSprites();
+    }
+
+    private void generateSprites() {
+        //Sprite setup:
+        textures = new ArrayList<>();
+        try {
+            BufferedImage spritesheet = ImageIO.read(new File("cscigroup3project/Player_Spritesheet.png"));
+
+            int[] yList = new int[]{1, 34, 67, 100, 133, 166, 199, 232};
+            int[] xList = new int[]{1, 39, 77, 115};
+            int Width = 37;
+            int Height = 32;
+
+            for (int i = 0; i < 8; i++){
+                for(int j = 0; j < 0; j++){
+                    BufferedImage newSprite = spritesheet.getSubimage(xList[i], yList[j], Width, Height);
+                    Texture newTexture = new Texture(newSprite);
+                    textures.add(newTexture);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

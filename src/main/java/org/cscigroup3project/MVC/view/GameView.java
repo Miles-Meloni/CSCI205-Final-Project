@@ -56,13 +56,11 @@ public class GameView {
         //TODO move a lot of the below code from the view to the model
 
         // get image from resources and create player
-        Image playerImage = new Image("cscigroup3project/AmogusTest.png");
-        this.player = new Player(new double[]{0,0}, new Texture(playerImage), "DemoPlayer");
+        this.player = new Player(new double[]{0,0}, "DemoPlayer");
 
         // set up the ImageView of the player with a hardcoded height and width, and set its image
         //TODO remove hardcoding from here
         this.playerView = new ImageView();
-        this.playerView.setImage(playerImage);
         this.playerView.setFitHeight(100);
         this.playerView.setFitWidth(100);
 
