@@ -76,6 +76,7 @@ public class Player {
         generateSprites();
 
         curSprite = 0;
+        updateSpriteInMs(100);
 
 
     }
@@ -99,6 +100,7 @@ public class Player {
         generateSprites();
 
         curSprite = 0;
+        updateSpriteInMs(100);
     }
 
     private void generateSprites() {
