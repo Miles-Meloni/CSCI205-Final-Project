@@ -44,7 +44,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the specified point is inside the boundary of {@code Bounds}.
+     * Checks if the specified point is inside the boundary of {@code Bounds}.
      *
      * @param p the specified point to be tested
      * @return true if the specified point is inside the boundary of this
@@ -56,7 +56,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the specified point is inside the boundary of {@code Bounds}.
+     * Checks if the specified point is inside the boundary of {@code Bounds}.
      *
      * @param p the specified 3D point to be tested
      * @return true if the specified point is inside the boundary of this
@@ -68,7 +68,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the specified {@code (x, y)} coordinates are inside the boundary
+     * Checks if the specified {@code (x, y)} coordinates are inside the boundary
      * of {@code Bounds}.
      *
      * @param x the specified x coordinate to be tested
@@ -82,7 +82,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the specified {@code (x, y, z)} coordinates are inside the boundary
+     * Checks if the specified {@code (x, y, z)} coordinates are inside the boundary
      * of {@code Bounds}.
      *
      * @param x the specified x coordinate to be tested
@@ -97,7 +97,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} entirely contains the
+     * Checks if the interior of this {@code Bounds} entirely contains the
      * specified Bounds, {@code b}.
      *
      * @param b The specified Bounds
@@ -110,7 +110,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} entirely contains the
+     * Checks if the interior of this {@code Bounds} entirely contains the
      * specified rectangular area.
      *
      * @param x the x coordinate of the upper-left corner of the specified
@@ -128,7 +128,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} entirely contains the
+     * Checks if the interior of this {@code Bounds} entirely contains the
      * specified rectangular area.
      *
      * @param x the x coordinate of the upper-left corner of the specified
@@ -149,7 +149,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} intersects the interior
+     * Checks if the interior of this {@code Bounds} intersects the interior
      * of a specified Bounds, {@code b}.
      *
      * @param b The specified Bounds
@@ -162,7 +162,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} intersects the interior
+     * Checks if the interior of this {@code Bounds} intersects the interior
      * of a specified rectangular area.
      *
      * @param x the x coordinate of the upper-left corner of the specified
@@ -180,7 +180,7 @@ public class Wall extends Bounds {
     }
 
     /**
-     * Tests if the interior of this {@code Bounds} intersects the interior
+     * Checks if the interior of this {@code Bounds} intersects the interior
      * of a specified rectangular area.
      *
      * @param x the x coordinate of the upper-left corner of the specified
