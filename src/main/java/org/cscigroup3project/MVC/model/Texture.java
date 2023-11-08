@@ -20,7 +20,6 @@ package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
 //#TODO make embed work
-import javafx.embed.swing.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,16 +34,6 @@ public class Texture {
      * @param textureFile the data for the new texture
      */
     public Texture(Image textureFile){
-        this.textureFile = textureFile;
-    }
-
-    /**
-     * Create the new texture after converting to image
-     * @param textureFileBuffered the data for the new texture
-     */
-    public Texture(BufferedImage textureFileBuffered){
-
-        Image textureFile = SwingFXUtils.toFXImage(textureFileBuffered, null);
         this.textureFile = textureFile;
     }
 

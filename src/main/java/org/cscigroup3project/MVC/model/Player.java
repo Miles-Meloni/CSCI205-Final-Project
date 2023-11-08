@@ -59,6 +59,31 @@ public class Player {
     /** current sprite for the player */
     private int curSprite;
 
+    /**position in the array for left idle sprites */
+    private int POS_IDLE_LEFT = 0;
+
+    /**position in the array for right idle sprites */
+    private int POS_IDLE_RIGHT = 4;
+
+    /**position in the array for left move sprites */
+    private int POS_MOVE_LEFT = 8;
+
+    /**position in the array for right move sprites */
+    private int POS_MOVE_RIGHT = 12;
+
+    /**position in the array for down idle sprites */
+    private int POS_IDLE_DOWN = 16;
+
+    /**position in the array for down moving sprites */
+    private int POS_MOVE_DOWN = 20;
+
+    /**position in the array for down idle sprites */
+    private int POS_IDLE_UP = 24;
+
+    /**position in the array for down moving sprites */
+    private int POS_MOVE_UP = 28;
+
+
     /**
      * Default constructor for a player.
      */
@@ -164,45 +189,45 @@ public class Player {
                     }
                     if (state == PlayerState.MOVING) {
                         if (direction == Direction.LEFT) {
-                            if (curSprite >= 8 & curSprite <= 11) {
+                            if (curSprite >= POS_MOVE_LEFT & curSprite <= POS_MOVE_LEFT + 3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(8);
+                            } else changeSpriteTo(POS_MOVE_LEFT);
                         }
-                        if (direction == Direction.UP) {
-                            if (curSprite >= 12 & curSprite <= 15) {
+                        if (direction == Direction.RIGHT) {
+                            if (curSprite >= POS_MOVE_RIGHT & curSprite <= POS_MOVE_RIGHT+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(12);
+                            } else changeSpriteTo(POS_MOVE_RIGHT);
                         }
                         if (direction == Direction.DOWN) {
-                            if (curSprite >= 20 & curSprite <= 23) {
+                            if (curSprite >= POS_MOVE_DOWN & curSprite <= POS_MOVE_DOWN + 3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(23);
+                            } else changeSpriteTo(POS_MOVE_DOWN);
                         }
                         if (direction == Direction.UP) {
-                            if (curSprite >= 28 & curSprite <= 31) {
+                            if (curSprite >= POS_MOVE_UP & curSprite <= POS_MOVE_UP+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(28);
+                            } else changeSpriteTo(POS_MOVE_UP);
                         }
                     } else {
                         if (direction == Direction.LEFT) {
-                            if (curSprite >= 0 & curSprite <= 3) {
+                            if (curSprite >= POS_IDLE_LEFT & curSprite <= POS_IDLE_LEFT+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(0);
+                            } else changeSpriteTo(POS_IDLE_LEFT);
                         }
-                        if (direction == Direction.UP) {
-                            if (curSprite >= 4 & curSprite <= 7) {
+                        if (direction == Direction.RIGHT) {
+                            if (curSprite >= POS_IDLE_RIGHT & curSprite <= POS_IDLE_RIGHT+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(4);
+                            } else changeSpriteTo(POS_IDLE_RIGHT);
                         }
                         if (direction == Direction.DOWN) {
-                            if (curSprite >= 16 & curSprite <= 19) {
+                            if (curSprite >= POS_IDLE_DOWN & curSprite <= POS_IDLE_DOWN+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(23);
+                            } else changeSpriteTo(POS_IDLE_DOWN);
                         }
                         if (direction == Direction.UP) {
-                            if (curSprite >= 24 & curSprite <= 27) {
+                            if (curSprite >= POS_IDLE_UP & curSprite <= POS_IDLE_UP+3) {
                                 changeSpriteTo(curSprite + moveBy);
-                            } else changeSpriteTo(28);
+                            } else changeSpriteTo(POS_IDLE_UP);
                         }
                     }
 
