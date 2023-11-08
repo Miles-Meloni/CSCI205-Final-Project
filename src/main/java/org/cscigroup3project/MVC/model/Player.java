@@ -53,6 +53,12 @@ public class Player {
     /**Player sprites array */
     private ArrayList<Texture> textures;
 
+    /** player move speed constant*/
+    private final int MOVE_SPEED = 3;
+
+    /** current sprite for the player */
+    private int curSprite;
+
     /**
      * Default constructor for a player.
      */
@@ -68,6 +74,8 @@ public class Player {
         direction = Direction.DOWN;
 
         generateSprites();
+
+        curSprite = 0;
 
 
     }
@@ -89,6 +97,8 @@ public class Player {
         inventory = new Inventory();
 
         generateSprites();
+
+        curSprite = 0;
     }
 
     private void generateSprites() {
@@ -139,11 +149,83 @@ public class Player {
         }
     }
 
+    public void updateSpriteInMs(long timeInMs){
+        //repeat update over and over
+        do {
+            Runnable r = () -> {
+                try {
+                    int moveBy = 1;
+                    //first we check if it is the 4th sprite,
+                    // if we do we go back 3 instead of moving forward 1
+                    if (curSprite % 4 == 3) {
+                        moveBy = -3;
+                    }
+                    if (state == PlayerState.MOVING) {
+                        if (direction == Direction.LEFT) {
+                            if (curSprite >= 8 & curSprite <= 11) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(8);
+                        }
+                        if (direction == Direction.UP) {
+                            if (curSprite >= 12 & curSprite <= 15) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(12);
+                        }
+                        if (direction == Direction.DOWN) {
+                            if (curSprite >= 20 & curSprite <= 23) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(23);
+                        }
+                        if (direction == Direction.UP) {
+                            if (curSprite >= 28 & curSprite <= 31) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(28);
+                        }
+                    } else {
+                        if (direction == Direction.LEFT) {
+                            if (curSprite >= 0 & curSprite <= 3) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(0);
+                        }
+                        if (direction == Direction.UP) {
+                            if (curSprite >= 4 & curSprite <= 7) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(4);
+                        }
+                        if (direction == Direction.DOWN) {
+                            if (curSprite >= 16 & curSprite <= 19) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(23);
+                        }
+                        if (direction == Direction.UP) {
+                            if (curSprite >= 24 & curSprite <= 27) {
+                                changeSpriteTo(curSprite + moveBy);
+                            } else changeSpriteTo(28);
+                        }
+                    }
+
+                    Thread.sleep(timeInMs);
+                } catch (InterruptedException e) {
+                }
+            };
+
+            //encapsulate thread
+            Thread t = new Thread(r);
+            t.start();
+
+        }while(true);
+    }
+
+    public void changeSpriteTo(int spriteVal){
+        curSprite = spriteVal;
+        setTexture(textures.get(spriteVal));
+    }
+
     /**
      * Move the player up by one unit and update the corresponding property.
      */
     private void moveUp() {
-        yPos -= 4;
+        yPos -= MOVE_SPEED ;
         yProperty.set(yPos);
     }
 
@@ -151,7 +233,7 @@ public class Player {
      * Move the player down by one unit and update the corresponding property.
      */
     private void moveDown() {
-        yPos += 4;
+        yPos += MOVE_SPEED ;
         yProperty.set(yPos);
     }
 
@@ -159,7 +241,7 @@ public class Player {
      * Move the player left by one unit and update the corresponding property.
      */
     private void moveLeft() {
-        xPos -= 4;
+        xPos -= MOVE_SPEED ;
         xProperty.set(xPos);
     }
 
@@ -167,7 +249,7 @@ public class Player {
      * Move the player right by one unit and update the corresponding property.
      */
     private void moveRight() {
-        xPos += 4;
+        xPos += MOVE_SPEED ;
         xProperty.set(xPos);
     }
 

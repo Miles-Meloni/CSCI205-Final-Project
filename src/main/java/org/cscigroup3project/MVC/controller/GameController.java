@@ -26,6 +26,7 @@ import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
 import org.cscigroup3project.MVC.view.GameView;
 
+
 /**
  * The class implementing the logic and user interactions for the created game.
  */
@@ -35,6 +36,7 @@ public class GameController {
     private GameView theView;
     private Scene theScene;
     private Player thePlayer;
+
 
     /**
      * Constructor for the GameController.
