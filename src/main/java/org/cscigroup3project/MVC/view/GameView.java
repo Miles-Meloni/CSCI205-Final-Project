@@ -27,7 +27,7 @@ import org.cscigroup3project.MVC.model.Texture;
 
 public class GameView {
 
-    /** Model for the traffic light program */
+    /** Model for the game */
     private GameModel theModel;
 
     /** Root note for the view */
@@ -35,7 +35,9 @@ public class GameView {
 
     /** Player representation ({@link javafx.scene.shape.Circle} for now) */
     private Player player;
+    /** the texture representing the player, collected from player object*/
     private ImageView playerView;
+    /** png representing a wall */
     private ImageView wallView;
 
 
@@ -67,6 +69,7 @@ public class GameView {
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
 
+        //TEMPORARY wall rendering
         Image wallImage = new Image("cscigroup3project/TestWall.png");
 
         this.wallView = new ImageView();
@@ -89,14 +92,23 @@ public class GameView {
 
     }
 
+    /**
+     * @return the root
+     */
     public StackPane getRoot() {
         return root;
     }
 
+    /**
+     * @return the player texture
+     */
     public ImageView getPlayerView() {
         return playerView;
     }
 
+    /**
+     * @return the player texture
+     */
     public Player getPlayer() {
         return player;
     }
