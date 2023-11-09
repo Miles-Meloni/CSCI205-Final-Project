@@ -117,7 +117,7 @@ public class Player {
         yPos = position[1];
         xProperty = new SimpleDoubleProperty(xPos);
         yProperty = new SimpleDoubleProperty(yPos);
-        this.texture = texture;
+        //this.texture = texture;
         state = PlayerState.IDLE;
         this.name = name;
         inventory = new Inventory();
@@ -172,7 +172,7 @@ public class Player {
                 try {
                     int moveBy = 1;
                     //first we check if it is the 4th sprite,
-                    // if we do we go back 3 instead of moving forward 1
+                    //if we do we go back 3 instead of moving forward 1
                     if (curSprite % 4 == 3) {
                         moveBy = -3;
                     }
@@ -380,6 +380,15 @@ public class Player {
      */
     public SimpleDoubleProperty getyProperty() {
         return yProperty;
+    }
+
+
+    /**
+     * Get the inventory of the player
+     * @return the inventory arraylist of the player
+     */
+    public Inventory getInventory() {
+        return inventory;
     }
 
     /**

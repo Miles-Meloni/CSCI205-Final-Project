@@ -36,10 +36,17 @@ public class Texture {
         this.textureFile = textureFile;
     }
 
+    /**
+     * Sets the texture to a chosen Image
+     * @param textureFile - an image file
+     */
     public void setTextureFile(Image textureFile) {
         this.textureFile = textureFile;
     }
 
+    /**
+     * @return the image for the texture
+     */
     public Image getTextureFile() {
         return textureFile;
     }
