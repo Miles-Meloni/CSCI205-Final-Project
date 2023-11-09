@@ -19,7 +19,6 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
-//#TODO make embed work
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
