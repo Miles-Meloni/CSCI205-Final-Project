@@ -1,13 +1,11 @@
 package org.cscigroup3project.MVC.model;
 
+import javafx.scene.image.Image;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class PlayerTest {
 
@@ -18,10 +16,11 @@ public class PlayerTest {
     public void setUp() {
         // Initialize a new player before each test
         player = new Player();
+        //player.setTexture(new Texture(new Image("cscigroup3project/Sprites/PS1.png")));
     }
 
     @Test
-    public void testMoveUp() {
+    public void testMove() {
         // Save the initial position
         double initialX = player.getxPos();
         double initialY = player.getyPos();
