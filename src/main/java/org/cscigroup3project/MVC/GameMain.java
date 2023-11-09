@@ -27,15 +27,30 @@ import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.view.GameView;
 
 public class GameMain extends Application {
-
+    /** The model for the game**/
     private GameModel theModel;
+    /**the view for the game**/
     private GameView theView;
+    /**the controller for the game**/
     private GameController theController;
 
+    /**
+     * launches the game
+     * @param args String[] to be launched
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Creates a scene, initializes the controller, adds information to the stage,
+     * sets the scene on the stage, and shows the scene
+     *
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -52,6 +67,11 @@ public class GameMain extends Application {
 
     }
 
+    /**
+     * Initializes the View and the Model
+     *
+     * @throws Exception
+     */
     @Override
     public void init() throws Exception {
         super.init();
