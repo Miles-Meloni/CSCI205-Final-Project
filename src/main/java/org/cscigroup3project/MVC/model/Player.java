@@ -18,7 +18,12 @@
  */
 package org.cscigroup3project.MVC.model;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableObjectValue;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 
 import javax.imageio.ImageIO;
@@ -40,6 +45,10 @@ public class Player {
 
     /** The texture of the player */
     private Texture texture;
+
+    /** Observable value for the player's image/ sprite */
+    private ObservableObjectValue<Image> playerImage;
+
     /** The current state of the player */
     private PlayerState state;
     /** The name of the player */
@@ -57,7 +66,7 @@ public class Player {
     private final int MOVE_SPEED = 3;
 
     /** current sprite for the player */
-    private int curSprite;
+    private int curSprite = 0;
 
     /**position in the array for left idle sprites */
     private int POS_IDLE_LEFT = 0;
@@ -101,7 +110,6 @@ public class Player {
         generateSprites();
 
         changeSpriteTo(0);
-        //updateSpriteInMs(100);
 
 
     }
@@ -117,16 +125,48 @@ public class Player {
         yPos = position[1];
         xProperty = new SimpleDoubleProperty(xPos);
         yProperty = new SimpleDoubleProperty(yPos);
-        this.texture = texture;
         state = PlayerState.IDLE;
         this.name = name;
         inventory = new Inventory();
 
         generateSprites();
-
         changeSpriteTo(0);
-        //updateSpriteInMs(100);
+        playerImage = new ObservableObjectValue<Image>() {
+            @Override
+            public Image get() {
+                Image thisImage = textures.get(curSprite).getTextureFile();
+                return thisImage;
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super Image> listener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Image> listener) {
+
+            }
+
+            @Override
+            public Image getValue() {
+                Image thisImage = textures.get(curSprite).getTextureFile();
+                return thisImage;
+            }
+
+            @Override
+            public void addListener(InvalidationListener listener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener listener) {
+
+            }
+        };
+
     }
+
 
     private void generateSprites() {
         //Sprite setup:
@@ -156,14 +196,19 @@ public class Player {
         state = PlayerState.MOVING;
         if (movementDirection == Direction.UP) {
             moveUp();
+            changeSpriteTo(POS_MOVE_UP);
         } else if (movementDirection == Direction.DOWN) {
             moveDown();
+            changeSpriteTo(POS_MOVE_DOWN);
         } else if (movementDirection == Direction.LEFT) {
             moveLeft();
+            changeSpriteTo(POS_MOVE_LEFT);
         } else {
             moveRight();
+            changeSpriteTo(POS_MOVE_RIGHT);
         }
     }
+
 
     public void updateSpriteInMs(long timeInMs){
         //repeat update over and over
@@ -399,5 +444,13 @@ public class Player {
      */
     public boolean getRidOfItem(Object item) {
         return inventory.removeItemByObject(item);
+    }
+
+    public Image getPlayerImage() {
+        return playerImage.get();
+    }
+
+    public ObservableObjectValue<Image> playerImageProperty() {
+        return playerImage;
     }
 }

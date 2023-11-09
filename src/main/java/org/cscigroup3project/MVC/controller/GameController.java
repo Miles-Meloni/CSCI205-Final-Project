@@ -70,6 +70,7 @@ public class GameController {
         // Bind the ImageView's position to the Player's x and y properties
         theView.getPlayerView().translateXProperty().bind(thePlayer.getxProperty());
         theView.getPlayerView().translateYProperty().bind(thePlayer.getyProperty());
+        theView.getPlayerView().imageProperty().bind(thePlayer.playerImageProperty());
     }
 
     /**
