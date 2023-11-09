@@ -100,8 +100,8 @@ public class Player {
 
         generateSprites();
 
-        curSprite = 0;
-        updateSpriteInMs(100);
+        changeSpriteTo(0);
+        //updateSpriteInMs(100);
 
 
     }
@@ -124,31 +124,20 @@ public class Player {
 
         generateSprites();
 
-        curSprite = 0;
-        updateSpriteInMs(100);
+        changeSpriteTo(0);
+        //updateSpriteInMs(100);
     }
 
     private void generateSprites() {
         //Sprite setup:
         textures = new ArrayList<>();
-        try {
-            BufferedImage spritesheet = ImageIO.read(new File("cscigroup3project/Player_Spritesheet.png"));
-
-            int[] yList = new int[]{1, 34, 67, 100, 133, 166, 199, 232};
-            int[] xList = new int[]{1, 39, 77, 115};
-            int Width = 37;
-            int Height = 32;
-
-            for (int i = 0; i < 8; i++){
-                for(int j = 0; j < 0; j++){
-                    BufferedImage newSprite = spritesheet.getSubimage(xList[i], yList[j], Width, Height);
-                    Texture newTexture = new Texture(newSprite);
-                    textures.add(newTexture);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 1; i < 32; i++){
+            String imageURL = "cscigroup3project/Sprites/PS" + i +".png";
+            Image newSprite = new Image(imageURL);
+            Texture newTexture = new Texture(newSprite);
+            textures.add(newTexture);
         }
+
     }
 
     /**
@@ -243,6 +232,10 @@ public class Player {
         }while(true);
     }
 
+    /**
+     * Changes the player texture and updates the current sprite value simultaneously.
+     * @param spriteVal - the index in the sprite array of the new sprite assigned.
+     */
     public void changeSpriteTo(int spriteVal){
         curSprite = spriteVal;
         setTexture(textures.get(spriteVal));
