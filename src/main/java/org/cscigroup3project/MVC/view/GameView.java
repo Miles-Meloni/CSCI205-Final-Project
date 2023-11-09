@@ -73,7 +73,7 @@ public class GameView {
 
 
         // Initialize a Player with position and name, add it to the root
-        this.player = new Player(new double[]{0,0}, "DemoPlayer"); // TODO - move to model?
+        this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS"); // TODO - move to model?
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
 

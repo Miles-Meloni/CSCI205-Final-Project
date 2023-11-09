@@ -87,7 +87,7 @@ public class Player {
     /**
      * Default constructor for a player.
      */
-    public Player() {
+    /*public Player() {
         xPos = 0;
         yPos = 0;
         xProperty = new SimpleDoubleProperty(xPos);
@@ -98,13 +98,13 @@ public class Player {
         inventory = new Inventory();
         direction = Direction.DOWN;
 
-        generateSprites();
+        generateSprites(null);
 
         changeSpriteTo(0);
         //updateSpriteInMs(100);
 
 
-    }
+    }*/
 
     /**
      * Constructor for a player with specified initial position, texture, and name.
@@ -112,7 +112,7 @@ public class Player {
      * @param position The initial position of the player.
      * @param name     The name of the player.
      */
-    public Player(double[] position, String name) {
+    public Player(double[] position, String name, String imageURL) {
         xPos = position[0];
         yPos = position[1];
         xProperty = new SimpleDoubleProperty(xPos);
@@ -122,20 +122,21 @@ public class Player {
         this.name = name;
         inventory = new Inventory();
 
-        generateSprites();
+        generateSprites(imageURL);
 
         changeSpriteTo(0);
         //updateSpriteInMs(100);
     }
 
-    private void generateSprites() {
+    private void generateSprites(String imageURL) {
         //Sprite setup:
-        textures = new ArrayList<>();
-        for (int i = 1; i < 32; i++){
-            String imageURL = "cscigroup3project/Sprites/PS" + i +".png";
-            Image newSprite = new Image(imageURL);
-            Texture newTexture = new Texture(newSprite);
-            textures.add(newTexture);
+        if (imageURL != null) {
+            textures = new ArrayList<>();
+            for (int i = 1; i <= 32; i++) {
+                Image newSprite = new Image(imageURL + i + ".png");
+                Texture newTexture = new Texture(newSprite);
+                textures.add(newTexture);
+            }
         }
 
     }

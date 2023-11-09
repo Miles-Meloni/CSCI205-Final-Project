@@ -42,6 +42,6 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current player for the game
-        this.player = new Player();
+        //this.player = new Player();
     }
 }

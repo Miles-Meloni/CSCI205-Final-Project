@@ -15,8 +15,7 @@ public class PlayerTest {
     @BeforeEach
     public void setUp() {
         // Initialize a new player before each test
-        player = new Player();
-        //player.setTexture(new Texture(new Image("cscigroup3project/Sprites/PS1.png")));
+        player = new Player(new double[]{0,0}, "Test", "src/test/resources/cscigroup3project/Sprites/PS");
     }
 
     @Test
