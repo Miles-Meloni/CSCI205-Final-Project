@@ -96,7 +96,7 @@ public class Player {
     /**
      * Default constructor for a player.
      */
-    public Player() {
+    /*public Player() {
         xPos = 0;
         yPos = 0;
         xProperty = new SimpleDoubleProperty(xPos);
@@ -112,7 +112,7 @@ public class Player {
         changeSpriteTo(0);
 
 
-    }
+    }*/
 
     /**
      * Constructor for a player with specified initial position, texture, and name.
@@ -173,7 +173,7 @@ public class Player {
         if (imageURL != null) {
             textures = new ArrayList<>();
             for (int i = 1; i < 32; i++) {
-                Image newSprite = new Image(imageURL);
+                Image newSprite = new Image(imageURL + i + ".png");
                 Texture newTexture = new Texture(newSprite);
                 textures.add(newTexture);
             }
