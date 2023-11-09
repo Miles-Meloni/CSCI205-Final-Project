@@ -39,7 +39,6 @@ public class GameView {
     private ImageView wallView;
 
 
-
     public GameView(GameModel theModel){
         this.theModel = theModel;
 
@@ -61,8 +60,9 @@ public class GameView {
         // set up the ImageView of the player with a hardcoded height and width, and set its image
         //TODO remove hardcoding from here
         this.playerView = new ImageView();
-        this.playerView.setFitHeight(100);
-        this.playerView.setFitWidth(100);
+        this.playerView.setFitHeight(32);
+        this.playerView.setFitWidth(37);
+        this.playerView.setImage(player.getTexture().getTextureFile());
 
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
