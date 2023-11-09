@@ -41,7 +41,10 @@ public class GameModel {
         // currently empty arraylist of rooms
         this.rooms = new ArrayList<>();
 
-        // current player for the game
-        this.player = new Player();
+        // current player for the game with position and name
+        this.player = new Player(new double[]{0,0}, "DemoPlayer");
     }
+
+    /** Getter for the {@link Player} */
+    public Player getPlayer() { return player; }
 }

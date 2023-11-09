@@ -71,9 +71,8 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
-
         // Initialize a Player with position and name, add it to the root
-        this.player = new Player(new double[]{0,0}, "DemoPlayer"); // TODO - move to model?
+        this.player = theModel.getPlayer();
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
 
