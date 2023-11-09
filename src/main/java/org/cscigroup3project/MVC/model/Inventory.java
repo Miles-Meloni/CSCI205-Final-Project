@@ -44,6 +44,8 @@ public class Inventory {
         items.add(item);
     }
 
+    public boolean containsItem(Object item){return items.contains(item);}
+
     public boolean removeItemByObject(Object item){
         return items.remove(item);
     }
