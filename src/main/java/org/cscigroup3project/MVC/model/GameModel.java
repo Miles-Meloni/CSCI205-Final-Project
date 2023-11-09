@@ -13,31 +13,28 @@
  * Class: GameModel
  *
  * Description:
- *
+ * The Model representing our JavaFX appliction.
  * ****************************************
  */
+
 package org.cscigroup3project.MVC.model;
 
 import java.util.ArrayList;
 
+/**
+ * The model representing our JavaFX application.
+ */
 public class GameModel {
 
-    /**
-     * Our player for the game
-     */
+    /** Our player for the game */
     private Player player;
 
-    /**
-     * Our array of all rooms for the game
-     */
+    /** Our array of all rooms for the game */
     private ArrayList<Room> rooms;
 
-
     /**
-     * Create a new GameModel object with any
-     * number of {@link Room} objects (and their contained
-     * objects), a {@link Player} for the game,
-     * and {ADD ANYTHING ELSE HERE}
+     * Create a new GameModel object with any number of {@link Room} objects (and their contained
+     * objects), a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
      */
     public GameModel(){
 
@@ -45,9 +42,6 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current player for the game
-        // (for now, a circle)
         this.player = new Player();
-
     }
-
 }
