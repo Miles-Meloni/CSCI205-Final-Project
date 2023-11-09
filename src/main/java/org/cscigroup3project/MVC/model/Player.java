@@ -382,6 +382,15 @@ public class Player {
         return yProperty;
     }
 
+
+    /**
+     * Get the inventory of the player
+     * @return the inventory arraylist of the player
+     */
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     /**
      * Have the player pick up an item and add it to their inventory.
      *
