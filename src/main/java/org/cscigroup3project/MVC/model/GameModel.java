@@ -48,7 +48,8 @@ public class GameModel {
         this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
 
         // single Wall represented in GUI for implementing collisions
-        this.wall = new Wall(50,50,50,400);
+        // minX and minY define upper left corner position
+        this.wall = new Wall(50,75,200,100); // TODO - Hardcode wall coordinates/dimensions?
     }
 
     /** Getter for the {@link Player}, {@link Wall} */

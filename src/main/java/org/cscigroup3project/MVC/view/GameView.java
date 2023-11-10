@@ -92,20 +92,19 @@ public class GameView {
      */
     public void initStyling(){
 
-        // Style the ImageView of the player with a field constant height and width, and set its image
+        // Style the ImageView of the Player with a field constant height and width, and set its image
         this.playerView.setFitHeight(PLAYER_HEIGHT);
         this.playerView.setFitWidth(PLAYER_WIDTH);
         this.playerView.setImage(player.getImage());
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
 
-        // Style the wallView of the wall with Image, and magic number height, width, and translated position
+        // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
         this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
-        // TODO - Hardcoding wall position, width, height?
-        this.wallView.setFitHeight(50);
-        this.wallView.setFitWidth(400);
-        this.wallView.setTranslateX(100);
-        this.wallView.setTranslateY(100);
+        this.wallView.setFitHeight(this.wall.getBounds().getHeight());
+        this.wallView.setFitWidth(this.wall.getBounds().getWidth());
+        this.wallView.setTranslateX(this.wall.getBounds().getMinX());
+        this.wallView.setTranslateY(this.wall.getBounds().getMinY());
     }
 
     /**
