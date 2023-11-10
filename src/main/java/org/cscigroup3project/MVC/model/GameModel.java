@@ -42,7 +42,7 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current player for the game with position and name
-        this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
+        this.player = new Player(new double[]{0,0}, "DemoPlayer");
     }
 
     /** Getter for the {@link Player} */
