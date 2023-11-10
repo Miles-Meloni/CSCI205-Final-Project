@@ -101,6 +101,7 @@ public class GameView {
         this.wallView.setTranslateY(100);
     }
 
+
     /**
      * @return the root
      */

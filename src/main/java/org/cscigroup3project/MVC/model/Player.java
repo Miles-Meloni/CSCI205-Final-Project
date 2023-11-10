@@ -18,18 +18,12 @@
  */
 package org.cscigroup3project.MVC.model;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableObjectValue;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.image.Image;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +41,7 @@ public class Player {
     private Image image;
 
     /** Observable value for the player's image/ sprite */
-    private ObservableObjectValue<Image> playerImage;
+    private ObjectProperty<Image> playerImage;
 
     /** The current state of the player */
     private PlayerState state;
@@ -69,28 +63,31 @@ public class Player {
     private int curSprite = 0;
 
     /**position in the array for left idle sprites */
-    private int POS_IDLE_LEFT = 0;
+    private final int POS_IDLE_LEFT = 0;
 
     /**position in the array for right idle sprites */
-    private int POS_IDLE_RIGHT = 4;
+    private final int POS_IDLE_RIGHT = 4;
 
     /**position in the array for left move sprites */
-    private int POS_MOVE_LEFT = 8;
+    private final int POS_MOVE_LEFT = 8;
 
     /**position in the array for right move sprites */
-    private int POS_MOVE_RIGHT = 12;
+    private final int POS_MOVE_RIGHT = 12;
 
     /**position in the array for down idle sprites */
-    private int POS_IDLE_DOWN = 16;
+    private final int POS_IDLE_DOWN = 16;
 
     /**position in the array for down moving sprites */
-    private int POS_MOVE_DOWN = 20;
+    private final int POS_MOVE_DOWN = 20;
 
     /**position in the array for down idle sprites */
-    private int POS_IDLE_UP = 24;
+    private final int POS_IDLE_UP = 24;
 
     /**position in the array for down moving sprites */
-    private int POS_MOVE_UP = 28;
+    private final int POS_MOVE_UP = 28;
+
+    /** total number of sprites */
+    private final int NUM_SPRITES = 32;
 
 
     /**
@@ -129,49 +126,24 @@ public class Player {
         this.name = name;
         inventory = new Inventory();
 
+        //this.playerImage = new PlayerObjectBinding<Image>(image);
+        this.playerImage = new SimpleObjectProperty<>(image);
         generateSprites(imageURL);
         changeSpriteTo(0);
-        playerImage = new ObservableObjectValue<Image>() {
-            @Override
-            public Image get() {
-                Image thisImage = image;
-                return thisImage;
-            }
 
-            @Override
-            public void addListener(ChangeListener<? super Image> listener) {
-
-            }
-
-            @Override
-            public void removeListener(ChangeListener<? super Image> listener) {
-
-            }
-
-            @Override
-            public Image getValue() {
-                Image thisImage = image;
-                return thisImage;
-            }
-
-            @Override
-            public void addListener(InvalidationListener listener) {
-
-            }
-
-            @Override
-            public void removeListener(InvalidationListener listener) {
-
-            }
-        };
 
     }
 
-
+    /**
+     * Loop through all .png images used for the sprites
+     * @param imageURL the URL (without image number and extension)
+     *                 to be used for all the sprites
+     */
     private void generateSprites(String imageURL) {
         //Sprite setup:
         images = new ArrayList<>();
-        for (int i = 1; i < 32; i++){
+        // loop through all 32 sprites
+        for (int i = 1; i <= NUM_SPRITES; i++){
             Image newSprite = new Image(imageURL + i + ".png");
             images.add(newSprite);
         }
@@ -185,7 +157,7 @@ public class Player {
     }
 
     /**
-     * Move the player in the specified direction.
+     * Move the player in the specified direction, and change its sprite.
      *
      * @param movementDirection The direction in which to move.
      */
@@ -206,7 +178,7 @@ public class Player {
         }
     }
 
-
+    //TODO This needs redone
     public void updateSpriteInMs(long timeInMs){
         //repeat update over and over
         do {
@@ -358,6 +330,7 @@ public class Player {
      */
     public void setImage(Image image) {
         this.image = image;
+        this.playerImage.setValue(image);
     }
 
     /**
@@ -451,7 +424,8 @@ public class Player {
         return playerImage.get();
     }
 
-    public ObservableObjectValue<Image> playerImageProperty() {
+    public ObjectProperty<Image> playerImageProperty() {
         return playerImage;
     }
+
 }

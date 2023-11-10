@@ -19,6 +19,7 @@
 package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.cscigroup3project.MVC.model.Direction;
@@ -70,6 +71,8 @@ public class GameController {
         // Bind the ImageView's position to the Player's x and y properties
         theView.getPlayerView().translateXProperty().bind(thePlayer.getxProperty());
         theView.getPlayerView().translateYProperty().bind(thePlayer.getyProperty());
+
+        // Bind the view of the player to the image property of the player
         theView.getPlayerView().imageProperty().bind(thePlayer.playerImageProperty());
     }
 
@@ -89,7 +92,5 @@ public class GameController {
             thePlayer.move(Direction.LEFT);
         }
     }
-
-
 }
 
