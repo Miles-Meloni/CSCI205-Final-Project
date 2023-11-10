@@ -65,21 +65,18 @@ public class GameView {
      */
     public void initSceneGraph(){
 
-        //TODO move select code from the view to the model
-
         // Initialize a StackPane root
         this.root = new StackPane();
 
+        // Initialize our Player from the model
+        this.player = theModel.getPlayer();
 
-        // Initialize a Player with position and name, add it to the root
-        this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS"); // TODO - move to model?
+        // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
 
-        // Initialize a wall Image, add it to the root
-        Image wallImage = new Image("cscigroup3project/TestWall.png"); // TODO - hardcoding image file?
+        // Initialize a wall ImageView, add it to the root
         this.wallView = new ImageView();
-        this.wallView.setImage(wallImage);
         this.root.getChildren().add(wallView);
     }
 
@@ -95,7 +92,9 @@ public class GameView {
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
 
-        // Style the wallView of the wall with magic number height, width, and translated position
+        // Style the wallView of the wall with Image, and magic number height, width, and translated position
+        this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
+        // TODO - Hardcoding wall position, width, height?
         this.wallView.setFitHeight(50);
         this.wallView.setFitWidth(400);
         this.wallView.setTranslateX(100);
