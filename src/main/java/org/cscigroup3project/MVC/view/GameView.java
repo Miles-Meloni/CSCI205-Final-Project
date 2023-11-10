@@ -107,6 +107,7 @@ public class GameView {
         this.wallView.setTranslateY(this.wall.getBounds().getMinY());
     }
 
+
     /**
      * @return the root
      */
