@@ -12,16 +12,18 @@
  * Package: org.cscigroup3project
  * Class: Player
  *
- * Description: Basic class containing a player object
- *
+ * Description:
+ * Basic class containing a Player object
  * ****************************************
  */
+
 package org.cscigroup3project.MVC.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableObjectValue;
+import javafx.geometry.BoundingBox;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -49,6 +51,12 @@ public class Player {
     private String name;
     /** Inventory for the player */
     private Inventory inventory;
+
+    /** Collision {@link BoundingBox} of the Player */
+    private BoundingBox bounds;
+
+    /** Interacting {@link BoundingBox} of the Player */
+    private BoundingBox reach;
 
     /** Direction of the player*/
     private Direction direction;
@@ -118,20 +126,26 @@ public class Player {
      * @param name     The name of the player.
      */
     public Player(double[] position, String name, String imageURL) {
-        xPos = position[0];
-        yPos = position[1];
-        xProperty = new SimpleDoubleProperty(xPos);
-        yProperty = new SimpleDoubleProperty(yPos);
-        state = PlayerState.IDLE;
+        this.xPos = position[0];
+        this.yPos = position[1];
+        this.xProperty = new SimpleDoubleProperty(xPos);
+        this.yProperty = new SimpleDoubleProperty(yPos);
+        this.state = PlayerState.IDLE;
         this.name = name;
-        inventory = new Inventory();
+        this.inventory = new Inventory();
 
         //this.playerImage = new PlayerObjectBinding<Image>(image);
         this.playerImage = new SimpleObjectProperty<>(image);
         generateSprites(imageURL);
         changeSpriteTo(0);
 
+        // Initialize the Player collision bounds
+        // TODO - We must update the BoundingBox when the Player moves
+        this.bounds = new BoundingBox(this.xPos,this.yPos,37,32);
 
+        // Initialize the Player reach bounds
+        // TODO - We must update the BoundingBox when the Player moves
+        this.reach = new BoundingBox(this.xPos,this.yPos,47,42);
     }
 
     /**
