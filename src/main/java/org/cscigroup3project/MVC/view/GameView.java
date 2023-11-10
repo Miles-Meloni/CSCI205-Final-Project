@@ -23,7 +23,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
-import org.cscigroup3project.MVC.model.Texture;
 
 public class GameView {
 
@@ -62,7 +61,7 @@ public class GameView {
         this.playerView = new ImageView();
         this.playerView.setFitHeight(32);
         this.playerView.setFitWidth(37);
-        this.playerView.setImage(player.getTexture().getTextureFile());
+        this.playerView.setImage(player.getImage());
 
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
