@@ -24,7 +24,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
-import org.cscigroup3project.MVC.model.Texture;
 
 /**
  * The view of our JavaFX application
@@ -92,7 +91,7 @@ public class GameView {
         // Style the ImageView of the player with a field constant height and width, and set its image
         this.playerView.setFitHeight(PLAYER_HEIGHT);
         this.playerView.setFitWidth(PLAYER_WIDTH);
-        this.playerView.setImage(player.getTexture().getTextureFile());
+        this.playerView.setImage(player.getImage());
         this.playerView.setTranslateX(player.getxPos());
         this.playerView.setTranslateY(player.getyPos());
 

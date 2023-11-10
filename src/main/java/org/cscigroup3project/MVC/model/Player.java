@@ -44,7 +44,7 @@ public class Player {
     private SimpleDoubleProperty yProperty;
 
     /** The texture of the player */
-    private Texture texture;
+    private Image image;
 
     /** Observable value for the player's image/ sprite */
     private ObservableObjectValue<Image> playerImage;
@@ -60,7 +60,7 @@ public class Player {
     private Direction direction;
 
     /**Player sprites array */
-    private ArrayList<Texture> textures;
+    private ArrayList<Image> images;
 
     /** player move speed constant*/
     private final int MOVE_SPEED = 3;
@@ -101,7 +101,7 @@ public class Player {
         yPos = 0;
         xProperty = new SimpleDoubleProperty(xPos);
         yProperty = new SimpleDoubleProperty(yPos);
-        texture = null;
+        image = null;
         state = PlayerState.IDLE;
         name = "";
         inventory = new Inventory();
@@ -134,7 +134,7 @@ public class Player {
         playerImage = new ObservableObjectValue<Image>() {
             @Override
             public Image get() {
-                Image thisImage = textures.get(curSprite).getTextureFile();
+                Image thisImage = image;
                 return thisImage;
             }
 
@@ -150,7 +150,7 @@ public class Player {
 
             @Override
             public Image getValue() {
-                Image thisImage = textures.get(curSprite).getTextureFile();
+                Image thisImage = image;
                 return thisImage;
             }
 
@@ -170,12 +170,11 @@ public class Player {
 
     private void generateSprites() {
         //Sprite setup:
-        textures = new ArrayList<>();
+        images = new ArrayList<>();
         for (int i = 1; i < 32; i++){
             String imageURL = "cscigroup3project/Sprites/PS" + i +".png";
             Image newSprite = new Image(imageURL);
-            Texture newTexture = new Texture(newSprite);
-            textures.add(newTexture);
+            images.add(newSprite);
         }
 
     }
@@ -283,7 +282,7 @@ public class Player {
      */
     public void changeSpriteTo(int spriteVal){
         curSprite = spriteVal;
-        setTexture(textures.get(spriteVal));
+        setImage(images.get(spriteVal));
     }
 
     /**
@@ -357,10 +356,10 @@ public class Player {
     /**
      * Set the texture of the player.
      *
-     * @param texture The texture to set for the player.
+     * @param image The texture to set for the player.
      */
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     /**
@@ -368,8 +367,8 @@ public class Player {
      *
      * @return The texture of the player.
      */
-    public Texture getTexture() {
-        return texture;
+    public Image getImage() {
+        return image;
     }
 
     /**
