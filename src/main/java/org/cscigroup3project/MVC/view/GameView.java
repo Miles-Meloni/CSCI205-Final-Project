@@ -24,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
+import org.cscigroup3project.MVC.model.Wall;
 
 /**
  * The view of our JavaFX application
@@ -45,6 +46,9 @@ public class GameView {
 
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
+
+    /** The {@link Wall} in order to collide */
+    private Wall wall;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
@@ -70,6 +74,9 @@ public class GameView {
 
         // Initialize our Player from the model
         this.player = theModel.getPlayer();
+
+        // Initialize our Wall from the model
+        this.wall = theModel.getWall();
 
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();

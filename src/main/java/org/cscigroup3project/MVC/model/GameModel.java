@@ -32,6 +32,9 @@ public class GameModel {
     /** Our array of all rooms for the game */
     private ArrayList<Room> rooms;
 
+    /** Our {@link Wall} for the game */
+    private Wall wall;
+
     /**
      * Create a new GameModel object with any number of {@link Room} objects (and their contained
      * objects), a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
@@ -43,8 +46,12 @@ public class GameModel {
 
         // current player for the game with position and name
         this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
+
+        // single Wall represented in GUI for implementing collisions
+        this.wall = new Wall(50,50,50,400);
     }
 
-    /** Getter for the {@link Player} */
+    /** Getter for the {@link Player}, {@link Wall} */
     public Player getPlayer() { return player; }
+    public Wall getWall() { return wall; }
 }
