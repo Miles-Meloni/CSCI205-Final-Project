@@ -178,7 +178,20 @@ public class Player {
      * @param movementDirection The direction in which to move.
      */
     public void move(Direction movementDirection) {
+
+        // Set the PlayerState to MOVING
         state = PlayerState.MOVING;
+
+        // Match the direction the Player is moving, move them and update the sprite
+        switch (movementDirection) {
+            case UP -> { moveUp(); changeSpriteTo(POS_MOVE_UP); }
+            case DOWN -> { moveDown(); changeSpriteTo(POS_MOVE_DOWN); }
+            case LEFT -> { moveLeft(); changeSpriteTo(POS_MOVE_LEFT); }
+            case RIGHT -> { moveRight(); changeSpriteTo(POS_MOVE_RIGHT); }
+        }
+
+        // Equivalent if statement
+        /*
         if (movementDirection == Direction.UP) {
             moveUp();
             changeSpriteTo(POS_MOVE_UP);
@@ -192,6 +205,7 @@ public class Player {
             moveRight();
             changeSpriteTo(POS_MOVE_RIGHT);
         }
+         */
     }
 
     //TODO This needs redone
@@ -277,6 +291,7 @@ public class Player {
     private void moveUp() {
         yPos -= MOVE_SPEED ;
         yProperty.set(yPos);
+        bounds.translate(0,((int) bounds.getY()) - MOVE_SPEED);
     }
 
     /**
@@ -285,6 +300,7 @@ public class Player {
     private void moveDown() {
         yPos += MOVE_SPEED ;
         yProperty.set(yPos);
+        bounds.translate(0,((int) bounds.getY()) + MOVE_SPEED);
     }
 
     /**
@@ -293,6 +309,7 @@ public class Player {
     private void moveLeft() {
         xPos -= MOVE_SPEED ;
         xProperty.set(xPos);
+        bounds.translate(((int) bounds.getX()) - MOVE_SPEED,0);
     }
 
     /**
@@ -301,6 +318,7 @@ public class Player {
     private void moveRight() {
         xPos += MOVE_SPEED ;
         xProperty.set(xPos);
+        bounds.translate(((int) bounds.getX()) + MOVE_SPEED,0);
     }
 
     /**
@@ -444,4 +462,12 @@ public class Player {
         return playerImage;
     }
 
+    /** Getter for the {@link Rectangle} representing the Player collision bounds */
+    public Rectangle getBounds() { return bounds; }
+
+    /** Getter for the {@link Rectangle} representing the Player reach bounds */
+    public Rectangle getReach() { return reach; }
+
+    /** Getter for the Player's movement speed */
+    public int getMOVE_SPEED() { return MOVE_SPEED; }
 }

@@ -44,12 +44,12 @@ public class GameModel {
         // currently empty arraylist of rooms
         this.rooms = new ArrayList<>();
 
-        // current player for the game with position and name
+        // current Player for the game with position and name
         this.player = new Player(new int[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
 
-        // single Wall represented in GUI for implementing collisions
+        // single Wall for implementing collisions
         // minX and minY define upper left corner position
-        this.wall = new Wall(50,75,200,100); // TODO - Hardcode wall coordinates/dimensions?
+        this.wall = new Wall(0,0,200,100); // TODO - Hardcode wall coordinates/dimensions?
     }
 
     /** Getter for the {@link Player}, {@link Wall} */

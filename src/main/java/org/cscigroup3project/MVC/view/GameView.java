@@ -42,7 +42,7 @@ public class GameView {
     private StackPane root;
 
     /** The {@link Player} representation using Sprite resources */
-    private Player player;
+//    private Player player;
 
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
@@ -73,7 +73,7 @@ public class GameView {
         this.root = new StackPane();
 
         // Initialize our Player from the model
-        this.player = theModel.getPlayer();
+//        this.player = theModel.getPlayer();
 
         // Initialize our Wall from the model
         this.wall = theModel.getWall();
@@ -95,9 +95,9 @@ public class GameView {
         // Style the ImageView of the Player with a field constant height and width, and set its image
         this.playerView.setFitHeight(PLAYER_HEIGHT);
         this.playerView.setFitWidth(PLAYER_WIDTH);
-        this.playerView.setImage(player.getImage());
-        this.playerView.setTranslateX(player.getxPos());
-        this.playerView.setTranslateY(player.getyPos());
+        this.playerView.setImage(theModel.getPlayer().getImage());
+        this.playerView.setTranslateX(theModel.getPlayer().getxPos());
+        this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
         // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
         this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
@@ -125,7 +125,7 @@ public class GameView {
     /**
      * @return the player texture
      */
-    public Player getPlayer() {
-        return player;
-    }
+//    public Player getPlayer() {
+//        return player;
+//    }
 }

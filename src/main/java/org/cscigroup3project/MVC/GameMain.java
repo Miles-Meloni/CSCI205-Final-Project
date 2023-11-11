@@ -12,8 +12,8 @@
  * Package: org.cscigroup3project
  * Class: GameMain
  *
- * Description: Main view class for the game
- *
+ * Description:
+ * The main game class for the JavaFX application
  * ****************************************
  */
 
@@ -26,21 +26,26 @@ import org.cscigroup3project.MVC.controller.GameController;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.view.GameView;
 
+/**
+ * Our main game class for the JavaFX application.
+ */
 public class GameMain extends Application {
-    /** The model for the game**/
+
+    /** The {@link GameModel} for the game */
     private GameModel theModel;
-    /**the view for the game**/
+
+    /** The {@link GameView} for the game */
     private GameView theView;
-    /**the controller for the game**/
+
+    /** The {@link GameController} for the game */
     private GameController theController;
 
     /**
-     * launches the game
+     * Launches the game
+     *
      * @param args String[] to be launched
      */
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public static void main(String[] args) { launch(args); }
 
     /**
      * Creates a scene, initializes the controller, adds information to the stage,
@@ -54,21 +59,20 @@ public class GameMain extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // initialize the scene and its default size
+        // Initialize the Scene and set its size
         Scene scene = new Scene(theView.getRoot(), 600, 400);
 
-        // initialize the controller
+        // Initialize the GameController
         this.theController = new GameController(this.theModel, this.theView, scene);
 
-        // set the title, scene, and display it!
+        // Set the title, Scene, and display it!
         primaryStage.setTitle("Basic Game Sim");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 
     /**
-     * Initializes the View and the Model
+     * Initializes the {@link GameView} and the {@link GameModel}
      *
      * @throws Exception
      */
