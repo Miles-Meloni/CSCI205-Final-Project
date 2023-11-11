@@ -19,32 +19,29 @@
 
 package org.cscigroup3project.MVC.model;
 
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
+import java.awt.*;
 
 /**
- * Class that represents wall objects that the {@link Player} cannot walk through. Extends from
- * {@link BoundingBox} in order to help checking for collisions.
+ * Class that represents wall objects that the {@link Player} cannot walk through. Uses a
+ * {@link Rectangle} in order to help checking for collisions.
  */
 public class Wall {
 
-    /** The {@link BoundingBox} of the Wall */
-    private BoundingBox bounds;
+    /** The {@link Rectangle} of the Wall */
+    private Rectangle bounds;
 
     /**
      * Constructs a new Wall using a position and dimensions.
      *
      * @param minX   the X coordinate of the upper-left corner
      * @param minY   the Y coordinate of the upper-left corner
-     * @param width  the width of the {@code Bounds}
-     * @param height the height of the {@code Bounds}
+     * @param width  the width of the {@code bounds}
+     * @param height the height of the {@code bounds}
      */
-    public Wall(double minX, double minY, double width, double height) {
-        this.bounds = new BoundingBox(minX, minY, width, height);
+    public Wall(int minX, int minY, int width, int height) {
+        this.bounds = new Rectangle(minX, minY, width, height);
     }
 
-    /** Getter for the {@link BoundingBox} of this Wall */
-    public BoundingBox getBounds() { return bounds; }
+    /** Getter for the {@link Rectangle} of this Wall */
+    public Rectangle getBounds() { return bounds; }
 }

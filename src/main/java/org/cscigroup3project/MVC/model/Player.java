@@ -21,11 +21,13 @@ package org.cscigroup3project.MVC.model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.geometry.BoundingBox;
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -34,10 +36,10 @@ import java.util.ArrayList;
 public class Player {
 
     /** Store the position of the player */
-    private double xPos;
-    private double yPos;
-    private SimpleDoubleProperty xProperty;
-    private SimpleDoubleProperty yProperty;
+    private int xPos;
+    private int yPos;
+    private SimpleIntegerProperty xProperty;
+    private SimpleIntegerProperty yProperty;
 
     /** The texture of the player */
     private Image image;
@@ -52,11 +54,11 @@ public class Player {
     /** Inventory for the player */
     private Inventory inventory;
 
-    /** Collision {@link BoundingBox} of the Player */
-    private BoundingBox bounds;
+    /** Collision {@link Rectangle} of the Player */
+    private Rectangle bounds;
 
-    /** Interacting {@link BoundingBox} of the Player */
-    private BoundingBox reach;
+    /** Interacting {@link Rectangle} of the Player */
+    private Rectangle reach;
 
     /** Direction of the player*/
     private Direction direction;
@@ -125,11 +127,11 @@ public class Player {
      * @param position The initial position of the player.
      * @param name     The name of the player.
      */
-    public Player(double[] position, String name, String imageURL) {
+    public Player(int[] position, String name, String imageURL) {
         this.xPos = position[0];
         this.yPos = position[1];
-        this.xProperty = new SimpleDoubleProperty(xPos);
-        this.yProperty = new SimpleDoubleProperty(yPos);
+        this.xProperty = new SimpleIntegerProperty(xPos);
+        this.yProperty = new SimpleIntegerProperty(yPos);
         this.state = PlayerState.IDLE;
         this.name = name;
         this.inventory = new Inventory();
@@ -140,12 +142,12 @@ public class Player {
         changeSpriteTo(0);
 
         // Initialize the Player collision bounds
-        // TODO - We must update the BoundingBox when the Player moves
-        this.bounds = new BoundingBox(this.xPos,this.yPos,37,32);
+        // TODO - We must update the Rectangle when the Player moves
+        this.bounds = new Rectangle(this.xPos,this.yPos,37,32);
 
         // Initialize the Player reach bounds
-        // TODO - We must update the BoundingBox when the Player moves
-        this.reach = new BoundingBox(this.xPos,this.yPos,47,42);
+        // TODO - We must update the Rectangle when the Player moves
+        this.reach = new Rectangle(this.xPos,this.yPos,47,42);
     }
 
     /**
@@ -361,7 +363,7 @@ public class Player {
      *
      * @param position An array containing the x and y coordinates to set for the player.
      */
-    public void setPosition(double[] position) {
+    public void setPosition(int[] position) {
         xPos = position[0];
         yPos = position[1];
     }
@@ -371,8 +373,8 @@ public class Player {
      *
      * @return An array of coordinates representing the player's position.
      */
-    public double[] getPosition() {
-        return new double[]{xPos, yPos};
+    public int[] getPosition() {
+        return new int[]{xPos, yPos};
     }
 
     /**
@@ -380,7 +382,7 @@ public class Player {
      *
      * @return The x-coordinate of the player's position.
      */
-    public double getxPos() {
+    public int getxPos() {
         return xPos;
     }
 
@@ -389,7 +391,7 @@ public class Player {
      *
      * @return The y-coordinate of the player's position.
      */
-    public double getyPos() {
+    public int getyPos() {
         return yPos;
     }
 
@@ -398,7 +400,7 @@ public class Player {
      *
      * @return The x-coordinate property.
      */
-    public SimpleDoubleProperty getxProperty() {
+    public SimpleIntegerProperty getxProperty() {
         return xProperty;
     }
 
@@ -407,7 +409,7 @@ public class Player {
      *
      * @return The y-coordinate property.
      */
-    public SimpleDoubleProperty getyProperty() {
+    public SimpleIntegerProperty getyProperty() {
         return yProperty;
     }
 

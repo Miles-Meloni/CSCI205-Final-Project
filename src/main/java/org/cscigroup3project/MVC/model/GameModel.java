@@ -45,7 +45,7 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current player for the game with position and name
-        this.player = new Player(new double[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
+        this.player = new Player(new int[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
 
         // single Wall represented in GUI for implementing collisions
         // minX and minY define upper left corner position

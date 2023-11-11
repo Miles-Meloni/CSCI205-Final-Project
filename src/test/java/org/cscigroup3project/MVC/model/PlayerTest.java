@@ -15,14 +15,14 @@ public class PlayerTest {
     @BeforeEach
     public void setUp() {
         // Initialize a new player before each test
-        player = new Player(new double[]{0,0}, "Test", "src/test/resources/cscigroup3project/Sprites/PS");
+        player = new Player(new int[]{0,0}, "Test", "src/test/resources/cscigroup3project/Sprites/PS");
     }
 
     @Test
     public void testMove() {
         // Save the initial position
-        double initialX = player.getxPos();
-        double initialY = player.getyPos();
+        int initialX = player.getxPos();
+        int initialY = player.getyPos();
 
         // Move the player up
         player.move(Direction.UP);
