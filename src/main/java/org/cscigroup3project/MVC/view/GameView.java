@@ -22,6 +22,8 @@ package org.cscigroup3project.MVC.view;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import org.cscigroup3project.MVC.model.GameModel;
 import org.cscigroup3project.MVC.model.Player;
 import org.cscigroup3project.MVC.model.Wall;
@@ -31,24 +33,14 @@ import org.cscigroup3project.MVC.model.Wall;
  */
 public class GameView {
 
-    /** The {@link Player} height and width */
-    private final int PLAYER_HEIGHT = 32;
-    private final int PLAYER_WIDTH = 37;
-
     /** The {@link GameModel} for the game */
     private GameModel theModel;
 
     /** A {@link StackPane} root for the view */
     private StackPane root;
 
-    /** The {@link Player} representation using Sprite resources */
-//    private Player player;
-
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
-
-    /** The {@link Wall} in order to collide */
-    private Wall wall;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
@@ -72,20 +64,19 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
-        // Initialize our Player from the model
-//        this.player = theModel.getPlayer();
-
-        // Initialize our Wall from the model
-        this.wall = theModel.getWall();
+        // Initialize a wall ImageView, add it to the root
+        this.wallView = new ImageView();
+        this.root.getChildren().add(wallView);
 
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
 
-        // Initialize a wall ImageView, add it to the root
-        this.wallView = new ImageView();
-        this.root.getChildren().add(wallView);
-    }
+        // TODO - Delete once done debugging hit-box sizing issues referenced in below TODO
+        // Add the Player and Wall Rectangle bounds to the root
+//        this.root.getChildren().add(this.theModel.getPlayer().getBounds());
+//        this.root.getChildren().add(this.theModel.getWall().getBounds());
+}
 
     /**
      * Initialize styling for the view
@@ -93,20 +84,28 @@ public class GameView {
     public void initStyling(){
 
         // Style the ImageView of the Player with a field constant height and width, and set its image
-        this.playerView.setFitHeight(PLAYER_HEIGHT);
-        this.playerView.setFitWidth(PLAYER_WIDTH);
+        this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight());
+        this.playerView.setFitWidth(theModel.getPlayer().getBounds().getWidth());
         this.playerView.setImage(theModel.getPlayer().getImage());
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
         // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
-        this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
-        this.wallView.setFitHeight(this.wall.getBounds().getHeight());
-        this.wallView.setFitWidth(this.wall.getBounds().getWidth());
-        this.wallView.setTranslateX(this.wall.getBounds().getMinX());
-        this.wallView.setTranslateY(this.wall.getBounds().getMinY());
+        Image image = new Image("cscigroup3project/TestWall.png");
+//        this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
+        this.wallView.setImage(image); // TODO - hardcoding image file?
+        this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
+        this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
+//        double height = image.getHeight();
+//        double width = image.getWidth();
+//        System.out.println("HEIGHT: " + height + "   WIDTH: " + width);
+//        height = this.wallView.getFitHeight();
+//        width = this.wallView.getFitWidth();
+//        System.out.println("HEIGHT: " + height + "   WIDTH: " + width);
+        this.wallView.setTranslateX(theModel.getWall().getBounds().getX()+theModel.getWall().getBounds().getWidth()/2);
+        this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
+        // TODO - Fix difference between Model and View representations of Wall / TestWall.png
     }
-
 
     /**
      * @return the root
@@ -121,11 +120,4 @@ public class GameView {
     public ImageView getPlayerView() {
         return playerView;
     }
-
-    /**
-     * @return the player texture
-     */
-//    public Player getPlayer() {
-//        return player;
-//    }
 }

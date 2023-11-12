@@ -49,7 +49,7 @@ public class GameModel {
 
         // single Wall for implementing collisions
         // minX and minY define upper left corner position
-        this.wall = new Wall(0,0,200,100); // TODO - Hardcode wall coordinates/dimensions?
+        this.wall = new Wall(100,50,100,50); // TODO - Hardcode wall coordinates/dimensions?
     }
 
     /** Getter for the {@link Player}, {@link Wall} */

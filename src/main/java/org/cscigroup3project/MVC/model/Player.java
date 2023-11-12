@@ -20,14 +20,10 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableObjectValue;
-import javafx.geometry.BoundingBox;
 import javafx.scene.image.Image;
-
-import java.awt.*;
+import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 
 /**
@@ -35,23 +31,32 @@ import java.util.ArrayList;
  */
 public class Player {
 
-    /** Store the position of the player */
+    /** The dimensions of the Player */
+    private final int WIDTH = 37;
+    private final int HEIGHT = 33;
+
+    /** The reach of the Player */
+    private final int REACH = 10;
+
+    /** Store the position of the Player */
     private int xPos;
     private int yPos;
     private SimpleIntegerProperty xProperty;
     private SimpleIntegerProperty yProperty;
 
-    /** The texture of the player */
+    /** The texture of the Player */
     private Image image;
 
-    /** Observable value for the player's image/ sprite */
+    /** Observable value for the Player's image/ sprite */
     private ObjectProperty<Image> playerImage;
 
-    /** The current state of the player */
+    /** The current state of the Player */
     private PlayerState state;
-    /** The name of the player */
+
+    /** The name of the Player */
     private String name;
-    /** Inventory for the player */
+
+    /** Inventory for the Player */
     private Inventory inventory;
 
     /** Collision {@link Rectangle} of the Player */
@@ -60,72 +65,51 @@ public class Player {
     /** Interacting {@link Rectangle} of the Player */
     private Rectangle reach;
 
-    /** Direction of the player*/
+    /** Direction of the Player */
     private Direction direction;
 
-    /**Player sprites array */
+    /** Player sprites array */
     private ArrayList<Image> images;
 
-    /** player move speed constant*/
+    /** Player move speed constant*/
     private final int MOVE_SPEED = 3;
 
-    /** current sprite for the player */
+    /** Current sprite for the player */
     private int curSprite = 0;
 
-    /**position in the array for left idle sprites */
+    /** Position in the array for left idle sprites */
     private final int POS_IDLE_LEFT = 0;
 
-    /**position in the array for right idle sprites */
+    /** Position in the array for right idle sprites */
     private final int POS_IDLE_RIGHT = 4;
 
-    /**position in the array for left move sprites */
+    /** Position in the array for left move sprites */
     private final int POS_MOVE_LEFT = 8;
 
-    /**position in the array for right move sprites */
+    /** Position in the array for right move sprites */
     private final int POS_MOVE_RIGHT = 12;
 
-    /**position in the array for down idle sprites */
+    /** Position in the array for down idle sprites */
     private final int POS_IDLE_DOWN = 16;
 
-    /**position in the array for down moving sprites */
+    /** Position in the array for down moving sprites */
     private final int POS_MOVE_DOWN = 20;
 
-    /**position in the array for down idle sprites */
+    /** Position in the array for down idle sprites */
     private final int POS_IDLE_UP = 24;
 
-    /**position in the array for down moving sprites */
+    /** Position in the array for down moving sprites */
     private final int POS_MOVE_UP = 28;
 
-    /** total number of sprites */
+    /** Total number of sprites */
     private final int NUM_SPRITES = 32;
-
-
-    /**
-     * Default constructor for a player.
-     */
-    /*public Player() {
-        xPos = 0;
-        yPos = 0;
-        xProperty = new SimpleDoubleProperty(xPos);
-        yProperty = new SimpleDoubleProperty(yPos);
-        image = null;
-        state = PlayerState.IDLE;
-        name = "";
-        inventory = new Inventory();
-        direction = Direction.DOWN;
-
-        generateSprites(null);
-
-        changeSpriteTo(0);
-
-
-    }*/
 
     /**
      * Constructor for a player with specified initial position, texture, and name.
      *
-     * @param position The initial position of the player.
-     * @param name     The name of the player.
+     * @param position The initial position of the Player.
+     * @param name     The name of the Player.
+     * @param imageURL The String representing the Player sprite.
      */
     public Player(int[] position, String name, String imageURL) {
         this.xPos = position[0];
@@ -141,13 +125,11 @@ public class Player {
         generateSprites(imageURL);
         changeSpriteTo(0);
 
-        // Initialize the Player collision bounds
-        // TODO - We must update the Rectangle when the Player moves
-        this.bounds = new Rectangle(this.xPos,this.yPos,37,32);
-
-        // Initialize the Player reach bounds
-        // TODO - We must update the Rectangle when the Player moves
-        this.reach = new Rectangle(this.xPos,this.yPos,47,42);
+        // Initialize Player collision and reach bounds. Shift left and down by half of width floored
+        int startX = WIDTH * -1 / 2;
+        int startY = HEIGHT * -1 / 2;
+        this.bounds = new Rectangle(startX, startY, WIDTH, HEIGHT); // this appears to be pixel-tight to sprite
+        this.reach = new Rectangle(startX, startY, WIDTH + REACH, HEIGHT + REACH);
     }
 
     /**
@@ -189,23 +171,6 @@ public class Player {
             case LEFT -> { moveLeft(); changeSpriteTo(POS_MOVE_LEFT); }
             case RIGHT -> { moveRight(); changeSpriteTo(POS_MOVE_RIGHT); }
         }
-
-        // Equivalent if statement
-        /*
-        if (movementDirection == Direction.UP) {
-            moveUp();
-            changeSpriteTo(POS_MOVE_UP);
-        } else if (movementDirection == Direction.DOWN) {
-            moveDown();
-            changeSpriteTo(POS_MOVE_DOWN);
-        } else if (movementDirection == Direction.LEFT) {
-            moveLeft();
-            changeSpriteTo(POS_MOVE_LEFT);
-        } else {
-            moveRight();
-            changeSpriteTo(POS_MOVE_RIGHT);
-        }
-         */
     }
 
     //TODO This needs redone
@@ -282,8 +247,7 @@ public class Player {
      */
     public void changeSpriteTo(int spriteVal){
         curSprite = spriteVal;
-        setImage(images.get(spriteVal));
-    }
+        setImage(images.get(spriteVal)); }
 
     /**
      * Move the player up by one unit and update the corresponding property.
@@ -291,7 +255,7 @@ public class Player {
     private void moveUp() {
         yPos -= MOVE_SPEED ;
         yProperty.set(yPos);
-        bounds.translate(0,((int) bounds.getY()) - MOVE_SPEED);
+        bounds.setY(bounds.getY() - MOVE_SPEED);
     }
 
     /**
@@ -300,7 +264,7 @@ public class Player {
     private void moveDown() {
         yPos += MOVE_SPEED ;
         yProperty.set(yPos);
-        bounds.translate(0,((int) bounds.getY()) + MOVE_SPEED);
+        bounds.setY(bounds.getY() + MOVE_SPEED);
     }
 
     /**
@@ -309,7 +273,7 @@ public class Player {
     private void moveLeft() {
         xPos -= MOVE_SPEED ;
         xProperty.set(xPos);
-        bounds.translate(((int) bounds.getX()) - MOVE_SPEED,0);
+        bounds.setX(bounds.getX() - MOVE_SPEED);
     }
 
     /**
@@ -318,7 +282,7 @@ public class Player {
     private void moveRight() {
         xPos += MOVE_SPEED ;
         xProperty.set(xPos);
-        bounds.translate(((int) bounds.getX()) + MOVE_SPEED,0);
+        bounds.setX(bounds.getX() + MOVE_SPEED);
     }
 
     /**
@@ -326,119 +290,91 @@ public class Player {
      *
      * @param name The name to set for the player.
      */
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     /**
      * Get the name of the player.
      *
      * @return The name of the player.
      */
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     /**
      * Set the state of the player.
      *
      * @param state The state to set for the player.
      */
-    public void setState(PlayerState state) {
-        this.state = state;
-    }
+    public void setState(PlayerState state) { this.state = state; }
 
     /**
      * Get the current state of the player.
      *
      * @return The current state of the player.
      */
-    public PlayerState getState() {
-        return state;
-    }
+    public PlayerState getState() { return state; }
 
     /**
      * Set the texture of the player.
      *
      * @param image The texture to set for the player.
      */
-    public void setImage(Image image) {
-        this.image = image;
-        this.playerImage.setValue(image);
-    }
+    public void setImage(Image image) { this.image = image; this.playerImage.setValue(image); }
 
     /**
      * Get the texture of the player.
      *
      * @return The texture of the player.
      */
-    public Image getImage() {
-        return image;
-    }
+    public Image getImage() { return image; }
 
     /**
      * Set the position of the player using an array of coordinates.
      *
      * @param position An array containing the x and y coordinates to set for the player.
      */
-    public void setPosition(int[] position) {
-        xPos = position[0];
-        yPos = position[1];
-    }
+    public void setPosition(int[] position) { xPos = position[0]; yPos = position[1]; }
 
     /**
      * Get the current position of the player as an array of coordinates.
      *
      * @return An array of coordinates representing the player's position.
      */
-    public int[] getPosition() {
-        return new int[]{xPos, yPos};
-    }
+    public int[] getPosition() { return new int[]{xPos, yPos}; }
 
     /**
      * Get the x-coordinate of the player's position.
      *
      * @return The x-coordinate of the player's position.
      */
-    public int getxPos() {
-        return xPos;
-    }
+    public int getxPos() { return xPos; }
 
     /**
      * Get the y-coordinate of the player's position.
      *
      * @return The y-coordinate of the player's position.
      */
-    public int getyPos() {
-        return yPos;
-    }
+    public int getyPos() { return yPos; }
 
     /**
      * Get the x-coordinate property for binding to JavaFX elements.
      *
      * @return The x-coordinate property.
      */
-    public SimpleIntegerProperty getxProperty() {
-        return xProperty;
-    }
+    public SimpleIntegerProperty getxProperty() { return xProperty; }
 
     /**
      * Get the y-coordinate property for binding to JavaFX elements.
      *
      * @return The y-coordinate property.
      */
-    public SimpleIntegerProperty getyProperty() {
-        return yProperty;
-    }
+    public SimpleIntegerProperty getyProperty() { return yProperty; }
 
     /**
      * Have the player pick up an item and add it to their inventory.
      *
      * @param item The item to be added to the player's inventory.
      */
-    public void pickUpItem(Object item) {
-        inventory.addItem(item);
-    }
+    public void pickUpItem(Object item) { inventory.addItem(item); }
 
     /**
      * Remove an item from the player's inventory.
@@ -446,21 +382,13 @@ public class Player {
      * @param item The item to be removed from the player's inventory.
      * @return True if the item was successfully removed, false otherwise.
      */
-    public boolean getRidOfItem(Object item) {
-        return inventory.removeItemByObject(item);
-    }
+    public boolean getRidOfItem(Object item) { return inventory.removeItemByObject(item); }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
+    public Inventory getInventory() { return inventory; }
 
-    public Image getPlayerImage() {
-        return playerImage.get();
-    }
+    public Image getPlayerImage() { return playerImage.get(); }
 
-    public ObjectProperty<Image> playerImageProperty() {
-        return playerImage;
-    }
+    public ObjectProperty<Image> playerImageProperty() { return playerImage; }
 
     /** Getter for the {@link Rectangle} representing the Player collision bounds */
     public Rectangle getBounds() { return bounds; }

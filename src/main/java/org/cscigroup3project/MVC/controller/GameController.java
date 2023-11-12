@@ -20,15 +20,10 @@
 package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import org.cscigroup3project.MVC.model.Direction;
 import org.cscigroup3project.MVC.model.GameModel;
-import org.cscigroup3project.MVC.model.Player;
 import org.cscigroup3project.MVC.view.GameView;
-
-import java.awt.*;
 
 /**
  * The class implementing the logic and user interactions for the created game.
@@ -36,13 +31,13 @@ import java.awt.*;
 public class GameController {
 
     /** The {@link GameModel} for our app */
-    private GameModel theModel;
+    private final GameModel theModel;
 
     /** The {@link GameView} for our app */
-    private GameView theView;
+    private final GameView theView;
 
     /** The {@link Scene} for our app */
-    private Scene theScene;
+    private final Scene theScene;
 
     /**
      * Constructor for the GameController.
@@ -72,11 +67,9 @@ public class GameController {
      */
     private void initBindings() {
 
-        // Bind the ImageView's position to the Player's x and y properties
+        // Bind the PlayerView's position and image to the Player's x, y, and image properties
         theView.getPlayerView().translateXProperty().bind(theModel.getPlayer().getxProperty());
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
-
-        // Bind the view of the player to the image property of the Player
         theView.getPlayerView().imageProperty().bind(theModel.getPlayer().playerImageProperty());
     }
 
@@ -92,27 +85,27 @@ public class GameController {
         switch (event.getCode()) {
             case DOWN -> {
                 theModel.getPlayer().move(Direction.DOWN);
-                if (theModel.getPlayer().getBounds().intersects(theModel.getWall().getBounds())) {
-                    theModel.getPlayer().move(Direction.UP);
-                }
+                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
+                { theModel.getPlayer().move(Direction.UP); }
             }
             case UP -> {
                 theModel.getPlayer().move(Direction.UP);
-                if (theModel.getPlayer().getBounds().intersects(theModel.getWall().getBounds())) {
-                    theModel.getPlayer().move(Direction.DOWN);
-                }
+                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
+                { theModel.getPlayer().move(Direction.DOWN); }
             }
             case RIGHT -> {
                 theModel.getPlayer().move(Direction.RIGHT);
-                if (theModel.getPlayer().getBounds().intersects(theModel.getWall().getBounds())) {
-                    theModel.getPlayer().move(Direction.LEFT);
-                }
+                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
+                { theModel.getPlayer().move(Direction.LEFT); }
             }
             case LEFT -> {
                 theModel.getPlayer().move(Direction.LEFT);
-                if (theModel.getPlayer().getBounds().intersects(theModel.getWall().getBounds())) {
-                    theModel.getPlayer().move(Direction.RIGHT);
-                }
+                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
+                { theModel.getPlayer().move(Direction.RIGHT); }
             }
         }
     }
