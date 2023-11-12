@@ -82,30 +82,19 @@ public class GameController {
 
         // Match the arrow key input, move the Player in the corresponding direction.
         // Check for collisions after each movement, if there is, move in the opposite direction
-        switch (event.getCode()) {
-            case DOWN -> {
-                theModel.getPlayer().move(Direction.DOWN);
-                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
-                { theModel.getPlayer().move(Direction.UP); }
+            switch (event.getCode()) {
+                case DOWN -> { theModel.getPlayer().move(Direction.DOWN); }
+                case LEFT -> { theModel.getPlayer().move(Direction.LEFT); }
+                case UP -> { theModel.getPlayer().move(Direction.UP); }
+                case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
             }
-            case UP -> {
-                theModel.getPlayer().move(Direction.UP);
-                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
-                { theModel.getPlayer().move(Direction.DOWN); }
-            }
-            case RIGHT -> {
-                theModel.getPlayer().move(Direction.RIGHT);
-                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
-                { theModel.getPlayer().move(Direction.LEFT); }
-            }
-            case LEFT -> {
-                theModel.getPlayer().move(Direction.LEFT);
-                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                                                                    theModel.getWall().getBounds().getBoundsInLocal()))
-                { theModel.getPlayer().move(Direction.RIGHT); }
+        if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                theModel.getWall().getBounds().getBoundsInLocal())){
+            switch (event.getCode()) {
+                case DOWN -> { theModel.getPlayer().silentMove(Direction.UP);}
+                case LEFT -> { theModel.getPlayer().silentMove(Direction.RIGHT); }
+                case UP -> { theModel.getPlayer().silentMove(Direction.DOWN); }
+                case RIGHT -> { theModel.getPlayer().silentMove(Direction.LEFT); }
             }
         }
     }

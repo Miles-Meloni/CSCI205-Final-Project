@@ -173,6 +173,25 @@ public class Player {
         }
     }
 
+    /**
+     * Move the player in the specified direction, and DO NOT CHANGE its sprite.
+     *
+     * @param movementDirection The direction in which to move.
+     */
+    public void silentMove(Direction movementDirection) {
+
+        // Set the PlayerState to MOVING
+        state = PlayerState.MOVING;
+
+        // Match the direction the Player is moving, move them and update the sprite
+        switch (movementDirection) {
+            case UP -> { moveUp();  }
+            case DOWN -> { moveDown(); }
+            case LEFT -> { moveLeft(); }
+            case RIGHT -> { moveRight(); }
+        }
+    }
+
     //TODO This needs redone
     public void updateSpriteInMs(long timeInMs){
         //repeat update over and over
@@ -248,6 +267,7 @@ public class Player {
     public void changeSpriteTo(int spriteVal){
         curSprite = spriteVal;
         setImage(images.get(spriteVal)); }
+
 
     /**
      * Move the player up by one unit and update the corresponding property.

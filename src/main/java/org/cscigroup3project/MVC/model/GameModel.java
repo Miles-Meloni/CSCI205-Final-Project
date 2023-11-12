@@ -19,6 +19,8 @@
 
 package org.cscigroup3project.MVC.model;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 /**
@@ -35,6 +37,9 @@ public class GameModel {
     /** Our {@link Wall} for the game */
     private Wall wall;
 
+    /**Our {@link Disk} for testing music */
+    private Disk disk;
+
     /**
      * Create a new GameModel object with any number of {@link Room} objects (and their contained
      * objects), a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
@@ -50,6 +55,11 @@ public class GameModel {
         // single Wall for implementing collisions
         // minX and minY define upper left corner position
         this.wall = new Wall(100,50,100,50); // TODO - Hardcode wall coordinates/dimensions?
+
+        //for right now the game will make a disc and then play it
+        Image diskImage = new Image("cscigroup3project/AmogusTest.png");
+        this.disk = new Disk("Pink Disk", "cscigroup3project/Music/PinkDisk.mp3");
+
     }
 
     /** Getter for the {@link Player}, {@link Wall} */
