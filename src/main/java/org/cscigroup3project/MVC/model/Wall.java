@@ -26,7 +26,7 @@ import javafx.scene.shape.Rectangle;
  * Class that represents wall objects that the {@link Player} cannot walk through. Uses a
  * {@link Rectangle} in order to help checking for collisions.
  */
-public class Wall implements Collidable{
+public class Wall extends GameObject implements Collidable{
 
     /** The {@link Rectangle} of the Wall */
     private Rectangle bounds;
