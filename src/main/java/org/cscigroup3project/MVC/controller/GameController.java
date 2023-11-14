@@ -71,6 +71,9 @@ public class GameController {
         theView.getPlayerView().translateXProperty().bind(theModel.getPlayer().getxProperty());
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
         theView.getPlayerView().imageProperty().bind(theModel.getPlayer().playerImageProperty());
+
+        //TODO remove; debugging only
+
     }
 
     /**

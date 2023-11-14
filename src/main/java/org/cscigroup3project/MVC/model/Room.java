@@ -20,38 +20,91 @@ package org.cscigroup3project.MVC.model;
 
 import java.util.ArrayList;
 
+enum RoomState{
+    PRESENT_PLAYER,
+    NO_PLAYER,
+}
 public class Room {
-    /** The {@link Wall} objects contained by this room */
-    private ArrayList<Wall> walls;
 
-    /** The {@link Door} objects contained by this room */
-    private ArrayList<Door> doors;
 
-    /** The {@link Object} list contained by this room */
-    private ArrayList<Object> objects;
+    /** The {@link RoomState} state of the room, for rendering */
+    private RoomState roomState;
+
+    /** The {@link GameObject} list contained by this room */
+    private ArrayList<GameObject> gameObjects;
 
     /**
-     * Empty constructor for a room with nothing in it
+     * Empty constructor for a room with nothing in it.
+     * No player in the room by default
      */
     public Room(){
-        walls = new ArrayList<Wall>();
-        doors = new ArrayList<Door>();
-        objects = new ArrayList<>();
+        gameObjects = new ArrayList<>();
+        roomState = RoomState.NO_PLAYER;
     }
 
     /**
-     * Full constructor for pre-created walls, doors,
-     * and objects for this room
-     * @param walls the initial {@link Wall} objects for the room
-     * @param doors the initial {@link Door} objects for the room
+     * Full constructor for pre-created objects for this room.
+     * No player in the room by default
      * @param objects the initial {@link Object} objects for the room
      */
-    public Room(ArrayList<Wall> walls, ArrayList<Door> doors, ArrayList<Object> objects){
-        this.walls = walls;
-        this.doors = doors;
-        this.objects = objects;
+    public Room(ArrayList<GameObject> objects){
+        this.gameObjects = objects;
+        roomState = RoomState.NO_PLAYER;
     }
 
-    //TODO the rest of the class
+    public ArrayList<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+
+    /**
+     * Add an object to the room
+     */
+    public void addObject(GameObject gameObject){
+        this.gameObjects.add(gameObject);
+    }
+
+    /**
+     * Getter for all {@link Wall} objects of the room
+     */
+    public ArrayList<Wall> getWalls(){
+        ArrayList<Wall> walls = new ArrayList<>();
+
+        for (GameObject gameObject : gameObjects){
+            if (gameObject instanceof Wall){
+                walls.add((Wall)gameObject);
+            }
+        }
+
+        return walls;
+    }
+
+    /**
+     * Getter for all {@link Door} objects of the room
+     */
+    public ArrayList<Door> getDoors(){
+        ArrayList<Door> doors = new ArrayList<>();
+
+        for (GameObject gameObject : gameObjects){
+            if (gameObject instanceof Door){
+                doors.add((Door)gameObject);
+            }
+        }
+
+        return doors;
+    }
+
+    /**
+     * For a player to enter the Room
+     */
+    public void enterPlayer(){
+        this.roomState = RoomState.PRESENT_PLAYER;
+    }
+
+    /**
+     * For a player to exit the room
+     */
+    public void exitPlayer(){
+        this.roomState = RoomState.NO_PLAYER;
+    }
 
 }

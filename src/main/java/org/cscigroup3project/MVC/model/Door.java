@@ -18,6 +18,6 @@
  */
 package org.cscigroup3project.MVC.model;
 
-public class Door {
+public class Door extends GameObject{
     //TODO: The whole class
 }

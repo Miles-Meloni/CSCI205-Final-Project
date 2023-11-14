@@ -72,10 +72,6 @@ public class GameView {
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
 
-        // TODO - Delete once done debugging hit-box sizing issues referenced in below TODO
-        // Add the Player and Wall Rectangle bounds to the root
-//        this.root.getChildren().add(this.theModel.getPlayer().getBounds());
-//        this.root.getChildren().add(this.theModel.getWall().getBounds());
 }
 
     /**
@@ -91,20 +87,13 @@ public class GameView {
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
         // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
-        Image image = new Image("cscigroup3project/TestWall.png");
-//        this.wallView.setImage(new Image("cscigroup3project/TestWall.png")); // TODO - hardcoding image file?
+        Image image = new Image("cscigroup3project/Room tiles/Wall_front.png");
         this.wallView.setImage(image); // TODO - hardcoding image file?
         this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
         this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
-//        double height = image.getHeight();
-//        double width = image.getWidth();
-//        System.out.println("HEIGHT: " + height + "   WIDTH: " + width);
-//        height = this.wallView.getFitHeight();
-//        width = this.wallView.getFitWidth();
-//        System.out.println("HEIGHT: " + height + "   WIDTH: " + width);
+
         this.wallView.setTranslateX(theModel.getWall().getBounds().getX()+theModel.getWall().getBounds().getWidth()/2);
         this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
-        // TODO - Fix difference between Model and View representations of Wall / TestWall.png
     }
 
     /**
