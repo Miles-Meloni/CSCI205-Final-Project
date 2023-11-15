@@ -60,6 +60,7 @@ public class KeyPuzzle implements Puzzle {
      * @return true if the puzzle is solved, false otherwise
      */
     public boolean getIsSolved(){
+        this.solve();
         return isSolved;
     }
 }
