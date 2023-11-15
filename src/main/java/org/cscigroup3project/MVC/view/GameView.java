@@ -86,7 +86,7 @@ public class GameView {
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
         // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
-        Image image = new Image("cscigroup3project/Room tiles/Wall_front.png");
+        Image image = new Image("cscigroup3project/roomTiles/Wall_front.png");
         this.wallView.setImage(image); // TODO - hardcoding image file?
         this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
         this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
