@@ -18,20 +18,36 @@
  */
 package org.cscigroup3project.MVC.model;
 
+import javafx.scene.shape.Rectangle;
+
+import java.awt.*;
+
 /**
  * Class that represents keys that can be picked up, equipped, and used by the {@link Player}.
  */
-public class Key {
+public class Key extends GameObject implements Storable{
 
     /** Name of the key object */
     private String name;
 
-    /**
-     * Constructs a key given a {@link String} name.
-     *
-     * @param name the String name of the key
-     */
-    public Key(String name) {
-        this.name = name;
+    public Key(int x, int y, Image[] sprites, String id) {
+        super(x, y, 16, 16, sprites, id);
+    }
+
+
+    @Override
+    public Rectangle getBounds() {
+        Rectangle bounds = new Rectangle(super.xPos, super.yPos, super.width, super.height);
+        return bounds;
+    }
+
+    @Override
+    public void store() {
+
+    }
+
+    @Override
+    public void deploy(int x, int y) {
+
     }
 }

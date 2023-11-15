@@ -18,6 +18,11 @@
  */
 package org.cscigroup3project.MVC.model;
 
+import java.awt.*;
+
 public class Door extends GameObject{
+    public Door(int x, int y, int w, int h, Image[] sprites) {
+        super(x, y, w, h, sprites);
+    }
     //TODO: The whole class
 }
