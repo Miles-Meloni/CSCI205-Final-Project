@@ -22,6 +22,8 @@ package org.cscigroup3project.MVC.model;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
+
 /**
  * Class that represents wall objects that the {@link Player} cannot walk through. Uses a
  * {@link Rectangle} in order to help checking for collisions.
@@ -36,11 +38,13 @@ public class Wall extends GameObject implements Collidable{
      *
      * @param minX   the X coordinate of the upper-left corner
      * @param minY   the Y coordinate of the upper-left corner
-     * @param width  the width of the {@code bounds}
-     * @param height the height of the {@code bounds}
+     * @param w  the width of the {@code bounds}
+     * @param h the height of the {@code bounds}
      */
-    public Wall(int minX, int minY, int width, int height) {
-        this.bounds = new Rectangle(minX, minY, width, height);
+    public Wall(int minX, int minY, int w, int h, Image[] sprites) {
+        super(minX, minY, w, h, sprites);
+        this.bounds = new Rectangle(minX, minY, w, h);
+
     }
 
     /** Getter for the {@link Rectangle} of this Wall */
