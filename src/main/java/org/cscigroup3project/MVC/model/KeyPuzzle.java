@@ -12,7 +12,7 @@
  * Package: org.cscigroup3project.MVC.model
  * Class: DoorPuzzle
  *
- * Description:
+ * Description: A simple puzzle that requires two keys to unlock a door
  *
  * ****************************************
  */
@@ -49,9 +49,12 @@ public class KeyPuzzle implements Puzzle {
      * Checks if the inventory has both key1 and key2, and if so, the puzzle is solved
      */
     public void solve(){
+        //check if BOTH keys are in the inventory
         if(inventory.containsItem(key1) && inventory.containsItem(key2)){
+            // remove keys from inventory
             inventory.removeItemByObject(key1);
             inventory.removeItemByObject(key2);
+            // set the puzzle to "solved"
             isSolved = true;
         }
     }
@@ -60,6 +63,7 @@ public class KeyPuzzle implements Puzzle {
      * @return true if the puzzle is solved, false otherwise
      */
     public boolean getIsSolved(){
+        //double check if it is solved
         this.solve();
         return isSolved;
     }
