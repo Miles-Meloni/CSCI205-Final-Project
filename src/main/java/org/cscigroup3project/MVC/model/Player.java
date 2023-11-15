@@ -35,6 +35,9 @@ public class Player {
     private final int WIDTH = 37;
     private final int HEIGHT = 33;
 
+    /** The difference between Player sprite and collision box */
+    private final int DIFF = 12;
+
     /** The reach of the Player */
     private final int REACH = 10;
 
@@ -128,7 +131,7 @@ public class Player {
         // Initialize Player collision and reach bounds. Shift left and down by half of width floored
         int startX = WIDTH * -1 / 2;
         int startY = HEIGHT * -1 / 2;
-        this.bounds = new Rectangle(startX, startY, WIDTH, HEIGHT); // this appears to be pixel-tight to sprite
+        this.bounds = new Rectangle(startX, startY, WIDTH, HEIGHT - DIFF);
         this.reach = new Rectangle(startX, startY, WIDTH + REACH, HEIGHT + REACH);
     }
 
@@ -418,4 +421,7 @@ public class Player {
 
     /** Getter for the Player's movement speed */
     public int getMOVE_SPEED() { return MOVE_SPEED; }
+
+    /** Getter for the Player's difference between sprite and collision bounds */
+    public int getDIFF() { return DIFF; }
 }
