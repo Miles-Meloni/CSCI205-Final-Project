@@ -54,11 +54,7 @@ public class GameModel {
 
         // single Wall for implementing collisions
         // minX and minY define upper left corner position
-        this.wall = new Wall(100,50,100,50); // TODO - Hardcode wall coordinates/dimensions?
-
-        //for right now the game will make a disc and then play it
-        Image diskImage = new Image("cscigroup3project/AmogusTest.png");
-        this.disk = new Disk("Pink Disk", "cscigroup3project/Music/PinkDisk.mp3");
+        this.wall = new Wall(100,50,16,16, ); // TODO - Hardcode wall coordinates/dimensions?
 
     }
 

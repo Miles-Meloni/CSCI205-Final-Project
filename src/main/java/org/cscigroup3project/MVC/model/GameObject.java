@@ -18,16 +18,56 @@
  */
 package org.cscigroup3project.MVC.model;
 
+import java.awt.*;
+
 public class GameObject {
 
     //TODO change to enum??
     private String id;
 
-    public GameObject (){
+    //Every object has a position width, and height (for rendering sprite)
+    protected int xPos;
+    protected int yPos;
+    protected int width;
+    protected int height;
+
+    /** the current sprite */
+    private Image sprite;
+
+    /** all sprites which can be used by the object*/
+    private Image[] sprites;
+
+    public GameObject (int x, int y, int w, int h, Image[] sprites){
         this.id = "";
+        this.xPos = x;
+        this.yPos = y;
+        this.width = w;
+        this.height = h;
+        this.sprites = sprites;
+
+        this.sprite = this.sprites[0];
     }
-    public GameObject (String id){
+
+    public GameObject (int x, int y, int w, int h, Image[] sprites, String id){
         this.id = id;
+        this.xPos = x;
+        this.yPos = y;
+        this.width = w;
+        this.height = h;
+        this.sprites = sprites;
+
+        this.sprite = this.sprites[0];
+    }
+
+    /** Assigns a sprite to a certain sprite in the array.
+     * If there is no valid sprite at the index, it adds the default sprite.
+     */
+    public void setSprite(int pos) {
+        if(pos >= 0 & pos < sprites.length) {
+            this.sprite = sprites[pos];
+            }
+        else {this.sprite = sprites[0];}
+
     }
 
     public String getId() {
