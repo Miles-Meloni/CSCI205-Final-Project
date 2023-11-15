@@ -40,16 +40,35 @@ public class Inventory {
         items = initialItems;
     }
 
+    /**
+     * adds an item to the player inventory
+     * @param item - the object to be added to the inventory
+     */
     public void addItem(Object item){
         items.add(item);
     }
 
+    /**
+     * Checks if the player's inventory contains a specific object
+     * @param item - the item that the inventory possible contains
+     * @return true if the item is in the inventory, false if it does not
+     */
     public boolean containsItem(Object item){return items.contains(item);}
 
+    /**
+     * Removes an object from the inventory based on the specific object
+     * @param item - the object that is being removed
+     * @return true if the item was successfully removed
+     */
     public boolean removeItemByObject(Object item){
         return items.remove(item);
     }
 
+    /**
+     * Removes an object from the inventory based on its index in the inventory
+     * @param index the index of the object to be removed
+     * @return the object that was removed
+     */
     public Object removeItemByIndex(int index){
         return items.remove(index);
     }
