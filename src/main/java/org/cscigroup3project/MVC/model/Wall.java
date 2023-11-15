@@ -19,10 +19,8 @@
 
 package org.cscigroup3project.MVC.model;
 
-import javafx.scene.paint.Paint;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-
-import java.awt.*;
 
 /**
  * Class that represents wall objects that the {@link Player} cannot walk through. Uses a

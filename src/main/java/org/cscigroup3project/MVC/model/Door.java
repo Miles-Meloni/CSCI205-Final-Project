@@ -18,7 +18,7 @@
  */
 package org.cscigroup3project.MVC.model;
 
-import java.awt.*;
+import javafx.scene.image.Image;
 
 public class Door extends GameObject{
     public Door(int x, int y, int w, int h, Image[] sprites) {

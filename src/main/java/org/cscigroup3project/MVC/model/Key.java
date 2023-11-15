@@ -19,8 +19,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.shape.Rectangle;
-
-import java.awt.*;
+import javafx.scene.image.Image;
 
 /**
  * Class that represents keys that can be picked up, equipped, and used by the {@link Player}.

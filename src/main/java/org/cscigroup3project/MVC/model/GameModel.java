@@ -13,14 +13,13 @@
  * Class: GameModel
  *
  * Description:
- * The Model representing our JavaFX appliction.
+ * The Model representing our JavaFX application.
  * ****************************************
  */
 
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 /**
@@ -54,7 +53,7 @@ public class GameModel {
 
         // single Wall for implementing collisions
         // minX and minY define upper left corner position
-        this.wall = new Wall(100,50,16,16, ); // TODO - Hardcode wall coordinates/dimensions?
+        this.wall = new Wall(100,50,50,50,new Image[1]);
 
     }
 

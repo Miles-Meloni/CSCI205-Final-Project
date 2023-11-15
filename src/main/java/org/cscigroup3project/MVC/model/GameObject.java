@@ -18,7 +18,7 @@
  */
 package org.cscigroup3project.MVC.model;
 
-import java.awt.*;
+import javafx.scene.image.Image;
 
 public class GameObject {
 
