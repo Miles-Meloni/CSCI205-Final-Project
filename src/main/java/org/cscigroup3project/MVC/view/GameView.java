@@ -71,16 +71,15 @@ public class GameView {
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
-
-}
+    }
 
     /**
      * Initialize styling for the view
      */
     public void initStyling(){
 
-        // Style the ImageView of the Player with a field constant height and width, and set its image
-        this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight());
+        // Style the ImageView of the Player with its height and width, and set its image
+        this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight()+theModel.getPlayer().getDIFF());
         this.playerView.setFitWidth(theModel.getPlayer().getBounds().getWidth());
         this.playerView.setImage(theModel.getPlayer().getImage());
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
