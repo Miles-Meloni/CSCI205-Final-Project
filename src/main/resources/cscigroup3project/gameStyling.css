@@ -1,0 +1,22 @@
+.root{
+    -fx-background-color: BLACK;
+}
+
+@font-face {
+    font-family: "TextboxFont";
+    src: url(texboxFont.ttf); /* The font we will use in our textbox */
+}
+
+.label{
+    -fx-pref-width: 180; /*The width of the text box minus the padding */
+    -fx-pref-height: 52; /*The height of the text box minus the padding */
+
+    /*Import the font family created */
+    -fx-font-family: "system-ui";
+    -fx-font-smoothing-type: never;
+
+    -fx-font-size: 12;
+    -fx-text-fill: WHITE;
+    -fx-wrap-text: true;
+    -fx-alignment: top-left;
+}

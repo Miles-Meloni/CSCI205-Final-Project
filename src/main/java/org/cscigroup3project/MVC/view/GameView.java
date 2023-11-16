@@ -133,7 +133,7 @@ public class GameView {
         //Initialize a textbox image view and label
         this.textView = new ImageView("cscigroup3project/textBoxSprite.png");
         // TODO make the label get text from a different source
-        this.textLabel = new Label("Test");
+        this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
 
         this.textboxPane.getChildren().add(textView);
         this.textboxPane.getChildren().add(textLabel);
@@ -155,9 +155,6 @@ public class GameView {
      */
     public void initStyling(){
 
-        //Make root bgcolor black
-        root.setBackground(Background.fill(Color.BLACK));
-
         // Style the ImageView of the Player with its height and width, and set its image
         this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight()+theModel.getPlayer().getDIFF());
         this.playerView.setFitWidth(theModel.getPlayer().getBounds().getWidth());
@@ -178,7 +175,8 @@ public class GameView {
 
         this.inventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.7)));
 
-
+        //Make textbox start out invisible
+        this.setTextboxVisibility(false);
     }
 
     private void drawActiveRoom(RoomManager roomManager){
@@ -229,6 +227,17 @@ public class GameView {
         return keyView2;
     }
 
+    /** Sets visibility of the textbox */
+    public void setTextboxVisibility(boolean visibility){
+        textboxPane.setVisible(visibility);
+    }
+
+    /** gets visibility of the textbox */
+    public boolean isTextboxVisible(){
+        boolean visbility = textboxPane.isVisible();
+        return visbility;
+    }
+
     /**
      * @return the root
      */
@@ -249,5 +258,9 @@ public class GameView {
 
     public ArrayList<ImageView> getAllViews() {
         return allViews;
+    }
+
+    public void setTextboxText(String s) {
+        textLabel.setText(s);
     }
 }
