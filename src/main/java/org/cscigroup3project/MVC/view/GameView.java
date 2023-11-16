@@ -122,7 +122,7 @@ public class GameView {
         //Initialize a textbox image view and label
         this.textView = new ImageView("cscigroup3project/textBoxSprite.png");
         // TODO make the label get text from a different source
-        this.textLabel = new Label("Test");
+        this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
 
         this.textboxPane.getChildren().add(textView);
         this.textboxPane.getChildren().add(textLabel);
@@ -137,9 +137,6 @@ public class GameView {
      * Initialize styling for the view
      */
     public void initStyling(){
-
-        //Make root bgcolor black
-        root.setBackground(Background.fill(Color.BLACK));
 
         // Style the ImageView of the Player with its height and width, and set its image
         this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight()+theModel.getPlayer().getDIFF());
