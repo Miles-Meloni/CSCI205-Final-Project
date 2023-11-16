@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 /**
@@ -31,7 +32,7 @@ public class RoomManager {
     private final int GRID_SIZE = 16;
 
     /** The grid width & height of our example {@link Room} */
-    private final int DIM = 5;
+    private final int DIM = 16;
 
     /** The {@link ArrayList} of {@link Room} objects */
     private ArrayList<Room> rooms;
@@ -43,13 +44,31 @@ public class RoomManager {
     /** ArrayList for wall images, for now */
     private ArrayList<Image> wallSprites;
 
+    /** Single image for floor sprite */
+    private ArrayList<Image> floorSprites;
+
     /**
      * Creates a RoomManager object.
      */
     public RoomManager() {
         rooms = new ArrayList<>();
+
+        //TODO maybe refactor elsewhere?
         wallSprites = new ArrayList<>();
-        wallSprites.add(new Image("cscigroup3project/AmogusTest.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_back.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_left.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_right.png"));
+
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_left.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_right.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back_Left.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back_Right.png"));
+
+
+        floorSprites = new ArrayList<>();
+        floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+
         generateRooms();
     }
 
@@ -63,6 +82,9 @@ public class RoomManager {
         for (int i = 0; i < DIM; i++) {
             code1.add(new ArrayList<>());
         }
+
+        //TODO clean up this nasty, messy, no good, very bad function / refactor
+
         // Loop through every position in the Room code
         // Looping through y-positions
         for (int i = 0; i < DIM; i++) {
@@ -70,12 +92,44 @@ public class RoomManager {
             for (int j = 0; j < DIM; j++) {
                 // Add a Wall around the square border
                 if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
-                    code1.get(i).add(new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, wallSprites)); // want this to be wall_front.png for now
+                    Wall thisWall = new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                            GRID_SIZE, GRID_SIZE, wallSprites);;
+
+                    if (j==0){
+                        // different wall for the back side (reconstruct)
+                        thisWall = new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                                GRID_SIZE, GRID_SIZE, wallSprites);
+                        if (i==0) {
+                            thisWall.setSprite(SpriteType.BACK_LEFT);
+                        }
+                        else if (i==DIM-1) {
+                            thisWall.setSprite(SpriteType.BACK_RIGHT);
+                        }
+                        else { thisWall.setSprite(SpriteType.BACK); }
+                    }
+
+                    else if (j == DIM-1){
+                        if (i == 0){
+                            thisWall.setSprite(SpriteType.FRONT_LEFT);
+                        }
+                        else if (i==DIM-1){
+                            thisWall.setSprite(SpriteType.FRONT_RIGHT);
+                        }
+                        else {thisWall.setSprite(SpriteType.FRONT); }
+                    }
+
+                    else if (i == 0){
+                        thisWall.setSprite(SpriteType.LEFT);
+                    }
+
+                    else {thisWall.setSprite(SpriteType.RIGHT);}
+
+                    code1.get(i).add(thisWall); // want this to be wall_front.png for now
                 }
                 // Add a Floor to the center
                 else {
-                    // TODO - Add floor tiles
+                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                            GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
                 }
             }
         }

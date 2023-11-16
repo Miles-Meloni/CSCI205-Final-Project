@@ -48,7 +48,7 @@ public class GameObject {
         this.sprites = sprites;
 
         //TODO change later - testing for view
-        if (sprites == null){
+        if (sprites == null || sprites.isEmpty()){
             this.sprite = new Image("cscigroup3project/AmogusTest.png");
         }
         else {
@@ -65,7 +65,6 @@ public class GameObject {
         this.sprites = sprites;
 
         if (sprites == null){
-            System.out.println("NULLLLL");
             this.sprite = new Image("cscigroup3project/AmogusTest.png");
         }
         else {
@@ -76,11 +75,18 @@ public class GameObject {
     /** Assigns a sprite to a certain sprite in the array.
      * If there is no valid sprite at the index, it adds the default sprite.
      */
-    public void setSprite(int pos) {
-        if(pos >= 0 & pos < sprites.size()) {
-            this.sprite = sprites.get(pos);
-            }
-        else {this.sprite = sprites.get(0);}
+    public void setSprite(SpriteType spriteType) {
+        switch (spriteType){
+            case BACK -> this.sprite = this.sprites.get(0);
+            case FRONT -> this.sprite = this.sprites.get(1);
+            case LEFT -> this.sprite = this.sprites.get(2);
+            case RIGHT -> this.sprite = this.sprites.get(3);
+            case FRONT_LEFT -> this.sprite = this.sprites.get(4);
+            case FRONT_RIGHT -> this.sprite = this.sprites.get(5);
+            case BACK_LEFT -> this.sprite = this.sprites.get(6);
+            case BACK_RIGHT -> this.sprite = this.sprites.get(7);
+            case FLOOR -> this.sprite = this.sprites.get(8);
+        }
 
     }
 

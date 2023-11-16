@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public class Wall extends GameObject implements Collidable{
     public Wall(int minX, int minY, int w, int h, ArrayList<Image> sprites) {
         super(minX, minY, w, h, sprites);
         this.bounds = new Rectangle(minX, minY, w, h);
-
     }
 
     /** Getter for the {@link Rectangle} of this Wall */
