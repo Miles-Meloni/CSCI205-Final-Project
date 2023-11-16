@@ -20,6 +20,8 @@
 package org.cscigroup3project.MVC.view;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -64,6 +66,9 @@ public class GameView {
 
     /** The {@link ImageView} representing a textbox */
     private ImageView textView;
+
+    /** The {@link javafx.scene.control.Label} representing textbox text */
+    private Label textLabel;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
@@ -114,12 +119,17 @@ public class GameView {
         //Initialize textbox pane
         this.textboxPane = new StackPane();
 
-        //Initialize a textbox image view, add it to the pane
-        this.textView = new ImageView();
+        //Initialize a textbox image view and label
+        this.textView = new ImageView("cscigroup3project/textBoxSprite.png");
+        // TODO make the label get text from a different source
+        this.textLabel = new Label("Test");
+
         this.textboxPane.getChildren().add(textView);
+        this.textboxPane.getChildren().add(textLabel);
 
         //Set the textbox pane to be the bottom pane in the overlay
         this.overlayPane.setBottom(textboxPane);
+        this.root.getChildren().add(overlayPane);
 
     }
 
