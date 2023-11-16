@@ -73,6 +73,14 @@ public class Inventory {
         return items.remove(index);
     }
 
+    /**
+     * Get the current size of the inventory
+     * @return the number of elements in the inventory
+     */
+    public int size(){
+        return items.size();
+    }
+
 
 
 

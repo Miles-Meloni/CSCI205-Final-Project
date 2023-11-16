@@ -21,8 +21,11 @@ package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.image.ImageView;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.view.GameView;
+
+
 
 /**
  * The class implementing the logic and user interactions for the created game.
@@ -89,7 +92,8 @@ public class GameController {
                 case LEFT -> { theModel.getPlayer().move(Direction.LEFT); }
                 case UP -> { theModel.getPlayer().move(Direction.UP); }
                 case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
-                case E -> { findItem(); }
+                case C -> { findItem(); }
+                case E -> { toggleInventory(); }
             }
         for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
@@ -112,28 +116,64 @@ public class GameController {
         }
     }
 
+    /**
+     * Find an item in range, if it exists, among all items in the active room
+     */
     private void findItem(){
 
-        for (GameObject object : theModel.getRoomManager().getActiveRoom().getItemObjects()){
+        boolean found = false;
+        int index = 0;
+
+        // while loop because we only want to pick up a single item
+        while (!found && index < theModel.getRoomManager().getActiveRoom().getItemObjects().size()){
+
+            // set the current object and increment index
+            GameObject object = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
+            index++;
+
+            // check for intersection; if there, pick it up!
             if (theModel.getPlayer().getReach().getBoundsInLocal().intersects(
                     object.getBounds().localToParent(object.getBounds().getBoundsInLocal()))) {
 
                 pickUpItem(object);
+                found = true;
 
             }
         }
 
     }
 
+    /**
+     * Pick up the specified item by notifying Player and Room
+     * @param object the object to be picked up
+     */
     private void pickUpItem(GameObject object){
 
-        //TODO fix everything (picks up out of range??)
         theModel.getPlayer().pickUpItem(object);
         theModel.getRoomManager().getActiveRoom().removeObject(object);
 
-        theView.getKeyView1().translateXProperty().bind(theModel.getPlayer().getxProperty());
-        theView.getKeyView1().translateYProperty().bind(theModel.getPlayer().getyProperty());
+        ImageView objectView = new ImageView(object.getSprite());
 
+        theView.getInventoryPane().add(objectView,0, theModel.getPlayer().getInventory().size());
+
+        for (ImageView imgView : theView.getAllViews()){
+            if (imgView.getImage() == object.getSprite()){
+                imgView.setVisible(false);
+            }
+        }
+
+    }
+
+    /**
+     * Turn the inventory on or off, based on current state
+     */
+    private void toggleInventory(){
+        if (theView.getInventoryPane().isVisible()){
+            theView.getInventoryPane().setVisible(false);
+        }
+        else {
+            theView.getInventoryPane().setVisible(true);
+        }
     }
 }
 

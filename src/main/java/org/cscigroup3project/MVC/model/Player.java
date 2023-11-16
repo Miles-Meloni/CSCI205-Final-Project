@@ -132,7 +132,7 @@ public class Player {
         int startX = WIDTH * -1 / 2;
         int startY = HEIGHT * -1 / 2;
         this.bounds = new Rectangle(startX, startY, WIDTH, HEIGHT - DIFF);
-        this.reach = new Rectangle(startX, startY, WIDTH + REACH, HEIGHT + REACH);
+        this.reach = new Rectangle(startX-REACH, startY-REACH, WIDTH + 2*REACH, HEIGHT + 2*REACH);
     }
 
     /**
@@ -287,6 +287,7 @@ public class Player {
         yPos -= MOVE_SPEED ;
         yProperty.set(yPos);
         bounds.setY(bounds.getY() - MOVE_SPEED);
+        reach.setY(reach.getY() - MOVE_SPEED);
     }
 
     /**
@@ -296,6 +297,7 @@ public class Player {
         yPos += MOVE_SPEED ;
         yProperty.set(yPos);
         bounds.setY(bounds.getY() + MOVE_SPEED);
+        reach.setY(reach.getY() + MOVE_SPEED);
     }
 
     /**
@@ -305,6 +307,7 @@ public class Player {
         xPos -= MOVE_SPEED ;
         xProperty.set(xPos);
         bounds.setX(bounds.getX() - MOVE_SPEED);
+        reach.setX(bounds.getX() - MOVE_SPEED);
     }
 
     /**
@@ -314,6 +317,7 @@ public class Player {
         xPos += MOVE_SPEED ;
         xProperty.set(xPos);
         bounds.setX(bounds.getX() + MOVE_SPEED);
+        reach.setX(bounds.getX() + MOVE_SPEED);
     }
 
     /**

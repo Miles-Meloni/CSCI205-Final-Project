@@ -61,12 +61,13 @@ public class GameModel {
         // Create the roomManager for the application
         this.roomManager = new RoomManager();
 
-        // Add the single key sprite, to be passed in Key constructors
+        // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
         keySprite.add(new Image("cscigroup3project/keyAndLockSprites/Key.png"));
+        this.key1 = new Key(0,0, keySprite, "key1");
 
         // Create the key for the application
-        this.key1 = new Key(0,0, keySprite, "key1");
+        keySprite.add(0, new Image("cscigroup3project/keyAndLockSprites/Key.png"));
         this.key2 = new Key(50,50, keySprite, "key2");
 
         this.roomManager.getActiveRoom().addObject(key1);

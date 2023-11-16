@@ -19,6 +19,7 @@
 
 package org.cscigroup3project.MVC.view;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -49,11 +50,14 @@ public class GameView {
     /** A {@link GridPane} for the room */
     private GridPane roomPane;
 
-    /** A {@link javafx.scene.layout.Pane} for the overlays */
+    /** A {@link javafx.scene.layout.BorderPane} for the overlays */
     private BorderPane overlayPane;
 
-    /** A {@link javafx.scene.layout.Pane} for the textbox */
+    /** A {@link javafx.scene.layout.StackPane} for the textbox */
     private StackPane textboxPane;
+
+    /** A {@link GridPane} for storing the inventory */
+    private GridPane inventoryPane;
 
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
@@ -65,8 +69,10 @@ public class GameView {
     /** The {@link ImageView} representing a textbox */
     private ImageView textView;
 
-    /** The {@link ImageView} png representing a wall */
-    private ImageView wallView;
+    /** Container for all ImageViews in the program */
+    private ArrayList<ImageView> allViews;
+
+
 
 
     /**
@@ -88,6 +94,8 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
+        allViews = new ArrayList<>();
+
         // Initialize the room display GridPane
         this.roomPane = new GridPane();
         this.roomPane.setAlignment(Pos.CENTER);
@@ -100,6 +108,10 @@ public class GameView {
         this.keyView1 = new ImageView();
         this.keyView2 = new ImageView();
 
+        this.allViews.add(keyView1);
+        this.allViews.add(keyView2);
+
+
         this.root.getChildren().add(keyView1);
         this.root.getChildren().add(keyView2);
 
@@ -107,6 +119,7 @@ public class GameView {
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
+        this.allViews.add(playerView);
 
         //Initialize the overlay pane
         this.overlayPane = new BorderPane();
@@ -117,10 +130,16 @@ public class GameView {
         //Initialize a textbox image view, add it to the pane
         this.textView = new ImageView();
         this.textboxPane.getChildren().add(textView);
+        this.allViews.add(textView);
 
         //Set the textbox pane to be the bottom pane in the overlay
         this.overlayPane.setBottom(textboxPane);
 
+        // set up the inventory pane
+        this.inventoryPane = new GridPane();
+        this.inventoryPane.setVisible(false);
+
+        this.root.getChildren().add(inventoryPane);
     }
 
     /**
@@ -148,6 +167,9 @@ public class GameView {
         // TODO no more magic?
         // adjust for top row height
         this.roomPane.setTranslateY(-26);
+
+        this.inventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.7)));
+
 
     }
 
@@ -211,5 +233,13 @@ public class GameView {
      */
     public ImageView getPlayerView() {
         return playerView;
+    }
+
+    public GridPane getInventoryPane() {
+        return inventoryPane;
+    }
+
+    public ArrayList<ImageView> getAllViews() {
+        return allViews;
     }
 }
