@@ -22,6 +22,7 @@ package org.cscigroup3project.MVC.view;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -97,6 +98,9 @@ public class GameView {
      * Initialize styling for the view
      */
     public void initStyling(){
+
+        //Make root bgcolor black
+        root.setBackground(Background.fill(Color.BLACK));
 
         // Style the ImageView of the Player with its height and width, and set its image
         this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight()+theModel.getPlayer().getDIFF());
