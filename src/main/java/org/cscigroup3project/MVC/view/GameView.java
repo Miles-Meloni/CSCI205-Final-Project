@@ -22,6 +22,7 @@ package org.cscigroup3project.MVC.view;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -60,6 +61,12 @@ public class GameView {
     /** The {@link ImageView} views representing two keys, collected from {@link Key} object */
     private ImageView keyView1;
     private ImageView keyView2;
+
+    /** The {@link ImageView} representing a textbox */
+    private ImageView textView;
+
+    /** The {@link ImageView} png representing a wall */
+    private ImageView wallView;
 
 
     /**
