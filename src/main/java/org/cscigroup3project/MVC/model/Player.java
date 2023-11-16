@@ -195,9 +195,16 @@ public class Player {
         }
     }
 
-    //TODO This needs redone
-    public void updateSpriteInMs(long timeInMs){
-        //repeat update over and over
+    /**
+     * Method to update the Player's sprite so that it appears as an animation.
+     *
+     * @param timeInMs the time between sprite updates (milliseconds)
+     */
+    public void animateSprite(long timeInMs) {
+
+        // TODO - Updates sprite to show an animated character
+
+        // Do this continuously
         do {
             Runnable r = () -> {
                 try {
@@ -264,16 +271,17 @@ public class Player {
     }
 
     /**
-     * Changes the player texture and updates the current sprite value simultaneously.
-     * @param spriteVal - the index in the sprite array of the new sprite assigned.
+     * Updates the current sprite value.
+     *
+     * @param spriteVal the index in the sprite array of the new sprite
      */
-    public void changeSpriteTo(int spriteVal){
+    public void changeSpriteTo(int spriteVal) {
         curSprite = spriteVal;
-        setImage(images.get(spriteVal)); }
-
+        setImage(images.get(spriteVal));
+    }
 
     /**
-     * Move the player up by one unit and update the corresponding property.
+     * Move the player up by one {@code MOVE_SPEED} and update the corresponding property.
      */
     private void moveUp() {
         yPos -= MOVE_SPEED ;
@@ -282,7 +290,7 @@ public class Player {
     }
 
     /**
-     * Move the player down by one unit and update the corresponding property.
+     * Move the player down by one {@code MOVE_SPEED} and update the corresponding property.
      */
     private void moveDown() {
         yPos += MOVE_SPEED ;
@@ -291,7 +299,7 @@ public class Player {
     }
 
     /**
-     * Move the player left by one unit and update the corresponding property.
+     * Move the player left by one {@code MOVE_SPEED} and update the corresponding property.
      */
     private void moveLeft() {
         xPos -= MOVE_SPEED ;
@@ -300,7 +308,7 @@ public class Player {
     }
 
     /**
-     * Move the player right by one unit and update the corresponding property.
+     * Move the player right by one {@code MOVE_SPEED} and update the corresponding property.
      */
     private void moveRight() {
         xPos += MOVE_SPEED ;
@@ -311,7 +319,7 @@ public class Player {
     /**
      * Set the name of the player.
      *
-     * @param name The name to set for the player.
+     * @param name the name to set for the player.
      */
     public void setName(String name) { this.name = name; }
 

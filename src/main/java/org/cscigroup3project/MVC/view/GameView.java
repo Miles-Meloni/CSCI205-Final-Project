@@ -35,21 +35,23 @@ import org.cscigroup3project.MVC.model.*;
 import java.util.ArrayList;
 
 /**
- * The view of our JavaFX application
+ * The view shown to the user of our JavaFX application.
  */
 public class GameView {
 
-    private static final int TILE_SIZE = 16;
+    /** The size of our grid */
+    private static final int GRID_SIZE = 16;
+
     /** The {@link GameModel} for the game */
     private GameModel theModel;
 
     /** A {@link StackPane} root for the view */
     private StackPane root;
 
-    /** A {@link javafx.scene.layout.Pane} for the room */
+    /** A {@link GridPane} for the room */
     private GridPane roomPane;
 
-    /** The {@link ImageView} representing the player, collected from player object*/
+    /** The {@link ImageView} representing the player, collected from player object */
     private ImageView playerView;
 
     /** The {@link ImageView} png representing a wall */
@@ -67,14 +69,14 @@ public class GameView {
     }
 
     /**
-     * Initialize the scene graph by creating and adding the GUI components
+     * Initialize the scene graph by creating and adding the GUI components.
      */
     public void initSceneGraph(){
 
         // Initialize a StackPane root
         this.root = new StackPane();
 
-        // Initialize the room display Pane
+        // Initialize the room display GridPane
         this.roomPane = new GridPane();
         this.roomPane.setAlignment(Pos.CENTER);
 

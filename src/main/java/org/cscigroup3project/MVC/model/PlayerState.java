@@ -16,16 +16,20 @@
  *
  * ****************************************
  */
+
 package org.cscigroup3project.MVC.model;
 
+/**
+ * Enum describing the current state of the {@link Player}.
+ */
 public enum PlayerState {
-    // when the player IS NOT moving
+
+    /** The {@link Player} is not moving */
     IDLE,
 
-    // when the player IS moving
+    /** The {@link Player} is moving */
     MOVING,
 
-    // when the player is INTERACTING
-    // WITH an interface of something
+    /** The {@link Player} is interacting with an object or interface */
     EXPLORING,
 }

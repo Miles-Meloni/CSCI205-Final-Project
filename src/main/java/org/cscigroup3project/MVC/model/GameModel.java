@@ -19,7 +19,6 @@
 
 package org.cscigroup3project.MVC.model;
 
-import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 /**
@@ -27,24 +26,24 @@ import java.util.ArrayList;
  */
 public class GameModel {
 
-    /** Our player for the game */
+    /** Our {@link Player} for the game */
     private Player player;
 
-    /** Our array of all rooms for the game */
+    /** Our {@link ArrayList} of all rooms for the game */
     private ArrayList<Room> rooms;
 
     /** Our {@link Wall} for the game */
     private Wall wall;
 
-    /**Our {@link Disk} for testing music */
+    /** Our {@link Disk} for testing music */
     private Disk disk;
 
-    /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
+    /** The {@link RoomManager} for the game */
     private RoomManager roomManager;
 
     /**
-     * Create a new GameModel object with any number of {@link Room} objects (and their contained
-     * objects), a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
+     * Create a new GameModel object with any number of {@link Room} objects,
+     * a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
      */
     public GameModel(){
 

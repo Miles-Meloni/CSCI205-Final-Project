@@ -20,12 +20,22 @@ package org.cscigroup3project.MVC.model;
 
 import java.util.ArrayList;
 
+/**
+ * Enum representing the state of the Room.
+ */
 enum RoomState{
+
+    /** The {@link Player} is in the Room */
     PRESENT_PLAYER,
+
+    /** The {@link Player} is not in the Room */
     NO_PLAYER,
 }
-public class Room {
 
+/**
+ * Class containing a 2D {@link ArrayList} coding for {@link Wall}, floor, and {@link GameObject}s.
+ */
+public class Room {
 
     /** The {@link RoomState} state of the room, for rendering */
     private RoomState roomState;
