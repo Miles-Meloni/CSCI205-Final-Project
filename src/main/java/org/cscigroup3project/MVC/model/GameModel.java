@@ -39,6 +39,9 @@ public class GameModel {
     /**Our {@link Disk} for testing music */
     private Disk disk;
 
+    /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
+    private RoomManager roomManager;
+
     /**
      * Create a new GameModel object with any number of {@link Room} objects (and their contained
      * objects), a {@link Player} for the game, and {ADD ANYTHING ELSE HERE}
@@ -56,9 +59,15 @@ public class GameModel {
         //TODO either uncomment or delete
         //this.wall = new Wall(100,50,50,50,new Image[1]);
 
+        // Create the roomManager for the application
+        roomManager = new RoomManager();
+
     }
 
     /** Getter for the {@link Player}, {@link Wall} */
     public Player getPlayer() { return player; }
+    public RoomManager getRoomManager(){
+        return roomManager;
+    }
     public Wall getWall() { return wall; }
 }

@@ -23,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import org.cscigroup3project.MVC.model.Direction;
 import org.cscigroup3project.MVC.model.GameModel;
+import org.cscigroup3project.MVC.model.GameObject;
+import org.cscigroup3project.MVC.model.Wall;
 import org.cscigroup3project.MVC.view.GameView;
 
 /**
@@ -91,16 +93,25 @@ public class GameController {
                 case UP -> { theModel.getPlayer().move(Direction.UP); }
                 case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
             }
-            //TODO uncomment when bound more clearly entered
-        /*if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                theModel.getWall().getBounds().getBoundsInLocal())){
-            switch (event.getCode()) {
-                case DOWN -> { theModel.getPlayer().silentMove(Direction.UP);}
-                case LEFT -> { theModel.getPlayer().silentMove(Direction.RIGHT); }
-                case UP -> { theModel.getPlayer().silentMove(Direction.DOWN); }
-                case RIGHT -> { theModel.getPlayer().silentMove(Direction.LEFT); }
+        for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
+            if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                    wall.getBounds().localToParent(wall.getBounds().getBoundsInLocal()))) {
+                switch (event.getCode()) {
+                    case DOWN -> {
+                        theModel.getPlayer().silentMove(Direction.UP);
+                    }
+                    case LEFT -> {
+                        theModel.getPlayer().silentMove(Direction.RIGHT);
+                    }
+                    case UP -> {
+                        theModel.getPlayer().silentMove(Direction.DOWN);
+                    }
+                    case RIGHT -> {
+                        theModel.getPlayer().silentMove(Direction.LEFT);
+                    }
+                }
             }
-        }*/
+        }
     }
 }
 

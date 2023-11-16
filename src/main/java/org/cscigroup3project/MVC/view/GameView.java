@@ -19,8 +19,10 @@
 
 package org.cscigroup3project.MVC.view;
 
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -44,16 +46,13 @@ public class GameView {
     private StackPane root;
 
     /** A {@link javafx.scene.layout.Pane} for the room */
-    private Pane roomPane;
+    private GridPane roomPane;
 
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
-
-    /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
-    private RoomManager roomManager;
 
     /**
      * Constructs the view given a {@link GameModel}.
@@ -75,17 +74,18 @@ public class GameView {
         this.root = new StackPane();
 
         // Initialize the room display Pane
-        this.roomPane = new Pane();
-
-        // Create the roomManager for the application
-        roomManager = new RoomManager();
-        drawActiveRoom();
+        this.roomPane = new GridPane();
+        this.roomPane.setAlignment(Pos.CENTER);
 
         // Initialize a wall ImageView, add it to the root
         this.wallView = new ImageView();
         //this.root.getChildren().add(wallView);
 
+        drawActiveRoom(theModel.getRoomManager());
+
         this.root.getChildren().add(roomPane);
+
+
 
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
@@ -105,8 +105,8 @@ public class GameView {
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
-        this.roomPane.setTranslateX(200);
-        this.roomPane.setTranslateY(200);
+        // adjust for top row height
+        this.roomPane.setTranslateY(-26);
 
         // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
         //Image image = new Image("cscigroup3project/roomTiles/Wall_front.png");
@@ -118,7 +118,7 @@ public class GameView {
         //this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
     }
 
-    private void drawActiveRoom(){
+    private void drawActiveRoom(RoomManager roomManager){
         Room activeRoom = roomManager.getActiveRoom();
         if (activeRoom != null){
             drawRoom(activeRoom);
@@ -126,24 +126,36 @@ public class GameView {
     }
 
     private void drawRoom(Room room){
+        int i = 0;
         for (ArrayList<GameObject> arrGO : room.getGameObjects()) {
+            int j = 0;
             for (GameObject gameObject : arrGO) {
-                drawGameObject(gameObject);
+                drawGameObject(gameObject, i, j);
+                j++;
             }
+            i++;
         }
     }
 
-    private void drawGameObject(GameObject gameObject){;
+    private void drawGameObject(GameObject gameObject, int i, int j){;
+
+        // adjust for the top row
+        int trueHeight = gameObject.getHeight();
+        if (j == 0){
+            trueHeight *= 5;
+        }
+
         Rectangle objectRect = new Rectangle(
                 gameObject.getxPos(),
                 gameObject.getyPos(),
                 gameObject.getWidth(),
-                gameObject.getHeight()
+                trueHeight
         );
+
 
         objectRect.setFill(new ImagePattern(gameObject.getSprite()));
 
-        roomPane.getChildren().add(objectRect);
+        roomPane.add(objectRect, i%16+8, j%16+8);
     }
 
     /**
