@@ -1,8 +1,11 @@
 package org.cscigroup3project.MVC.model;
 
+import javafx.scene.image.Image;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class KeyPuzzleTest {
     //TODO fix this test
+    private ArrayList<Image> sprites = new ArrayList<Image>();
     /** the first key to be added to the inventory **/
-    private Key k1 = new Key("key1");
+    private Key k1;
     /** the second key to be added to the inventory **/
-    private Key k2 = new Key("key2");
+    private Key k2;
     /** the first player's inventory **/
     private Inventory inventory1 = new Inventory();
     /** the second player's inventory **/
@@ -26,6 +30,9 @@ class KeyPuzzleTest {
 
     @BeforeEach
     void setUp() {
+        sprites.add(new Image("src/test/resources/org.cscigroup3project/Sprites/PS1.png"));
+        k1 = new Key(1, 1, sprites, "key1" );
+        k2 = new Key(1, 1, sprites, "key2" );
         inventory1.addItem(k1);
         inventory2.addItem(k2);
     }
