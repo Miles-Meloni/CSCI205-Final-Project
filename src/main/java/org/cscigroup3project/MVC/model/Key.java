@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Class that represents keys that can be picked up, equipped, and used by the {@link Player}.
  */
-public class Key extends GameObject implements Storable{
+public class Key extends GameObject implements Storable, Interactible{
 
     /** Name of the key object */
     private String name;
@@ -49,6 +49,11 @@ public class Key extends GameObject implements Storable{
 
     @Override
     public void deploy(int x, int y) {
+
+    }
+
+    @Override
+    public void react() {
 
     }
 }

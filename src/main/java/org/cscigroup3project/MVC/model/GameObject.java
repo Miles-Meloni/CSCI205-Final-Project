@@ -19,6 +19,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 
@@ -108,6 +109,15 @@ public class GameObject {
 
     public int getHeight() {
         return height;
+    }
+
+    public Rectangle getBounds(){
+        return (new Rectangle(
+                xPos,
+                yPos,
+                width,
+                height
+        ));
     }
 
     public String getId() {

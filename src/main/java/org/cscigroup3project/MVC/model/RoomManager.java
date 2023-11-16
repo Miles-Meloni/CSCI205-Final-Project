@@ -92,39 +92,8 @@ public class RoomManager {
             for (int j = 0; j < DIM; j++) {
                 // Add a Wall around the square border
                 if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
-                    Wall thisWall = new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, wallSprites);;
-
-                    if (j==0){
-                        // different wall for the back side (reconstruct)
-                        thisWall = new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                                GRID_SIZE, GRID_SIZE, wallSprites);
-                        if (i==0) {
-                            thisWall.setSprite(SpriteType.BACK_LEFT);
-                        }
-                        else if (i==DIM-1) {
-                            thisWall.setSprite(SpriteType.BACK_RIGHT);
-                        }
-                        else { thisWall.setSprite(SpriteType.BACK); }
-                    }
-
-                    else if (j == DIM-1){
-                        if (i == 0){
-                            thisWall.setSprite(SpriteType.FRONT_LEFT);
-                        }
-                        else if (i==DIM-1){
-                            thisWall.setSprite(SpriteType.FRONT_RIGHT);
-                        }
-                        else {thisWall.setSprite(SpriteType.FRONT); }
-                    }
-
-                    else if (i == 0){
-                        thisWall.setSprite(SpriteType.LEFT);
-                    }
-
-                    else {thisWall.setSprite(SpriteType.RIGHT);}
-
-                    code1.get(i).add(thisWall); // want this to be wall_front.png for now
+                    Wall thisWall = getWall(j, i);
+                    code1.get(i).add(thisWall);
                 }
                 // Add a Floor to the center
                 else {
@@ -138,6 +107,40 @@ public class RoomManager {
 
         //TODO remove this once player position tracked, for testing View
         activeRoom = room1;
+    }
+
+    private Wall getWall(int j, int i) {
+        Wall thisWall = new Wall((int) (GRID_SIZE*(j -DIM/2.0)),(int) (GRID_SIZE*(i -DIM/2.0)),
+                GRID_SIZE, GRID_SIZE, wallSprites);
+        ;
+
+        if (j ==0){
+
+            if (i ==0) {
+                thisWall.setSprite(SpriteType.BACK_LEFT);
+            }
+            else if (i ==DIM-1) {
+                thisWall.setSprite(SpriteType.BACK_RIGHT);
+            }
+            else { thisWall.setSprite(SpriteType.BACK); }
+        }
+
+        else if (j == DIM-1){
+            if (i == 0){
+                thisWall.setSprite(SpriteType.FRONT_LEFT);
+            }
+            else if (i ==DIM-1){
+                thisWall.setSprite(SpriteType.FRONT_RIGHT);
+            }
+            else {thisWall.setSprite(SpriteType.FRONT); }
+        }
+
+        else if (i == 0){
+            thisWall.setSprite(SpriteType.LEFT);
+        }
+
+        else {thisWall.setSprite(SpriteType.RIGHT);}
+        return thisWall;
     }
 
     public Room getActiveRoom() {
