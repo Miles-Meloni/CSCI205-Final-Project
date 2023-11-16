@@ -21,10 +21,7 @@ package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import org.cscigroup3project.MVC.model.Direction;
-import org.cscigroup3project.MVC.model.GameModel;
-import org.cscigroup3project.MVC.model.GameObject;
-import org.cscigroup3project.MVC.model.Wall;
+import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.view.GameView;
 
 /**
@@ -92,6 +89,7 @@ public class GameController {
                 case LEFT -> { theModel.getPlayer().move(Direction.LEFT); }
                 case UP -> { theModel.getPlayer().move(Direction.UP); }
                 case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
+                case E -> { findItem(); }
             }
         for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
@@ -112,6 +110,30 @@ public class GameController {
                 }
             }
         }
+    }
+
+    private void findItem(){
+
+        for (GameObject object : theModel.getRoomManager().getActiveRoom().getItemObjects()){
+            if (theModel.getPlayer().getReach().getBoundsInLocal().intersects(
+                    object.getBounds().localToParent(object.getBounds().getBoundsInLocal()))) {
+
+                pickUpItem(object);
+
+            }
+        }
+
+    }
+
+    private void pickUpItem(GameObject object){
+
+        //TODO fix everything (picks up out of range??)
+        theModel.getPlayer().pickUpItem(object);
+        theModel.getRoomManager().getActiveRoom().removeObject(object);
+
+        theView.getKeyView1().translateXProperty().bind(theModel.getPlayer().getxProperty());
+        theView.getKeyView1().translateYProperty().bind(theModel.getPlayer().getyProperty());
+
     }
 }
 

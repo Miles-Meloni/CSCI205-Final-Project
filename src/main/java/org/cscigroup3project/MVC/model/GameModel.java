@@ -39,6 +39,10 @@ public class GameModel {
     /**Our {@link Disk} for testing music */
     private Disk disk;
 
+    /** Our two {@link Key} objects for the key puzzle */
+    private Key key1;
+    private Key key2;
+
     /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
     private RoomManager roomManager;
 
@@ -54,20 +58,30 @@ public class GameModel {
         // current Player for the game with position and name
         this.player = new Player(new int[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
 
-        // single Wall for implementing collisions
-        // minX and minY define upper left corner position
-        //TODO either uncomment or delete
-        //this.wall = new Wall(100,50,50,50,new Image[1]);
-
         // Create the roomManager for the application
-        roomManager = new RoomManager();
+        this.roomManager = new RoomManager();
+
+        // Add the single key sprite, to be passed in Key constructors
+        ArrayList<Image> keySprite = new ArrayList<Image>();
+        keySprite.add(new Image("cscigroup3project/keyAndLockSprites/Key.png"));
+
+        // Create the key for the application
+        this.key1 = new Key(0,0, keySprite, "key1");
+        this.key2 = new Key(50,50, keySprite, "key2");
+
+        this.roomManager.getActiveRoom().addObject(key1);
+        this.roomManager.getActiveRoom().addObject(key2);
 
     }
 
-    /** Getter for the {@link Player}, {@link Wall} */
+    /** Getters for the {@link Player}, {@link RoomManager}, {@link Key} objects */
     public Player getPlayer() { return player; }
+
+    public Key[] getKeys() {
+        return new Key[]{key1,key2};
+    }
     public RoomManager getRoomManager(){
         return roomManager;
     }
-    public Wall getWall() { return wall; }
+
 }

@@ -30,15 +30,19 @@ public class Room {
     /** The {@link RoomState} state of the room, for rendering */
     private RoomState roomState;
 
-    /** The {@link GameObject} list contained by this room */
-    private ArrayList<ArrayList<GameObject>> gameObjects;
+    /** The {@link GameObject} list of lists contained by this room */
+    private ArrayList<ArrayList<GameObject>> baseObjects;
+
+    /** The {@link GameObject} list containing non-environmental objects */
+    private ArrayList<GameObject> itemObjects;
 
     /**
      * Empty constructor for a room with nothing in it.
      * No player in the room by default
      */
     public Room(){
-        gameObjects = new ArrayList<>();
+        baseObjects = new ArrayList<>();
+        itemObjects = new ArrayList<>();
         roomState = RoomState.NO_PLAYER;
     }
 
@@ -48,12 +52,18 @@ public class Room {
      * @param objects the initial {@link Object} objects for the room
      */
     public Room(ArrayList<ArrayList<GameObject>> objects){
-        this.gameObjects = objects;
+        this.baseObjects = objects;
+        this.itemObjects = new ArrayList<>();
+
         roomState = RoomState.NO_PLAYER;
     }
 
-    public ArrayList<ArrayList<GameObject>> getGameObjects() {
-        return gameObjects;
+    public ArrayList<ArrayList<GameObject>> getBaseObjects() {
+        return baseObjects;
+    }
+
+    public ArrayList<GameObject> getItemObjects() {
+        return itemObjects;
     }
 
     /**
@@ -69,7 +79,7 @@ public class Room {
     public ArrayList<Wall> getWalls(){
         ArrayList<Wall> walls = new ArrayList<>();
 
-        for (ArrayList<GameObject> arrGO : gameObjects) {
+        for (ArrayList<GameObject> arrGO : baseObjects) {
             for (GameObject gameObject : arrGO) {
                 if (gameObject instanceof Wall) {
                     walls.add((Wall) gameObject);
@@ -86,7 +96,7 @@ public class Room {
     public ArrayList<Door> getDoors(){
         ArrayList<Door> doors = new ArrayList<>();
 
-        for (ArrayList<GameObject> arrGO : gameObjects) {
+        for (ArrayList<GameObject> arrGO : baseObjects) {
             for (GameObject gameObject : arrGO) {
                 if (gameObject instanceof Door) {
                     doors.add((Door) gameObject);
@@ -95,6 +105,23 @@ public class Room {
         }
 
         return doors;
+    }
+
+    public void addObject(GameObject addition){
+        itemObjects.add(addition);
+    }
+
+
+    /**
+     * Method to remove an item from the {@link Room#baseObjects} list
+     * @param removal the {@link GameObject} to be removed
+     * @return the removed object, if found; otherwise, null
+     */
+    public GameObject removeObject(GameObject removal){
+        if (itemObjects.remove(removal)){
+            return removal;
+        }
+        else {return null;}
     }
 
     /**

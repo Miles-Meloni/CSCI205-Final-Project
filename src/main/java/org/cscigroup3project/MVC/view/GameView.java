@@ -20,15 +20,12 @@
 package org.cscigroup3project.MVC.view;
 
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
 
@@ -52,8 +49,10 @@ public class GameView {
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
 
-    /** The {@link ImageView} png representing a wall */
-    private ImageView wallView;
+    /** The {@link ImageView} views representing two keys, collected from {@link Key} object */
+    private ImageView keyView1;
+    private ImageView keyView2;
+
 
     /**
      * Constructs the view given a {@link GameModel}.
@@ -78,14 +77,16 @@ public class GameView {
         this.roomPane = new GridPane();
         this.roomPane.setAlignment(Pos.CENTER);
 
-        // Initialize a wall ImageView, add it to the root
-        this.wallView = new ImageView();
-        //this.root.getChildren().add(wallView);
-
         drawActiveRoom(theModel.getRoomManager());
-
         this.root.getChildren().add(roomPane);
 
+
+        // Initialize the key view
+        this.keyView1 = new ImageView();
+        this.keyView2 = new ImageView();
+
+        this.root.getChildren().add(keyView1);
+        this.root.getChildren().add(keyView2);
 
 
         // Initialize a PlayerView, add it to the root
@@ -109,17 +110,17 @@ public class GameView {
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
+        // Style the imageview of the key view
+        this.keyView1.setImage(theModel.getKeys()[0].getSprite());
+        this.keyView2.setImage(theModel.getKeys()[1].getSprite());
+
+        this.keyView2.setTranslateX(theModel.getKeys()[1].getxPos());
+        this.keyView2.setTranslateY(theModel.getKeys()[1].getyPos());
+
+        // TODO no more magic?
         // adjust for top row height
         this.roomPane.setTranslateY(-26);
 
-        // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
-        //Image image = new Image("cscigroup3project/roomTiles/Wall_front.png");
-        //this.wallView.setImage(image); // TODO - hardcoding image file?
-        //this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
-        //this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
-
-        //this.wallView.setTranslateX(theModel.getWall().getBounds().getX()+theModel.getWall().getBounds().getWidth()/2);
-        //this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
     }
 
     private void drawActiveRoom(RoomManager roomManager){
@@ -131,7 +132,7 @@ public class GameView {
 
     private void drawRoom(Room room){
         int i = 0;
-        for (ArrayList<GameObject> arrGO : room.getGameObjects()) {
+        for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
             int j = 0;
             for (GameObject gameObject : arrGO) {
                 drawGameObject(gameObject, i, j);
@@ -160,6 +161,14 @@ public class GameView {
         objectRect.setFill(new ImagePattern(gameObject.getSprite()));
 
         roomPane.add(objectRect, i%16+8, j%16+8);
+    }
+
+    public ImageView getKeyView1() {
+        return keyView1;
+    }
+
+    public ImageView getKeyView2() {
+        return keyView2;
     }
 
     /**
