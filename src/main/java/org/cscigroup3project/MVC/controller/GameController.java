@@ -104,7 +104,7 @@ public class GameController {
                 case RIGHT -> {theModel.getPlayer().move(Direction.RIGHT);}
                 case E -> {findItem();}
                 case Q -> {
-                    localArray = textArray;
+                    localArray = new ArrayList<>(textArray);
                     updateTextbox();
                 } //TODO for full functionality get boxes from user
             }
