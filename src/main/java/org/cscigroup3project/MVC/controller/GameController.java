@@ -106,8 +106,8 @@ public class GameController {
                 case C -> { findItem(); }
                 case E -> { toggleInventory(); }
                 case Q -> {
-                localArray = textArray;
-                updateTextbox();
+                    localArray = new ArrayList<>(textArray);
+                    updateTextbox();
                 } //TODO for full functionality get boxes from user
             }
 
