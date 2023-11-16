@@ -55,7 +55,7 @@ public class RoomManager {
 
         //TODO maybe refactor elsewhere?
         wallSprites = new ArrayList<>();
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_back.png"));
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_left.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_right.png"));
