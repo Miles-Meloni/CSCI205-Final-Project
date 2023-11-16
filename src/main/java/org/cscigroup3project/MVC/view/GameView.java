@@ -206,6 +206,17 @@ public class GameView {
         return keyView2;
     }
 
+    /** Sets visibility of the textbox */
+    public void setTextboxVisibility(boolean visibility){
+        textboxPane.setVisible(visibility);
+    }
+
+    /** gets visibility of the textbox */
+    public boolean isTextboxVisible(){
+        boolean visbility = textboxPane.isVisible();
+        return visbility;
+    }
+
     /**
      * @return the root
      */
@@ -218,5 +229,9 @@ public class GameView {
      */
     public ImageView getPlayerView() {
         return playerView;
+    }
+
+    public void setTextboxText(String s) {
+        textLabel.setText(s);
     }
 }

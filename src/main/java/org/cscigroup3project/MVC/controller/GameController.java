@@ -24,6 +24,8 @@ import javafx.scene.input.KeyEvent;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.view.GameView;
 
+import java.util.ArrayList;
+
 /**
  * The class implementing the logic and user interactions for the created game.
  */
@@ -38,6 +40,13 @@ public class GameController {
     /** The {@link Scene} for our app */
     private final Scene theScene;
 
+    /** An array that has hard coded textbox values.
+     * #TODO remove hardcoding */
+    private ArrayList<String> textArray;
+
+    /** The arraylist that looks at our player data, and displays it. */
+    private ArrayList<String> localArray;
+
     /**
      * Constructor for the GameController.
      *
@@ -49,6 +58,9 @@ public class GameController {
         this.theModel = theModel;
         this.theView = theView;
         this.theScene = theScene;
+        this.textArray = new ArrayList<>();
+        this.textArray.add("Have some text");
+        this.textArray.add("Have some more");
 
         initBindings();
         initEventHandlers();
@@ -84,13 +96,21 @@ public class GameController {
 
         // Match the arrow key input, move the Player in the corresponding direction.
         // Check for collisions after each movement, if there is, move in the opposite direction
+        if(!theView.isTextboxVisible()) {
             switch (event.getCode()) {
-                case DOWN -> { theModel.getPlayer().move(Direction.DOWN); }
-                case LEFT -> { theModel.getPlayer().move(Direction.LEFT); }
-                case UP -> { theModel.getPlayer().move(Direction.UP); }
-                case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
-                case E -> { findItem(); }
+                case DOWN -> {theModel.getPlayer().move(Direction.DOWN);}
+                case LEFT -> {theModel.getPlayer().move(Direction.LEFT);}
+                case UP -> {theModel.getPlayer().move(Direction.UP);}
+                case RIGHT -> {theModel.getPlayer().move(Direction.RIGHT);}
+                case E -> {findItem();}
+                case Q -> {
+                    localArray = textArray;
+                    updateTextbox();
+                } //TODO for full functionality get boxes from user
             }
+        }
+        else{ updateTextbox();}
+
         for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                     wall.getBounds().localToParent(wall.getBounds().getBoundsInLocal()))) {
@@ -109,6 +129,18 @@ public class GameController {
                     }
                 }
             }
+        }
+    }
+
+    private void updateTextbox() {
+        if (localArray.isEmpty()){
+            theView.setTextboxVisibility(false);
+        }
+        else{
+            theView.setTextboxVisibility(true);
+            theView.setTextboxText(localArray.get(0));
+            localArray.remove(0);
+
         }
     }
 
