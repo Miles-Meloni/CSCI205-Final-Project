@@ -22,10 +22,7 @@ package org.cscigroup3project.MVC.view;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -40,6 +37,7 @@ import java.util.ArrayList;
 public class GameView {
 
     private static final int TILE_SIZE = 16;
+
     /** The {@link GameModel} for the game */
     private GameModel theModel;
 
@@ -49,8 +47,17 @@ public class GameView {
     /** A {@link javafx.scene.layout.Pane} for the room */
     private GridPane roomPane;
 
+    /** A {@link javafx.scene.layout.Pane} for the overlays */
+    private BorderPane overlayPane;
+
+    /** A {@link javafx.scene.layout.Pane} for the textbox */
+    private StackPane textboxPane;
+
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
+
+    /** The {@link ImageView} representing a textbox */
+    private ImageView textView;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
@@ -91,6 +98,19 @@ public class GameView {
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
+
+        //Initialize the overlay pane
+        this.overlayPane = new BorderPane();
+
+        //Initialize textbox pane
+        this.textboxPane = new StackPane();
+
+        //Initialize a textbox image view, add it to the pane
+        this.textView = new ImageView();
+        this.textboxPane.getChildren().add(textView);
+
+        //Set the textbox pane to be the bottom pane in the overlay
+        this.overlayPane.setBottom(textboxPane);
 
     }
 
