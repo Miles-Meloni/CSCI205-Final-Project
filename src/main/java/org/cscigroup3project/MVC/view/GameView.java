@@ -156,6 +156,9 @@ public class GameView {
         // adjust for top row height
         this.roomPane.setTranslateY(-26);
 
+        //Make textbox start out invisible
+        this.setTextboxVisibility(false);
+
     }
 
     private void drawActiveRoom(RoomManager roomManager){
