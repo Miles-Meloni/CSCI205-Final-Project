@@ -39,10 +39,17 @@ public class RoomManager {
     /** The active {@link Room} to show the user */
     private Room activeRoom;
 
+    //TODO discuss this
+    /** ArrayList for wall images, for now */
+    private ArrayList<Image> wallSprites;
+
     /**
      * Creates a RoomManager object.
      */
     public RoomManager() {
+        rooms = new ArrayList<>();
+        wallSprites = new ArrayList<>();
+        wallSprites.add(new Image("cscigroup3project/AmogusTest.png"));
         generateRooms();
     }
 
@@ -64,7 +71,7 @@ public class RoomManager {
                 // Add a Wall around the square border
                 if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
                     code1.get(i).add(new Wall((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, new Image[1])); // want this to be wall_front.png for now
+                            GRID_SIZE, GRID_SIZE, wallSprites)); // want this to be wall_front.png for now
                 }
                 // Add a Floor to the center
                 else {
@@ -72,7 +79,14 @@ public class RoomManager {
                 }
             }
         }
-        Room room1 = new Room(); // pass in code1 once Room constructor is updated
+        Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
         rooms.add(room1);
+
+        //TODO remove this once player position tracked, for testing View
+        activeRoom = room1;
+    }
+
+    public Room getActiveRoom() {
+        return activeRoom;
     }
 }

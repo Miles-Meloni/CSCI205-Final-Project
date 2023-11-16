@@ -91,7 +91,8 @@ public class GameController {
                 case UP -> { theModel.getPlayer().move(Direction.UP); }
                 case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
             }
-        if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+            //TODO uncomment when bound more clearly entered
+        /*if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                 theModel.getWall().getBounds().getBoundsInLocal())){
             switch (event.getCode()) {
                 case DOWN -> { theModel.getPlayer().silentMove(Direction.UP);}
@@ -99,7 +100,7 @@ public class GameController {
                 case UP -> { theModel.getPlayer().silentMove(Direction.DOWN); }
                 case RIGHT -> { theModel.getPlayer().silentMove(Direction.LEFT); }
             }
-        }
+        }*/
     }
 }
 

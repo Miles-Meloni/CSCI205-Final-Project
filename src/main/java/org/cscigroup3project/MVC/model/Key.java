@@ -21,6 +21,8 @@ package org.cscigroup3project.MVC.model;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 /**
  * Class that represents keys that can be picked up, equipped, and used by the {@link Player}.
  */
@@ -29,7 +31,7 @@ public class Key extends GameObject implements Storable{
     /** Name of the key object */
     private String name;
 
-    public Key(int x, int y, Image[] sprites, String id) {
+    public Key(int x, int y, ArrayList<Image> sprites, String id) {
         super(x, y, 16, 16, sprites, id);
     }
 

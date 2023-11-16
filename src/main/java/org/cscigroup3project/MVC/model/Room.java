@@ -31,7 +31,7 @@ public class Room {
     private RoomState roomState;
 
     /** The {@link GameObject} list contained by this room */
-    private ArrayList<GameObject> gameObjects;
+    private ArrayList<ArrayList<GameObject>> gameObjects;
 
     /**
      * Empty constructor for a room with nothing in it.
@@ -47,21 +47,21 @@ public class Room {
      * No player in the room by default
      * @param objects the initial {@link Object} objects for the room
      */
-    public Room(ArrayList<GameObject> objects){
+    public Room(ArrayList<ArrayList<GameObject>> objects){
         this.gameObjects = objects;
         roomState = RoomState.NO_PLAYER;
     }
 
-    public ArrayList<GameObject> getGameObjects() {
+    public ArrayList<ArrayList<GameObject>> getGameObjects() {
         return gameObjects;
     }
 
     /**
      * Add an object to the room
      */
-    public void addObject(GameObject gameObject){
-        this.gameObjects.add(gameObject);
-    }
+    //public void addObject(GameObject gameObject){
+      //  this.gameObjects.add(gameObject);
+    //}
 
     /**
      * Getter for all {@link Wall} objects of the room
@@ -69,9 +69,11 @@ public class Room {
     public ArrayList<Wall> getWalls(){
         ArrayList<Wall> walls = new ArrayList<>();
 
-        for (GameObject gameObject : gameObjects){
-            if (gameObject instanceof Wall){
-                walls.add((Wall)gameObject);
+        for (ArrayList<GameObject> arrGO : gameObjects) {
+            for (GameObject gameObject : arrGO) {
+                if (gameObject instanceof Wall) {
+                    walls.add((Wall) gameObject);
+                }
             }
         }
 
@@ -84,9 +86,11 @@ public class Room {
     public ArrayList<Door> getDoors(){
         ArrayList<Door> doors = new ArrayList<>();
 
-        for (GameObject gameObject : gameObjects){
-            if (gameObject instanceof Door){
-                doors.add((Door)gameObject);
+        for (ArrayList<GameObject> arrGO : gameObjects) {
+            for (GameObject gameObject : arrGO) {
+                if (gameObject instanceof Door) {
+                    doors.add((Door) gameObject);
+                }
             }
         }
 

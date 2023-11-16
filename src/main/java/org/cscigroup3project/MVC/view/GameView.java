@@ -21,29 +21,39 @@ package org.cscigroup3project.MVC.view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-import org.cscigroup3project.MVC.model.GameModel;
-import org.cscigroup3project.MVC.model.Player;
-import org.cscigroup3project.MVC.model.Wall;
+import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.model.*;
+
+import java.util.ArrayList;
 
 /**
  * The view of our JavaFX application
  */
 public class GameView {
 
+    private static final int TILE_SIZE = 16;
     /** The {@link GameModel} for the game */
     private GameModel theModel;
 
     /** A {@link StackPane} root for the view */
     private StackPane root;
 
+    /** A {@link javafx.scene.layout.Pane} for the room */
+    private Pane roomPane;
+
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
 
     /** The {@link ImageView} png representing a wall */
     private ImageView wallView;
+
+    /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
+    private RoomManager roomManager;
 
     /**
      * Constructs the view given a {@link GameModel}.
@@ -64,13 +74,23 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
+        // Initialize the room display Pane
+        this.roomPane = new Pane();
+
+        // Create the roomManager for the application
+        roomManager = new RoomManager();
+        drawActiveRoom();
+
         // Initialize a wall ImageView, add it to the root
         this.wallView = new ImageView();
-        this.root.getChildren().add(wallView);
+        //this.root.getChildren().add(wallView);
+
+        this.root.getChildren().add(roomPane);
 
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
+
     }
 
     /**
@@ -85,14 +105,45 @@ public class GameView {
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
-        // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
-        Image image = new Image("cscigroup3project/roomTiles/Wall_front.png");
-        this.wallView.setImage(image); // TODO - hardcoding image file?
-        this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
-        this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
+        this.roomPane.setTranslateX(200);
+        this.roomPane.setTranslateY(200);
 
-        this.wallView.setTranslateX(theModel.getWall().getBounds().getX()+theModel.getWall().getBounds().getWidth()/2);
-        this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
+        // Style the ImageView of the Wall with its model height, width, translated position, and set its Image
+        //Image image = new Image("cscigroup3project/roomTiles/Wall_front.png");
+        //this.wallView.setImage(image); // TODO - hardcoding image file?
+        //this.wallView.setFitHeight(theModel.getWall().getBounds().getHeight());
+        //this.wallView.setFitWidth(theModel.getWall().getBounds().getWidth());
+
+        //this.wallView.setTranslateX(theModel.getWall().getBounds().getX()+theModel.getWall().getBounds().getWidth()/2);
+        //this.wallView.setTranslateY(theModel.getWall().getBounds().getY()+theModel.getWall().getBounds().getHeight()/2);
+    }
+
+    private void drawActiveRoom(){
+        Room activeRoom = roomManager.getActiveRoom();
+        if (activeRoom != null){
+            drawRoom(activeRoom);
+        }
+    }
+
+    private void drawRoom(Room room){
+        for (ArrayList<GameObject> arrGO : room.getGameObjects()) {
+            for (GameObject gameObject : arrGO) {
+                drawGameObject(gameObject);
+            }
+        }
+    }
+
+    private void drawGameObject(GameObject gameObject){;
+        Rectangle objectRect = new Rectangle(
+                gameObject.getxPos(),
+                gameObject.getyPos(),
+                gameObject.getWidth(),
+                gameObject.getHeight()
+        );
+
+        objectRect.setFill(new ImagePattern(gameObject.getSprite()));
+
+        roomPane.getChildren().add(objectRect);
     }
 
     /**

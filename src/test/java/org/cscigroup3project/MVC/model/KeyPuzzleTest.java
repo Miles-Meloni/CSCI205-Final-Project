@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Simple tests to make sure that the puzzle works outside JavaFx
  */
 class KeyPuzzleTest {
+    //TODO fix this test
     /** the first key to be added to the inventory **/
     private Key k1 = new Key("key1");
     /** the second key to be added to the inventory **/

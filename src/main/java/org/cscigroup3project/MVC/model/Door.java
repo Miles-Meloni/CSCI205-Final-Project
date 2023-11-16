@@ -20,8 +20,10 @@ package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public class Door extends GameObject{
-    public Door(int x, int y, int w, int h, Image[] sprites) {
+    public Door(int x, int y, int w, int h, ArrayList<Image> sprites) {
         super(x, y, w, h, sprites);
     }
     //TODO: The whole class

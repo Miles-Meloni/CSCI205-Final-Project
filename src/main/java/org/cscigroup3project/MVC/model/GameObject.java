@@ -20,6 +20,8 @@ package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 public class GameObject {
 
     //TODO change to enum??
@@ -35,9 +37,9 @@ public class GameObject {
     private Image sprite;
 
     /** all sprites which can be used by the object*/
-    private Image[] sprites;
+    private ArrayList<Image> sprites;
 
-    public GameObject (int x, int y, int w, int h, Image[] sprites){
+    public GameObject (int x, int y, int w, int h, ArrayList<Image> sprites){
         this.id = "";
         this.xPos = x;
         this.yPos = y;
@@ -45,10 +47,16 @@ public class GameObject {
         this.height = h;
         this.sprites = sprites;
 
-        this.sprite = this.sprites[0];
+        //TODO change later - testing for view
+        if (sprites == null){
+            this.sprite = new Image("cscigroup3project/AmogusTest.png");
+        }
+        else {
+            this.sprite = this.sprites.get(0);
+        }
     }
 
-    public GameObject (int x, int y, int w, int h, Image[] sprites, String id){
+    public GameObject (int x, int y, int w, int h, ArrayList<Image> sprites, String id){
         this.id = id;
         this.xPos = x;
         this.yPos = y;
@@ -56,18 +64,44 @@ public class GameObject {
         this.height = h;
         this.sprites = sprites;
 
-        this.sprite = this.sprites[0];
+        if (sprites == null){
+            System.out.println("NULLLLL");
+            this.sprite = new Image("cscigroup3project/AmogusTest.png");
+        }
+        else {
+            this.sprite = this.sprites.get(0);
+        }
     }
 
     /** Assigns a sprite to a certain sprite in the array.
      * If there is no valid sprite at the index, it adds the default sprite.
      */
     public void setSprite(int pos) {
-        if(pos >= 0 & pos < sprites.length) {
-            this.sprite = sprites[pos];
+        if(pos >= 0 & pos < sprites.size()) {
+            this.sprite = sprites.get(pos);
             }
-        else {this.sprite = sprites[0];}
+        else {this.sprite = sprites.get(0);}
 
+    }
+
+    public Image getSprite() {
+        return sprite;
+    }
+
+    public int getxPos() {
+        return xPos;
+    }
+
+    public int getyPos() {
+        return yPos;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public String getId() {

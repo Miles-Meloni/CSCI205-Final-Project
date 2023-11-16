@@ -21,6 +21,8 @@ package org.cscigroup3project.MVC.model;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+
 /**
  * Class that represents disks, containing a music file, that can be picked up, equipped, and used by the {@link Player}.
  */
@@ -32,7 +34,7 @@ public class Disk extends GameObject implements Storable{
     /** File of the disk's music */
     private String file;
 
-    public Disk(int x, int y, Image[] sprites, String id) {
+    public Disk(int x, int y, ArrayList<Image> sprites, String id) {
         super(x, y, 16, 16, sprites, id);
     }
 

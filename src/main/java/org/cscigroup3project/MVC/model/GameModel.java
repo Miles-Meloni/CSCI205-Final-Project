@@ -53,7 +53,8 @@ public class GameModel {
 
         // single Wall for implementing collisions
         // minX and minY define upper left corner position
-        this.wall = new Wall(100,50,50,50,new Image[1]);
+        //TODO either uncomment or delete
+        //this.wall = new Wall(100,50,50,50,new Image[1]);
 
     }
 
