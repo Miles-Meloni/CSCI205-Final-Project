@@ -24,10 +24,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -58,8 +55,8 @@ public class GameView {
     /** A {@link javafx.scene.layout.StackPane} for the textbox */
     private StackPane textboxPane;
 
-    /** A {@link GridPane} for storing the inventory */
-    private GridPane inventoryPane;
+    /** A {@link javafx.scene.layout.VBox} for storing the inventory */
+    private VBox inventoryPane;
 
     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
@@ -144,7 +141,7 @@ public class GameView {
         this.root.getChildren().add(overlayPane);
 
         // set up the inventory pane
-        this.inventoryPane = new GridPane();
+        this.inventoryPane = new VBox();
         this.inventoryPane.setVisible(false);
 
         this.root.getChildren().add(inventoryPane);
@@ -161,6 +158,7 @@ public class GameView {
         this.playerView.setImage(theModel.getPlayer().getImage());
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
+
 
         // Style the imageview of the key view
         this.keyView1.setImage(theModel.getKeys()[0].getSprite());
@@ -252,7 +250,7 @@ public class GameView {
         return playerView;
     }
 
-    public GridPane getInventoryPane() {
+    public VBox getInventoryPane() {
         return inventoryPane;
     }
 
@@ -263,4 +261,5 @@ public class GameView {
     public void setTextboxText(String s) {
         textLabel.setText(s);
     }
+
 }

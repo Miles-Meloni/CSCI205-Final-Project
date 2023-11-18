@@ -22,6 +22,9 @@ package org.cscigroup3project.MVC.controller;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.view.GameView;
 
@@ -48,6 +51,10 @@ public class GameController {
     /** The arraylist that looks at our player data, and displays it. */
     private ArrayList<String> localArray;
 
+    // TODO: likely needs moved elsewhere
+    /** Unselected and selected rectangles for border purposes */
+    private Rectangle unselected, selected;
+
     /**
      * Constructor for the GameController.
      *
@@ -62,6 +69,14 @@ public class GameController {
         this.textArray = new ArrayList<>();
         this.textArray.add("Have some text");
         this.textArray.add("Have some more");
+
+        this.selected = new Rectangle(16,16);
+        this.selected.setFill(null);
+        this.selected.setStroke(Color.WHITE);
+
+        this.unselected = new Rectangle(16,16);
+        this.unselected.setFill(null);
+        this.unselected.setStroke(Color.TRANSPARENT);
 
         initBindings();
         initEventHandlers();
@@ -79,12 +94,12 @@ public class GameController {
      */
     private void initBindings() {
 
+        //TODO fix the bounding box error for non-player objects (keys, for now)
+
         // Bind the PlayerView's position and image to the Player's x, y, and image properties
         theView.getPlayerView().translateXProperty().bind(theModel.getPlayer().getxProperty());
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
         theView.getPlayerView().imageProperty().bind(theModel.getPlayer().playerImageProperty());
-
-        //TODO remove; debugging only
 
     }
 
@@ -95,25 +110,30 @@ public class GameController {
      */
     public void handleKeyPress(KeyEvent event) {
 
-        // Match the arrow key input, move the Player in the corresponding direction.
-        // Check for collisions after each movement, if there is, move in the opposite direction
+        // if the textbox is not visible, check for inventory or environmental actions
         if(!theView.isTextboxVisible()) {
-            switch (event.getCode()) {
-                case DOWN -> { theModel.getPlayer().move(Direction.DOWN); }
-                case LEFT -> { theModel.getPlayer().move(Direction.LEFT); }
-                case UP -> { theModel.getPlayer().move(Direction.UP); }
-                case RIGHT -> { theModel.getPlayer().move(Direction.RIGHT); }
-                case C -> { findItem(); }
-                case E -> { toggleInventory(); }
-                case Q -> {
-                    localArray = new ArrayList<>(textArray);
-                    updateTextbox();
-                } //TODO for full functionality get boxes from user
-            }
 
+            // if the inventory is currently opened
+            if (theView.getInventoryPane().isVisible()){
+                inventoryAction(event);
+            }
+            // if the inventory is not opened, check for environment actions
+            else {
+                environmentAction(event);
+            }
         }
+        // otherwise, any keypress updates the text box
         else{ updateTextbox();}
 
+        // check for collisions with walls
+        checkCollisions(event);
+    }
+
+    /**
+     * Check for collisions with walls
+     * @param event the key event that triggered the collision check
+     */
+    private void checkCollisions(KeyEvent event) {
         for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                     wall.getBounds().localToParent(wall.getBounds().getBoundsInLocal()))) {
@@ -135,6 +155,115 @@ public class GameController {
         }
     }
 
+    /**
+     * Handle environmental actions, such as movement, item pickup, and inventory toggling
+     * @param event the key event that triggered the environmental action
+     */
+    private void environmentAction(KeyEvent event) {
+        switch (event.getCode()) {
+            case DOWN -> {
+                theModel.getPlayer().move(Direction.DOWN);
+            }
+            case LEFT -> {
+                theModel.getPlayer().move(Direction.LEFT);
+            }
+            case UP -> {
+                theModel.getPlayer().move(Direction.UP);
+            }
+            case RIGHT -> {
+                theModel.getPlayer().move(Direction.RIGHT);
+            }
+            case C -> {
+                findItem();
+            }
+            case E -> {
+                toggleInventory();
+            }
+            case Q -> {
+                localArray = new ArrayList<>(textArray);
+                updateTextbox();
+            } //TODO for full functionality get boxes from user
+        }
+    }
+
+    /**
+     * Handle inventory actions, such as item selection, dropping, and toggling
+     * @param event the key event that triggered the inventory action
+     */
+    private void inventoryAction(KeyEvent event) {
+        // select item in inventory based on up and down arrows
+        // highlight item with white box if selected, starting with first item
+        switch (event.getCode()) {
+            // toggle inventory with E
+            case E -> {
+                toggleInventory();
+            }
+            // select item in inventory with down arrow
+            case DOWN -> {
+                if (!theModel.getPlayer().getInventory().isEmpty()) {
+
+                    updateItemSelection(unselected);
+
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() + 1);
+                    if (theModel.getPlayer().getInventoryTracker() >= theModel.getPlayer().getInventory().size()) {
+                        theModel.getPlayer().setInventoryTracker(0);
+                    }
+
+                    updateItemSelection(selected);
+
+                }
+            }
+            // select item in inventory based on up arrow
+            case UP -> {
+                if (!theModel.getPlayer().getInventory().isEmpty()) {
+                    updateItemSelection(unselected);
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() - 1);
+                    if (theModel.getPlayer().getInventoryTracker() < 0) {
+                        theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventory().size() - 1);
+                    }
+                    updateItemSelection(selected);
+                }
+            }
+            // drop item if C is pressed
+            case C -> {
+                // only execute if the inventory is not empty
+                if (!theModel.getPlayer().getInventory().isEmpty()){
+
+                    updateItemSelection(unselected);
+
+                    // drop an item and adjust the inventory tracker
+                    dropItem();
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() - 1);
+                    if (theModel.getPlayer().getInventoryTracker() < 0) {
+                        theModel.getPlayer().setInventoryTracker(0);
+                    }
+                    else {
+                        updateItemSelection(selected);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Update the selection of the item in the inventory
+     * @param selection the selection to be changed in the inventory
+     */
+    private void updateItemSelection(Rectangle selection) {
+        StackPane pane = (StackPane) theView.getInventoryPane().getChildren().get(theModel.getPlayer().getInventoryTracker());
+
+        pane.getChildren().remove(unselected);
+        pane.getChildren().remove(selected);
+
+        pane.getChildren().add(selection);
+
+        theView.getInventoryPane().getChildren().remove(theModel.getPlayer().getInventoryTracker());
+        theView.getInventoryPane().getChildren().add(theModel.getPlayer().getInventoryTracker(), pane);
+    }
+
+    /**
+     * Update the textbox with the next text in the array
+     */
     private void updateTextbox() {
         if (localArray.isEmpty()){
             theView.setTextboxVisibility(false);
@@ -179,13 +308,25 @@ public class GameController {
      * @param object the object to be picked up
      */
     private void pickUpItem(GameObject object){
-
+        // pick up the item and remove it from the room
         theModel.getPlayer().pickUpItem(object);
         theModel.getRoomManager().getActiveRoom().removeObject(object);
 
+        // add the item to the inventory and add the image to the view
         ImageView objectView = new ImageView(object.getSprite());
+        StackPane imagePane = new StackPane();
 
-        theView.getInventoryPane().add(objectView,0, theModel.getPlayer().getInventory().size());
+        imagePane.getChildren().add(objectView);
+
+
+        if (theModel.getPlayer().getInventory().size() == 1) {
+            imagePane.getChildren().add(selected);
+        }
+        else{
+            imagePane.getChildren().add(unselected);
+        }
+
+        theView.getInventoryPane().getChildren().add(imagePane);
 
         for (ImageView imgView : theView.getAllViews()){
             if (imgView.getImage() == object.getSprite()){
@@ -193,6 +334,29 @@ public class GameController {
             }
         }
 
+    }
+
+    /**
+     * drop and return the current item selected by the player's inventory
+     */
+    private GameObject dropItem(){
+        // get the item that the player is dropping
+        GameObject droppedItem = theModel.getPlayer().dropItem();
+
+        // remove the item from the inventory and remove the image from the view
+        theView.getInventoryPane().getChildren().remove(theModel.getPlayer().getInventoryTracker());
+
+        // add the item to the room and add the image to the view
+        theModel.getRoomManager().getActiveRoom().addObject(droppedItem);
+        ImageView objectView = new ImageView(droppedItem.getSprite());
+        theView.getRoot().getChildren().add(objectView);
+
+        // set the position of the image to the player's position
+        objectView.setTranslateX(theModel.getPlayer().getxPos());
+        objectView.setTranslateY(theModel.getPlayer().getyPos());
+
+        // return the item
+        return droppedItem;
     }
 
     /**

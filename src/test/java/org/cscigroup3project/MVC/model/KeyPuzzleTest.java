@@ -30,7 +30,7 @@ class KeyPuzzleTest {
 
     @BeforeEach
     void setUp() {
-        sprites.add(new Image("src/test/resources/org.cscigroup3project/Sprites/PS1.png"));
+        sprites.add(new Image("/cscigroup3project/Sprites/PS1.png"));
         k1 = new Key(1, 1, sprites, "key1" );
         k2 = new Key(1, 1, sprites, "key2" );
         inventory1.addItem(k1);
