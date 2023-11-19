@@ -328,6 +328,7 @@ public class GameController {
 
         theView.getInventoryPane().getChildren().add(imagePane);
 
+        // if the image matches, turn off visibility
         for (ImageView imgView : theView.getAllViews()){
             if (imgView.getImage() == object.getSprite()){
                 imgView.setVisible(false);
@@ -342,18 +343,23 @@ public class GameController {
     private GameObject dropItem(){
         // get the item that the player is dropping
         GameObject droppedItem = theModel.getPlayer().dropItem();
+        droppedItem.setxPos(theModel.getPlayer().getxPos());
+        droppedItem.setyPos(theModel.getPlayer().getyPos());
 
         // remove the item from the inventory and remove the image from the view
         theView.getInventoryPane().getChildren().remove(theModel.getPlayer().getInventoryTracker());
 
         // add the item to the room and add the image to the view
         theModel.getRoomManager().getActiveRoom().addObject(droppedItem);
-        ImageView objectView = new ImageView(droppedItem.getSprite());
-        theView.getRoot().getChildren().add(objectView);
 
-        // set the position of the image to the player's position
-        objectView.setTranslateX(theModel.getPlayer().getxPos());
-        objectView.setTranslateY(theModel.getPlayer().getyPos());
+        // if the image matches, move the translation and set to visible
+        for (ImageView imgView : theView.getAllViews()){
+            if (imgView.getImage() == droppedItem.getSprite()){
+                imgView.setTranslateX(droppedItem.getxPos());
+                imgView.setTranslateY(droppedItem.getyPos());
+                imgView.setVisible(true);
+            }
+        }
 
         // return the item
         return droppedItem;
