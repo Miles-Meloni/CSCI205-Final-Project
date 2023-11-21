@@ -153,8 +153,8 @@ public class GameView {
     public void initStyling(){
 
         // Style the ImageView of the Player with its height and width, and set its image
-        this.playerView.setFitHeight(theModel.getPlayer().getBounds().getHeight()+theModel.getPlayer().getDIFF());
-        this.playerView.setFitWidth(theModel.getPlayer().getBounds().getWidth());
+        this.playerView.setFitHeight(theModel.getPlayer().getHeight());
+        this.playerView.setFitWidth(theModel.getPlayer().getWidth());
         this.playerView.setImage(theModel.getPlayer().getImage());
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());

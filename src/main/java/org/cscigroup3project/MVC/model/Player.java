@@ -135,7 +135,7 @@ public class Player {
         // Initialize Player collision and reach bounds. Shift left and down by half of width floored
         int startX = WIDTH * -1 / 2;
         int startY = HEIGHT * -1 / 2;
-        this.bounds = new Rectangle(startX, startY + DIFF, WIDTH, HEIGHT - 2*DIFF);
+        this.bounds = new Rectangle(startX, startY + DIFF, WIDTH, HEIGHT - 2*DIFF + 4);
         this.reach = new Rectangle(startX-REACH, startY-REACH, WIDTH + 2*REACH, HEIGHT + 2*REACH);
     }
 
@@ -448,5 +448,15 @@ public class Player {
     /** Getter for the Player's currently selected inventory item */
     public int getInventoryTracker() {
         return inventoryTracker;
+    }
+
+    /**Getter for player SPRITE width*/
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    /**Getter for player SPRITE height*/
+    public int getHeight() {
+        return HEIGHT;
     }
 }
