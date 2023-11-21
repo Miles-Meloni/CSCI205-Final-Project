@@ -74,6 +74,9 @@ public class Player {
     /** Player sprites array */
     private ArrayList<Image> images;
 
+    /** Tracker for current place in inventory */
+    private int inventoryTracker;
+
     /** Player move speed constant*/
     private final int MOVE_SPEED = 3;
 
@@ -122,6 +125,7 @@ public class Player {
         this.state = PlayerState.IDLE;
         this.name = name;
         this.inventory = new Inventory();
+        this.inventoryTracker = 0;
 
         //this.playerImage = new PlayerObjectBinding<Image>(image);
         this.playerImage = new SimpleObjectProperty<>(image);
@@ -409,15 +413,14 @@ public class Player {
      *
      * @param item The item to be added to the player's inventory.
      */
-    public void pickUpItem(Object item) { inventory.addItem(item); }
+    public void pickUpItem(GameObject item) { inventory.addItem(item); }
 
     /**
      * Remove an item from the player's inventory.
      *
-     * @param item The item to be removed from the player's inventory.
      * @return True if the item was successfully removed, false otherwise.
      */
-    public boolean getRidOfItem(Object item) { return inventory.removeItemByObject(item); }
+    public GameObject dropItem() { return inventory.removeItemByIndex(inventoryTracker); }
 
     public Inventory getInventory() { return inventory; }
 
@@ -436,4 +439,14 @@ public class Player {
 
     /** Getter for the Player's difference between sprite and collision bounds */
     public int getDIFF() { return DIFF; }
+
+    /** Setter for the Player's currently selected inventory item */
+    public void setInventoryTracker(int inventoryTracker) {
+        this.inventoryTracker = inventoryTracker;
+    }
+
+    /** Getter for the Player's currently selected inventory item */
+    public int getInventoryTracker() {
+        return inventoryTracker;
+    }
 }

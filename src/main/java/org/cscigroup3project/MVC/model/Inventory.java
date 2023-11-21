@@ -23,20 +23,20 @@ import java.util.ArrayList;
 public class Inventory {
 
     /** All items contained by the inventory */
-    private ArrayList<Object> items;
+    private ArrayList<GameObject> items;
 
     /**
      * Empty constructor
      */
     public Inventory(){
-        items = new ArrayList<Object>();
+        items = new ArrayList<GameObject>();
     }
 
     /**
      * Constructor with initial items
      * @param initialItems the initial items in the inventory
      */
-    public Inventory(ArrayList<Object> initialItems){
+    public Inventory(ArrayList<GameObject> initialItems){
         items = initialItems;
     }
 
@@ -44,7 +44,7 @@ public class Inventory {
      * adds an item to the player inventory
      * @param item - the object to be added to the inventory
      */
-    public void addItem(Object item){
+    public void addItem(GameObject item){
         items.add(item);
     }
 
@@ -69,7 +69,7 @@ public class Inventory {
      * @param index the index of the object to be removed
      * @return the object that was removed
      */
-    public Object removeItemByIndex(int index){
+    public GameObject removeItemByIndex(int index){
         return items.remove(index);
     }
 
@@ -82,6 +82,7 @@ public class Inventory {
     }
 
 
-
-
+    public boolean isEmpty() {
+        return items.isEmpty();
+    }
 }

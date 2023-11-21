@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
-
+    //TODO: fix test to use GameObjects now
     private Inventory inventory;
     private Object item1;
     private Object item2;

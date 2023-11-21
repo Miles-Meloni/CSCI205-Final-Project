@@ -95,6 +95,14 @@ public class GameObject {
         return sprite;
     }
 
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
     public int getxPos() {
         return xPos;
     }
