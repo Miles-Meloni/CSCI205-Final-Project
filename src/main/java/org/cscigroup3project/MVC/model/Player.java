@@ -13,7 +13,7 @@
  * Class: Player
  *
  * Description:
- * Basic class containing a Player object
+ * Basic class containing a Player object, and describes its state.
  * ****************************************
  */
 
@@ -25,6 +25,21 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
+
+/**
+ * Enumeration describing the current state of the {@link Player}.
+ */
+enum PlayerState {
+
+    /** The {@link Player} is not moving */
+    IDLE,
+
+    /** The {@link Player} is moving */
+    MOVING,
+
+    /** The {@link Player} is interacting with an object or interface */
+    EXPLORING,
+}
 
 /**
  * A class representing a player object in the game.
