@@ -17,13 +17,15 @@
  * ****************************************
  */
 
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.player;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
+
 import java.util.ArrayList;
 
 /**

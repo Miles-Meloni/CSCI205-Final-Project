@@ -20,6 +20,13 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.Disk;
+import org.cscigroup3project.MVC.model.gameObject.Key;
+import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.player.Player;
+import org.cscigroup3project.MVC.model.room.Room;
+import org.cscigroup3project.MVC.model.room.RoomManager;
+
 import java.util.ArrayList;
 
 /**
@@ -43,7 +50,7 @@ public class GameModel {
     private Key key1;
     private Key key2;
 
-    /** The {@link org.cscigroup3project.MVC.model.RoomManager} for the game */
+    /** The {@link RoomManager} for the game */
     private RoomManager roomManager;
 
     /**

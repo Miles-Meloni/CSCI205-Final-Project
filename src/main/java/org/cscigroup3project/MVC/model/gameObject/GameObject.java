@@ -16,10 +16,11 @@
  *
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.model.room.SpriteType;
 
 import java.util.ArrayList;
 

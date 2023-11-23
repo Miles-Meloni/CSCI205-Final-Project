@@ -16,32 +16,28 @@
  * Class that represents keys that can be used by the Player.
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Interactible;
+import org.cscigroup3project.MVC.model.player.Player;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Storable;
 
 import java.util.ArrayList;
 
 /**
- * Class that represents disks, containing a music file, that can be picked up, equipped, and used by the {@link Player}.
+ * Class that represents keys that can be picked up, equipped, and used by the {@link Player}.
  */
-public class Disk extends GameObject implements Storable{
+public class Key extends GameObject implements Storable, Interactible {
 
-    /** Name of the disk object */
+    /** Name of the key object */
     private String name;
 
-    /** File of the disk's music */
-    private String file;
-
-    public Disk(int x, int y, ArrayList<Image> sprites, String id) {
+    public Key(int x, int y, ArrayList<Image> sprites, String id) {
         super(x, y, 16, 16, sprites, id);
     }
 
-
-    public String getFile() {
-        return file;
-    }
 
     @Override
     public Rectangle getBounds() {
@@ -56,6 +52,11 @@ public class Disk extends GameObject implements Storable{
 
     @Override
     public void deploy(int x, int y) {
+
+    }
+
+    @Override
+    public void react() {
 
     }
 }

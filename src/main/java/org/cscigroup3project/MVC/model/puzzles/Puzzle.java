@@ -1,4 +1,4 @@
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.puzzles;
 
 /**
  * interface for the puzzles that the game will hold

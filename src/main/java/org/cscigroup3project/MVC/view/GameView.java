@@ -19,16 +19,18 @@
 
 package org.cscigroup3project.MVC.view;
 
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
+import org.cscigroup3project.MVC.model.gameObject.Key;
+import org.cscigroup3project.MVC.model.room.Room;
+import org.cscigroup3project.MVC.model.room.RoomManager;
 
 import java.util.ArrayList;
 

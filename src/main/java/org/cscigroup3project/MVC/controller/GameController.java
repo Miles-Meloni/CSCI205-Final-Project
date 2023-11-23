@@ -26,6 +26,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
+import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.player.Direction;
 import org.cscigroup3project.MVC.view.GameView;
 
 import java.util.ArrayList;

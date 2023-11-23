@@ -1,4 +1,4 @@
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.player;
 
 public enum Direction {
     UP,

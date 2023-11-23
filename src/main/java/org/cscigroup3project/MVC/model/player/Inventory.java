@@ -16,7 +16,9 @@
  *
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.player;
+
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
 
 import java.util.ArrayList;
 

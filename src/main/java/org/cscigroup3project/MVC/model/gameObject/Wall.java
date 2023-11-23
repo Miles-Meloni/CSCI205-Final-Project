@@ -17,11 +17,12 @@
  * ****************************************
  */
 
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Collidable;
+import org.cscigroup3project.MVC.model.player.Player;
 
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  * Class that represents wall objects that the {@link Player} cannot walk through. Uses a
  * {@link Rectangle} in order to help checking for collisions.
  */
-public class Wall extends GameObject implements Collidable{
+public class Wall extends GameObject implements Collidable {
 
     /** The {@link Rectangle} of the Wall */
     private Rectangle bounds;

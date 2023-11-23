@@ -1,6 +1,7 @@
 package org.cscigroup3project.MVC.model;
 
-import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.player.Direction;
+import org.cscigroup3project.MVC.model.player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

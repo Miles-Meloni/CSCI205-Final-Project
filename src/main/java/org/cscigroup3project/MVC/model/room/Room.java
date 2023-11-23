@@ -16,7 +16,12 @@
  *
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.room;
+
+import org.cscigroup3project.MVC.model.gameObject.Door;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
+import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.player.Player;
 
 import java.util.ArrayList;
 

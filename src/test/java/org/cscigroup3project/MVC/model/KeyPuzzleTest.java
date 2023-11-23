@@ -1,6 +1,9 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.Key;
+import org.cscigroup3project.MVC.model.player.Inventory;
+import org.cscigroup3project.MVC.model.puzzles.KeyPuzzle;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

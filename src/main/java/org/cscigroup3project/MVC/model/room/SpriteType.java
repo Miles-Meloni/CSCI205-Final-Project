@@ -1,4 +1,4 @@
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.room;
 
 public enum SpriteType {
     BACK_LEFT,

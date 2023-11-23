@@ -16,7 +16,10 @@
  *
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.puzzles;
+
+import org.cscigroup3project.MVC.model.gameObject.Key;
+import org.cscigroup3project.MVC.model.player.Inventory;
 
 /**
  * Takes in the player inventory and two key objects, checks if the keys are in the inventory

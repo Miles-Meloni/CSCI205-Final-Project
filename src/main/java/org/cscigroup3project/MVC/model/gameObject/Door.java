@@ -16,13 +16,14 @@
  *
  * ****************************************
  */
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
 
 import java.util.ArrayList;
 
-public class Door extends GameObject{
+public class Door extends GameObject {
     public Door(int x, int y, int w, int h, ArrayList<Image> sprites) {
         super(x, y, w, h, sprites);
     }

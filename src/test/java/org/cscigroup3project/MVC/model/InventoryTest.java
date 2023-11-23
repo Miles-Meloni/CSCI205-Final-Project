@@ -1,5 +1,6 @@
 package org.cscigroup3project.MVC.model;
 
+import org.cscigroup3project.MVC.model.player.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

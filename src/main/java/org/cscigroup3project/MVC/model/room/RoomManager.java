@@ -17,9 +17,13 @@
  * ****************************************
  */
 
-package org.cscigroup3project.MVC.model;
+package org.cscigroup3project.MVC.model.room;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
+import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.room.Room;
+import org.cscigroup3project.MVC.model.room.SpriteType;
 
 import java.util.ArrayList;
 
