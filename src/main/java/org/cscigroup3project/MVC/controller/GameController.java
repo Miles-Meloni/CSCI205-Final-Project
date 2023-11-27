@@ -95,7 +95,10 @@ public class GameController {
         initBindings();
         initEventHandlers();
 
-        DEFAULT_SONG = new Media ("cscigroup3project/music/PinkDisk.mp3");
+        ClassLoader classLoader = getClass().getClassLoader();
+        String resourcePass = "cscigroup3project/music/PinkDisk.mp3";
+        String resourceURL = classLoader.getResource(resourcePass).toExternalForm();
+        DEFAULT_SONG = new Media (resourceURL);
         backgroundPlayer = new MediaPlayer(DEFAULT_SONG);
         backgroundPlayer.setAutoPlay(true);
     }
