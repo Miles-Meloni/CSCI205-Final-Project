@@ -113,22 +113,19 @@ public class GameController {
      */
     public void handleKeyPress(KeyEvent event) {
 
-        // if the textbox is not visible, check for inventory or environmental actions
-        if(!theView.isTextboxVisible()) {
+        // If the inventory is open, check for inventory actions
+        if (theView.getInventoryPane().isVisible()) { inventoryAction(event); }
 
-            // if the inventory is currently opened
-            if (theView.getInventoryPane().isVisible()){
-                inventoryAction(event);
-            }
-            // if the inventory is not opened, check for environment actions
-            else {
-                environmentAction(event);
-            }
-        }
-        // otherwise, any keypress updates the text box
-        else{ updateTextbox();}
+        // If the inventory is not open
+        else {
 
-        // check for collisions with walls
+            // If a text box is visible, close it
+            if (theView.isTextboxVisible()) { theView.setTextboxVisibility(false); }
+
+            // Check for environment actions
+            environmentAction(event); }
+
+        // Always check for collisions with walls
         checkCollisions(event);
     }
 
@@ -177,14 +174,19 @@ public class GameController {
                 theModel.getPlayer().move(Direction.RIGHT);
             }
             case C -> {
-                findItem();
+                GameObject foundObject = findItem();
+                pickUpItem(foundObject);
             }
             case E -> {
                 toggleInventory();
             }
             case Q -> {
-                localArray = new ArrayList<>(textArray);
-                updateTextbox();
+
+                // If the text box is visible, close it
+                if (theView.isTextboxVisible()) { theView.setTextboxVisibility(false); }
+
+                // If the text box is not visible, show it, find the item, and show its text
+                else { GameObject foundObject = findItem(); updateTextbox(foundObject); }
             } //TODO for full functionality get boxes from user
         }
     }
@@ -267,43 +269,48 @@ public class GameController {
     /**
      * Update the textbox with the next text in the array
      */
-    private void updateTextbox() {
-        if (localArray.isEmpty()){
-            theView.setTextboxVisibility(false);
-        }
-        else{
-            theView.setTextboxVisibility(true);
-            theView.setTextboxText(localArray.get(0));
-            localArray.remove(0);
+    private void updateTextbox(GameObject foundObject) {
 
+        // If the foundObject is not null, show the text box, set the text from the foundObject
+        if (foundObject != null) {
+            theView.setTextboxVisibility(true);
+            theView.setTextboxText(foundObject.getId());
         }
     }
 
     /**
-     * Find an item in range, if it exists, among all items in the active room
+     * Find an item in range, if it exists, among all items in the active room.
+     *
+     * @return foundObject, the item the Player can pick up
      */
-    private void findItem(){
+    private GameObject findItem(){
 
+        // Set up a variable to contain the GameObject, if we find one
+        GameObject foundObject = null;
+
+        // Set up tracking variables to see if we need to exit the loop
         boolean found = false;
         int index = 0;
 
-        // while loop because we only want to pick up a single item
+        // While loop because we only want to pick up a single item.
+        // Continue while a GameObject is not found, and we still have items to search for
         while (!found && index < theModel.getRoomManager().getActiveRoom().getItemObjects().size()){
 
-            // set the current object and increment index
-            GameObject object = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
+            // Set the current object and increment index
+            GameObject currentObject = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
             index++;
 
             // check for intersection; if there, pick it up!
             if (theModel.getPlayer().getReach().getBoundsInLocal().intersects(
-                    object.getBounds().localToParent(object.getBounds().getBoundsInLocal()))) {
+                    currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal()))) {
 
-                pickUpItem(object);
+                foundObject = currentObject;
                 found = true;
-
             }
         }
 
+        // Return the found GameObject
+        return foundObject;
     }
 
     /**
