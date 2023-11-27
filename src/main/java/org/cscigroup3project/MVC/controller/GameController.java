@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
+import javafx.scene.media.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -58,6 +59,16 @@ public class GameController {
     /** Unselected and selected rectangles for border purposes */
     private Rectangle unselected, selected;
 
+    // TODO: remove hardcoding
+    /** Background audio that plays when game is started*/
+    private Media DEFAULT_SONG;
+
+    /** Audio track for music/background audio */
+    private MediaPlayer backgroundPlayer;
+
+    /** Audio track for sound effects */
+    private MediaPlayer sfxPlayer;
+
     /**
      * Constructor for the GameController.
      *
@@ -83,6 +94,10 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
+
+        DEFAULT_SONG = new Media ("cscigroup3project/music/PinkDisk.mp3");
+        backgroundPlayer = new MediaPlayer(DEFAULT_SONG);
+        backgroundPlayer.setAutoPlay(true);
     }
 
     /**
