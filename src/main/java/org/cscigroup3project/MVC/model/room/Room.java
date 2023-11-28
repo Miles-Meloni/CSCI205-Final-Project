@@ -19,6 +19,7 @@
 package org.cscigroup3project.MVC.model.room;
 
 import org.cscigroup3project.MVC.model.gameObject.Door;
+import org.cscigroup3project.MVC.model.gameObject.DoorFrame;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
 import org.cscigroup3project.MVC.model.player.Player;
@@ -81,12 +82,6 @@ public class Room {
         return itemObjects;
     }
 
-    /**
-     * Add an object to the room
-     */
-    //public void addObject(GameObject gameObject){
-      //  this.gameObjects.add(gameObject);
-    //}
 
     /**
      * Getter for all {@link Wall} objects of the room
@@ -108,18 +103,18 @@ public class Room {
     /**
      * Getter for all {@link Door} objects of the room
      */
-    public ArrayList<Door> getDoors(){
-        ArrayList<Door> doors = new ArrayList<>();
+    public ArrayList<DoorFrame> getDoors(){
+        ArrayList<DoorFrame> doorFrames = new ArrayList<>();
 
         for (ArrayList<GameObject> arrGO : baseObjects) {
             for (GameObject gameObject : arrGO) {
-                if (gameObject instanceof Door) {
-                    doors.add((Door) gameObject);
+                if (gameObject instanceof DoorFrame) {
+                    doorFrames.add((DoorFrame) gameObject);
                 }
             }
         }
 
-        return doors;
+        return doorFrames;
     }
 
     public void addObject(GameObject addition){

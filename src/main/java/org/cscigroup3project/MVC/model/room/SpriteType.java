@@ -9,5 +9,5 @@ public enum SpriteType {
     FRONT,
     LEFT,
     RIGHT,
-    FLOOR
+    FLOOR,
 }

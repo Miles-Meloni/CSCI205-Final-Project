@@ -26,6 +26,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
+import org.cscigroup3project.MVC.model.gameObject.Door;
+import org.cscigroup3project.MVC.model.gameObject.DoorFrame;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
 import org.cscigroup3project.MVC.model.player.Direction;
@@ -137,23 +139,55 @@ public class GameController {
      * @param event the key event that triggered the collision check
      */
     private void checkCollisions(KeyEvent event) {
+        checkWalls(event);
+        checkDoorFrames(event);
+    }
+
+    /**
+     * Check for collisions with walls
+     * @param event the key event that triggered the collision check
+     */
+    private void checkWalls(KeyEvent event) {
         for (Wall wall : theModel.getRoomManager().getActiveRoom().getWalls()) {
+            // if the player intersects with a wall, correct the movement
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                     wall.getBounds().localToParent(wall.getBounds().getBoundsInLocal()))) {
-                switch (event.getCode()) {
-                    case DOWN -> {
-                        theModel.getPlayer().silentMove(Direction.UP);
-                    }
-                    case LEFT -> {
-                        theModel.getPlayer().silentMove(Direction.RIGHT);
-                    }
-                    case UP -> {
-                        theModel.getPlayer().silentMove(Direction.DOWN);
-                    }
-                    case RIGHT -> {
-                        theModel.getPlayer().silentMove(Direction.LEFT);
-                    }
-                }
+                collisionCorrection(event);
+            }
+        }
+    }
+
+    /**
+     * Check for collisions with door frames
+     * @param event the key event that triggered the collision check
+     */
+    private void checkDoorFrames(KeyEvent event) {
+        for (DoorFrame doorFrame : theModel.getRoomManager().getActiveRoom().getDoors()) {
+            // if the player intersects with a door frame, correct the movement
+            if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                    doorFrame.getBounds().localToParent(doorFrame.getBounds().getBoundsInLocal()))) {
+                collisionCorrection(event);
+            }
+        }
+    }
+
+    /**
+     * Correct the player's movement if they collide with a wall
+     * @param event the key event that triggered the collision correction
+     */
+    private void collisionCorrection(KeyEvent event) {
+        switch (event.getCode()) {
+            case DOWN -> {
+                theModel.getPlayer().silentMove(Direction.UP);
+            }
+            case LEFT -> {
+                theModel.getPlayer().silentMove(Direction.RIGHT);
+            }
+            case UP -> {
+                theModel.getPlayer().silentMove(Direction.DOWN);
+            }
+            case RIGHT -> {
+                theModel.getPlayer().silentMove(Direction.LEFT);
             }
         }
     }

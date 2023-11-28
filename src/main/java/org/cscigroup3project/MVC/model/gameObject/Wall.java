@@ -32,7 +32,6 @@ import java.util.ArrayList;
  */
 public class Wall extends GameObject implements Collidable {
 
-    /** The {@link Rectangle} of the Wall */
     private Rectangle bounds;
 
     /**
