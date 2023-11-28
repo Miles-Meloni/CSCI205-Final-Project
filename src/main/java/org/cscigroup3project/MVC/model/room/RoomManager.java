@@ -56,7 +56,7 @@ public class RoomManager {
     /** ArrayList for door images, for now */
     private ArrayList<Image> doorSprites;
 
-    private static final int DOOR_SIZE = 6;
+    private static final int DOOR_SIZE = 3;
 
     /**
      * Creates a RoomManager object.
@@ -71,6 +71,8 @@ public class RoomManager {
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_left.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_right.png"));
+
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
 
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_left.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_right.png"));
@@ -90,11 +92,12 @@ public class RoomManager {
                 }
             }
             }
-
+        doorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
 
 
         floorSprites = new ArrayList<>();
         floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+
 
         generateRooms();
     }
@@ -216,7 +219,7 @@ public class RoomManager {
 
     private Door getDoor(int j, int i){
         Door thisDoor = new Door((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
-                GRID_SIZE, GRID_SIZE, doorSprites);
+                GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE);
 
         if (j ==0){
             thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK);

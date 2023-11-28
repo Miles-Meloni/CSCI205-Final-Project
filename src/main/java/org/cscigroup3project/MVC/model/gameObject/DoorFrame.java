@@ -28,8 +28,6 @@ import java.util.ArrayList;
 
 public class DoorFrame extends GameObject implements Collidable {
 
-    private GameObject frame;
-
     /** The {@link Rectangle} of the DoorFrame */
     private Rectangle bounds;
 
@@ -43,11 +41,7 @@ public class DoorFrame extends GameObject implements Collidable {
      */
     public DoorFrame(int minX, int minY, int w, int h, ArrayList<Image> sprites){
         super(minX, minY, w, h, sprites);
-        frame = new GameObject(minX, minY, w, h, sprites);
-
         this.bounds = new Rectangle(minX, minY, w, h);
-
-
     }
 
     /**
@@ -55,7 +49,7 @@ public class DoorFrame extends GameObject implements Collidable {
      * @param spriteType1 the sprite for the first frame
      */
     public void setSprite(SpriteType spriteType1){
-        frame.setSprite(spriteType1);
+        super.setSprite(spriteType1);
     }
 
     /** Getter for the {@link Rectangle} of this Door */

@@ -84,18 +84,25 @@ public class GameObject {
             case LEFT -> this.sprite = this.sprites.get(2);
             case RIGHT -> this.sprite = this.sprites.get(3);
 
-            case FRONT_LEFT -> this.sprite = this.sprites.get(4);
-            case FRONT_RIGHT -> this.sprite = this.sprites.get(5);
-            case BACK_LEFT -> this.sprite = this.sprites.get(6);
-            case BACK_RIGHT -> this.sprite = this.sprites.get(7);
+            case FLOOR -> this.sprite = this.sprites.get(4);
 
-            case FLOOR -> this.sprite = this.sprites.get(8);
+            case FRONT_LEFT -> this.sprite = this.sprites.get(5);
+            case FRONT_RIGHT -> this.sprite = this.sprites.get(6);
+            case BACK_LEFT -> this.sprite = this.sprites.get(7);
+            case BACK_RIGHT -> this.sprite = this.sprites.get(8);
+
+
         }
 
     }
 
     public Image getSprite() {
         return sprite;
+    }
+
+    // TODO for debugging
+    public ArrayList<Image> getSprites() {
+        return sprites;
     }
 
     public void setxPos(int xPos) {

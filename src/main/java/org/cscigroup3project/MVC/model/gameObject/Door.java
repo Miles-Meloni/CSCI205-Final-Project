@@ -29,7 +29,6 @@ public class Door {
     private DoorFrame topDoorFrame;
     private DoorFrame bottomDoorFrame;
     private static final int GRID_SIZE = 16;
-    private static final int DOOR_SIZE = 4;
 
     /**
      * Constructs a new Door using a position and dimensions.
@@ -39,15 +38,15 @@ public class Door {
      * @param w  the width of the {@code bounds}
      * @param h the height of the {@code bounds}
      */
-    public Door(int minX, int minY, int w, int h, ArrayList<Image> sprites) {
+    public Door(int minX, int minY, int w, int h, ArrayList<Image> sprites, int doorSize) {
 
         this.topDoorFrame = new DoorFrame(minX, minY, w, h, sprites);
 
         if (minX == 0){
-            this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE*(DOOR_SIZE + 2), minY, w, h, sprites);
+            this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE*(doorSize), minY, w, h, sprites);
         }
         else {
-            this.bottomDoorFrame = new DoorFrame(minX, minY + GRID_SIZE*(DOOR_SIZE + 2), w, h, sprites);
+            this.bottomDoorFrame = new DoorFrame(minX, minY + GRID_SIZE*(doorSize), w, h, sprites);
         }
     }
 
