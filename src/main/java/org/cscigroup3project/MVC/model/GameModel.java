@@ -79,7 +79,6 @@ public class GameModel {
 
         this.roomManager.getActiveRoom().addObject(key1);
         this.roomManager.getActiveRoom().addObject(key2);
-
     }
 
     /** Getters for the {@link Player}, {@link RoomManager}, {@link Key} objects */

@@ -162,7 +162,6 @@ public class GameView {
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
-
         // Style the imageview of the key view
         this.keyView1.setImage(theModel.getKeys()[0].getSprite());
         this.keyView2.setImage(theModel.getKeys()[1].getSprite());
@@ -214,12 +213,6 @@ public class GameView {
      * @param j the y position of the {@link GameObject}
      */
     private void drawGameObject(GameObject gameObject, int i, int j){;
-
-        if (gameObject.getSprites().size() != 1) {
-            System.out.println(gameObject.getSprites().size() + " " + i + " " + j);
-            System.out.println(gameObject.getSprites());
-            System.out.println(gameObject.getSprite());
-        }
 
         // adjust for the top row
         int trueHeight = gameObject.getHeight();

@@ -23,8 +23,6 @@ import javafx.scene.image.Image;
 import org.cscigroup3project.MVC.model.gameObject.Door;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
-import org.cscigroup3project.MVC.model.room.Room;
-import org.cscigroup3project.MVC.model.room.SpriteType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,33 +65,30 @@ public class RoomManager {
         //TODO maybe refactor elsewhere?
         wallSprites = new ArrayList<>();
 
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_left.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_right.png"));
-
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
-
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_left.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_right.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back_Left.png"));
-        wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back_Right.png"));
-
-
-        doorSprites = new ArrayList<>();
-
-        File dir = new File("src/main/resources/cscigroup3project/roomTiles");
+        File dir = new File("src/main/resources/cscigroup3project/roomTiles/wallTiles/");
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null){
             for (File child : directoryListing
             ) {
-                if (child.getName().contains("indent")){
-                    doorSprites.add(new Image("cscigroup3project/roomTiles/" + child.getName()));
+                if (child.getName().contains("indent") || child.getName().contains("Wall")){
+                    wallSprites.add(new Image("cscigroup3project/roomTiles/wallTiles/" + child.getName()));
                 }
             }
-            }
-        doorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+        }
 
+
+        doorSprites = new ArrayList<>();
+
+        dir = new File("src/main/resources/cscigroup3project/roomTiles/doorTiles");
+        directoryListing = dir.listFiles();
+        if (directoryListing != null){
+            for (File child : directoryListing
+            ) {
+                if (child.getName().contains("indent") || child.getName().contains("Door")){
+                    doorSprites.add(new Image("cscigroup3project/roomTiles/doorTiles/" + child.getName()));
+                }
+            }
+        }
 
         floorSprites = new ArrayList<>();
         floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
@@ -129,6 +124,7 @@ public class RoomManager {
         for (int j = 0; j < DIM; j++) {
             // Looping through x-positions
             for (int i = 0; i < DIM; i++) {
+
 
                 // Add a Door frame if at right coordinates
                 if (i == doorY && j == doorX) {
@@ -174,8 +170,10 @@ public class RoomManager {
                     code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
                             GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
                 }
+
             }
         }
+
         Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
         rooms.add(room1);
 
