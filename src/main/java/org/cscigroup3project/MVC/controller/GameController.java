@@ -32,6 +32,7 @@ import org.cscigroup3project.MVC.model.gameObject.Wall;
 import org.cscigroup3project.MVC.model.player.Direction;
 import org.cscigroup3project.MVC.view.GameView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -95,12 +96,13 @@ public class GameController {
         initBindings();
         initEventHandlers();
 
-        ClassLoader classLoader = getClass().getClassLoader();
-        String resourcePass = "cscigroup3project/music/PinkDisk.mp3";
-        String resourceURL = classLoader.getResource(resourcePass).toExternalForm();
-        DEFAULT_SONG = new Media (resourceURL);
-        backgroundPlayer = new MediaPlayer(DEFAULT_SONG);
-        backgroundPlayer.setAutoPlay(true);
+        //Create default music TODO remove hardcoding
+        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
+        String longUrl = new File(defaultMusic).toURI().toString();
+        Media sound = new Media(longUrl);
+        backgroundPlayer = new MediaPlayer(sound);
+        //backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
     }
 
     /**
