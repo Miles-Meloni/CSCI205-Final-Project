@@ -28,6 +28,7 @@ public class Door {
 
     private DoorFrame topDoorFrame;
     private DoorFrame bottomDoorFrame;
+    private ArrayList<Doorway> doorways;
     private static final int GRID_SIZE = 16;
 
     /**
@@ -42,6 +43,13 @@ public class Door {
 
         this.topDoorFrame = new DoorFrame(minX, minY, w, h, sprites);
 
+        doorways = new ArrayList<>();
+
+        for (int i = 1; i < doorSize; i++){
+            Doorway doorway = new Doorway(minX, minY + GRID_SIZE*(i), w, h, false, sprites);
+            doorways.add(doorway);
+        }
+
         if (minX == 0){
             this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE*(doorSize), minY, w, h, sprites);
         }
@@ -50,6 +58,9 @@ public class Door {
         }
     }
 
+    public ArrayList<Doorway> getDoorways() {
+        return doorways;
+    }
 
     public DoorFrame[] getDoorFrames() { return new DoorFrame[]{topDoorFrame, bottomDoorFrame}; }
 

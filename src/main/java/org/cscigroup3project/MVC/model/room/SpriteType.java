@@ -10,4 +10,6 @@ public enum SpriteType {
     LEFT,
     RIGHT,
     FLOOR,
+    TOP_LEFT,
+    TOP_RIGHT,
 }

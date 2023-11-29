@@ -21,6 +21,7 @@ package org.cscigroup3project.MVC.model.room;
 
 import javafx.scene.image.Image;
 import org.cscigroup3project.MVC.model.gameObject.Door;
+import org.cscigroup3project.MVC.model.gameObject.Doorway;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
 
@@ -54,7 +55,7 @@ public class RoomManager {
     /** ArrayList for door images, for now */
     private ArrayList<Image> doorSprites;
 
-    private static final int DOOR_SIZE = 3;
+    private static final int DOOR_SIZE = 4;
 
     /**
      * Creates a RoomManager object.
@@ -70,7 +71,7 @@ public class RoomManager {
         if (directoryListing != null){
             for (File child : directoryListing
             ) {
-                if (child.getName().contains("indent") || child.getName().contains("Wall")){
+                if (child.getName().contains("Wall")){
                     wallSprites.add(new Image("cscigroup3project/roomTiles/wallTiles/" + child.getName()));
                 }
             }
@@ -84,7 +85,7 @@ public class RoomManager {
         if (directoryListing != null){
             for (File child : directoryListing
             ) {
-                if (child.getName().contains("indent") || child.getName().contains("Door")){
+                if (child.getName().contains("Door")){
                     doorSprites.add(new Image("cscigroup3project/roomTiles/doorTiles/" + child.getName()));
                 }
             }
@@ -103,8 +104,8 @@ public class RoomManager {
     private void generateRooms() {
 
         // TODO: temporary hardcode
-        int doorX = 8;
-        int doorY = 0;
+        int doorX = 4;
+        int doorY = DIM - 1;
 
         int doorXEnd = -1;
         int doorYEnd = -1;
@@ -131,12 +132,12 @@ public class RoomManager {
                     thisDoor = getDoor(j, i);
                     code1.get(i).add(thisDoor.getTopDoorFrame());
 
-                    if (doorX == 0){
-                        doorXEnd = 0;
+                    if (doorX == 0 || doorX == DIM-1){
+                        doorXEnd = doorX;
                         doorYEnd = doorY + DOOR_SIZE;
                     }
                     else{
-                        doorYEnd = 0;
+                        doorYEnd = doorY;
                         doorXEnd = doorX + DOOR_SIZE;
                     }
                 }
@@ -147,17 +148,13 @@ public class RoomManager {
                 }
 
                 // Add a Door fade if at right coordinates
-                // TODO update with new files
                 else if (i == doorY && doorX != 0 && j > doorX && j < doorXEnd){
-                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, floorSprites));
+                    code1.get(i).add(thisDoor.getDoorways().get(j-doorX-1));
                 }
 
                 // Add a Door fade if at right coordinates
-                // TODO update with new files
                 else if (j == doorX && doorY != 0 && i > doorY && i < doorYEnd){
-                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, floorSprites));
+                    code1.get(i).add(thisDoor.getDoorways().get(i-doorY-1));
                 }
 
                 // Add a Wall around the square border otherwise
@@ -220,24 +217,43 @@ public class RoomManager {
                 GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE);
 
         if (j ==0){
-            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK);
-            thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT);
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK_RIGHT);
+
+            for (Doorway doorway : thisDoor.getDoorways()) {
+                doorway.setSprite(SpriteType.BACK);
+            }
+
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.BACK_LEFT);
         }
 
         else if (j == DIM-1){
-            thisDoor.getTopDoorFrame().setSprite(SpriteType.LEFT);
-            thisDoor.getBottomDoorFrame().setSprite(SpriteType.RIGHT);
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.FRONT_LEFT);
+
+            for (Doorway doorway : thisDoor.getDoorways()) {
+                doorway.setSprite(SpriteType.FRONT);
+            }
+
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_RIGHT);
         }
 
         else if (i == 0){
-            //TODO fix: first "LEFT" to "BACK" when resized back door
-            thisDoor.getTopDoorFrame().setSprite(SpriteType.LEFT);
-            thisDoor.getBottomDoorFrame().setSprite(SpriteType.LEFT);
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK_RIGHT);
+
+            for (Doorway doorway : thisDoor.getDoorways()) {
+                doorway.setSprite(SpriteType.LEFT);
+            }
+
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_LEFT);
         }
 
         else {
-            thisDoor.getTopDoorFrame().setSprite(SpriteType.FRONT);
-            thisDoor.getBottomDoorFrame().setSprite(SpriteType.RIGHT);
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK_LEFT);
+
+            for (Doorway doorway : thisDoor.getDoorways()) {
+                doorway.setSprite(SpriteType.RIGHT);
+            }
+
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_RIGHT);
         }
         return thisDoor;
     }

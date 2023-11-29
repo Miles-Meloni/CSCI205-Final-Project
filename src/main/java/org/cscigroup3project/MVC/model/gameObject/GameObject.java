@@ -80,17 +80,18 @@ public class GameObject {
     public void setSprite(SpriteType spriteType) {
         switch (spriteType){
             case BACK -> this.sprite = this.sprites.get(0);
-            case FRONT -> this.sprite = this.sprites.get(1);
-            case LEFT -> this.sprite = this.sprites.get(2);
-            case RIGHT -> this.sprite = this.sprites.get(3);
+            case BACK_LEFT -> this.sprite = this.sprites.get(1);
+            case BACK_RIGHT -> this.sprite = this.sprites.get(2);
 
+            case FRONT -> this.sprite = this.sprites.get(3);
             case FRONT_LEFT -> this.sprite = this.sprites.get(4);
             case FRONT_RIGHT -> this.sprite = this.sprites.get(5);
-            case BACK_LEFT -> this.sprite = this.sprites.get(6);
-            case BACK_RIGHT -> this.sprite = this.sprites.get(7);
 
-            case FLOOR -> this.sprite = this.sprites.get(8);
+            case LEFT -> this.sprite = this.sprites.get(6);
+            case RIGHT -> this.sprite = this.sprites.get(7);
 
+            case TOP_LEFT -> this.sprite = this.sprites.get(8);
+            case TOP_RIGHT -> this.sprite = this.sprites.get(9);
         }
 
     }
