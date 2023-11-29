@@ -97,14 +97,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
-
-        //Create default music TODO remove hardcoding
-        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
-        String longUrl = new File(defaultMusic).toURI().toString();
-        Media sound = new Media(longUrl);
-        backgroundPlayer = new MediaPlayer(sound);
-        //backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-
+        initMusic();
     }
 
     /**
@@ -126,6 +119,33 @@ public class GameController {
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
         theView.getPlayerView().imageProperty().bind(theModel.getPlayer().playerImageProperty());
 
+    }
+
+    /**
+     * Initialize the music that will play in the background of our program indefinitely.
+     */
+    private void initMusic() {
+
+        // TODO - Remove hard coding
+
+        // Get the filepath from the resources folder
+        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
+
+        // Create a File object from the resources URL
+        File fileURL = new File(defaultMusic);
+
+        // Get the long URL needed for the Media object
+        String longUrl = fileURL.toURI().toString();
+
+        // Create the Media object
+        Media sound = new Media(longUrl);
+
+        // Set the MediaPlayer with the music
+        backgroundPlayer = new MediaPlayer(sound);
+
+        // Cycle the song indefinitely, and play the song
+        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundPlayer.play();
     }
 
     /**
