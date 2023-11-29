@@ -20,11 +20,13 @@
 package org.cscigroup3project.MVC.model.room;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.model.gameObject.Door;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
 import org.cscigroup3project.MVC.model.room.Room;
 import org.cscigroup3project.MVC.model.room.SpriteType;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +53,11 @@ public class RoomManager {
     /** Single image for floor sprite */
     private ArrayList<Image> floorSprites;
 
+    /** ArrayList for door images, for now */
+    private ArrayList<Image> doorSprites;
+
+    private static final int DOOR_SIZE = 3;
+
     /**
      * Creates a RoomManager object.
      */
@@ -59,10 +66,13 @@ public class RoomManager {
 
         //TODO maybe refactor elsewhere?
         wallSprites = new ArrayList<>();
+
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_left.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_right.png"));
+
+        wallSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
 
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_left.png"));
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_front_right.png"));
@@ -70,8 +80,24 @@ public class RoomManager {
         wallSprites.add(new Image("cscigroup3project/roomTiles/Wall_Back_Right.png"));
 
 
+        doorSprites = new ArrayList<>();
+
+        File dir = new File("src/main/resources/cscigroup3project/roomTiles");
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null){
+            for (File child : directoryListing
+            ) {
+                if (child.getName().contains("indent")){
+                    doorSprites.add(new Image("cscigroup3project/roomTiles/" + child.getName()));
+                }
+            }
+            }
+        doorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+
+
         floorSprites = new ArrayList<>();
         floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+
 
         generateRooms();
     }
@@ -80,6 +106,15 @@ public class RoomManager {
      * Generates {@link Room} objects
      */
     private void generateRooms() {
+
+        // TODO: temporary hardcode
+        int doorX = 8;
+        int doorY = 0;
+
+        int doorXEnd = -1;
+        int doorYEnd = -1;
+
+        Door thisDoor = null;
 
         // Generate the first Room code
         ArrayList<ArrayList<GameObject>> code1 = new ArrayList<>();
@@ -91,11 +126,46 @@ public class RoomManager {
 
         // Loop through every position in the Room code
         // Looping through y-positions
-        for (int i = 0; i < DIM; i++) {
+        for (int j = 0; j < DIM; j++) {
             // Looping through x-positions
-            for (int j = 0; j < DIM; j++) {
-                // Add a Wall around the square border
-                if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
+            for (int i = 0; i < DIM; i++) {
+
+                // Add a Door frame if at right coordinates
+                if (i == doorY && j == doorX) {
+                    thisDoor = getDoor(j, i);
+                    code1.get(i).add(thisDoor.getTopDoorFrame());
+
+                    if (doorX == 0){
+                        doorXEnd = 0;
+                        doorYEnd = doorY + DOOR_SIZE;
+                    }
+                    else{
+                        doorYEnd = 0;
+                        doorXEnd = doorX + DOOR_SIZE;
+                    }
+                }
+
+                // Add a Door frame if at right coordinates
+                else if (i == doorYEnd && j == doorXEnd){
+                    code1.get(i).add(thisDoor.getBottomDoorFrame());
+                }
+
+                // Add a Door fade if at right coordinates
+                // TODO update with new files
+                else if (i == doorY && doorX != 0 && j > doorX && j < doorXEnd){
+                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                            GRID_SIZE, GRID_SIZE, floorSprites));
+                }
+
+                // Add a Door fade if at right coordinates
+                // TODO update with new files
+                else if (j == doorX && doorY != 0 && i > doorY && i < doorYEnd){
+                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                            GRID_SIZE, GRID_SIZE, floorSprites));
+                }
+
+                // Add a Wall around the square border otherwise
+                else if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
                     Wall thisWall = getWall(j, i);
                     code1.get(i).add(thisWall);
                 }
@@ -114,7 +184,7 @@ public class RoomManager {
     }
 
     private Wall getWall(int j, int i) {
-        Wall thisWall = new Wall((int) (GRID_SIZE*(j -DIM/2.0)),(int) (GRID_SIZE*(i -DIM/2.0)),
+        Wall thisWall = new Wall((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
                 GRID_SIZE, GRID_SIZE, wallSprites);
         ;
 
@@ -145,6 +215,33 @@ public class RoomManager {
 
         else {thisWall.setSprite(SpriteType.RIGHT);}
         return thisWall;
+    }
+
+    private Door getDoor(int j, int i){
+        Door thisDoor = new Door((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
+                GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE);
+
+        if (j ==0){
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK);
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT);
+        }
+
+        else if (j == DIM-1){
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.LEFT);
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.RIGHT);
+        }
+
+        else if (i == 0){
+            //TODO fix: first "LEFT" to "BACK" when resized back door
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.LEFT);
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.LEFT);
+        }
+
+        else {
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.FRONT);
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.RIGHT);
+        }
+        return thisDoor;
     }
 
     public Room getActiveRoom() {

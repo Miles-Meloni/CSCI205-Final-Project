@@ -131,6 +131,7 @@ public class GameView {
 
         //Initialize a textbox image view and label
         this.textView = new ImageView("cscigroup3project/textBoxSprite.png");
+
         // TODO make the label get text from a different source
         this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
 
@@ -179,6 +180,10 @@ public class GameView {
         this.setTextboxVisibility(false);
     }
 
+    /**
+     * Draws the active {@link Room} to the {@link GameView#roomPane}
+     * @param roomManager the {@link RoomManager} to get the active {@link Room} from
+     */
     private void drawActiveRoom(RoomManager roomManager){
         Room activeRoom = roomManager.getActiveRoom();
         if (activeRoom != null){
@@ -186,6 +191,10 @@ public class GameView {
         }
     }
 
+    /**
+     * Draws a {@link Room} to the {@link GameView#roomPane}
+     * @param room the {@link Room} to be drawn
+     */
     private void drawRoom(Room room){
         int i = 0;
         for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
@@ -198,7 +207,19 @@ public class GameView {
         }
     }
 
+    /**
+     * Draws a {@link GameObject} to the {@link GameView#roomPane}
+     * @param gameObject the {@link GameObject} to be drawn
+     * @param i the x position of the {@link GameObject}
+     * @param j the y position of the {@link GameObject}
+     */
     private void drawGameObject(GameObject gameObject, int i, int j){;
+
+        if (gameObject.getSprites().size() != 1) {
+            System.out.println(gameObject.getSprites().size() + " " + i + " " + j);
+            System.out.println(gameObject.getSprites());
+            System.out.println(gameObject.getSprite());
+        }
 
         // adjust for the top row
         int trueHeight = gameObject.getHeight();
