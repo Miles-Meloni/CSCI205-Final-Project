@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.controller;
 
 import javafx.scene.Scene;
+import javafx.scene.media.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -33,6 +34,7 @@ import org.cscigroup3project.MVC.model.gameObject.Wall;
 import org.cscigroup3project.MVC.model.player.Direction;
 import org.cscigroup3project.MVC.view.GameView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -60,6 +62,16 @@ public class GameController {
     /** Unselected and selected rectangles for border purposes */
     private Rectangle unselected, selected;
 
+    // TODO: remove hardcoding
+    /** Background audio that plays when game is started*/
+    private Media DEFAULT_SONG;
+
+    /** Audio track for music/background audio */
+    private MediaPlayer backgroundPlayer;
+
+    /** Audio track for sound effects */
+    private MediaPlayer sfxPlayer;
+
     /**
      * Constructor for the GameController.
      *
@@ -85,6 +97,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
+        initMusic();
     }
 
     /**
@@ -106,6 +119,33 @@ public class GameController {
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
         theView.getPlayerView().imageProperty().bind(theModel.getPlayer().playerImageProperty());
 
+    }
+
+    /**
+     * Initialize the music that will play in the background of our program indefinitely.
+     */
+    private void initMusic() {
+
+        // TODO - Remove hard coding
+
+        // Get the filepath from the resources folder
+        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
+
+        // Create a File object from the resources URL
+        File fileURL = new File(defaultMusic);
+
+        // Get the long URL needed for the Media object
+        String longUrl = fileURL.toURI().toString();
+
+        // Create the Media object
+        Media sound = new Media(longUrl);
+
+        // Set the MediaPlayer with the music
+        backgroundPlayer = new MediaPlayer(sound);
+
+        // Cycle the song indefinitely, and play the song
+        backgroundPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        backgroundPlayer.play();
     }
 
     /**
