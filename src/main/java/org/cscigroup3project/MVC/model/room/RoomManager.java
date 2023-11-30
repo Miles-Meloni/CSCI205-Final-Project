@@ -75,7 +75,17 @@ public class RoomManager {
 
         // generate the rooms for the game
         rooms = new ArrayList<>();
-        generateRooms();
+
+        // Door sizes for room 1 here
+        ArrayList<Integer> doorXs = new ArrayList<>();
+        doorXs.add(5);
+        doorXs.add(DIM-1);
+
+        ArrayList<Integer> doorYs = new ArrayList<>();
+        doorYs.add(DIM-1);
+        doorYs.add(8);
+
+        generateRooms(doorXs, doorYs);
     }
 
     /**
@@ -115,17 +125,13 @@ public class RoomManager {
     /**
      * Generates {@link Room} objects
      */
-    private void generateRooms() {
+    private void generateRooms(ArrayList<Integer> doorXs, ArrayList<Integer> doorYs) {
 
         // Generate the first Room code
         ArrayList<ArrayList<GameObject>> code1 = new ArrayList<>();
         initializeCode(code1);
 
-        ArrayList<Door> room1Doors = new ArrayList<>();
-        room1Doors.add(new Door(2, 0, GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE));
-        room1Doors.add(new Door(0, 2, GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE));
-
-        generateComponents(code1, room1Doors);
+        generateComponents(code1, doorXs, doorYs);
 
         Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
         rooms.add(room1);
@@ -133,6 +139,7 @@ public class RoomManager {
         //room1 active room by default
         activeRoom = room1;
     }
+
 
     private void initializeCode(ArrayList<ArrayList<GameObject>> code1) {
         for (int i = 0; i < DIM; i++) {
@@ -144,9 +151,23 @@ public class RoomManager {
      * Generates the components of the room
      * @param code1 the code for the room
      */
-    private void generateComponents(ArrayList<ArrayList<GameObject>> code1, ArrayList<Door> room1Doors){
+    private void generateComponents(ArrayList<ArrayList<GameObject>> code1, ArrayList<Integer> doorXs, ArrayList<Integer> doorYs){
+
+        ArrayList<Integer> doorXEnds = new ArrayList<>();
+        ArrayList<Integer> doorYEnds = new ArrayList<>();
+        ArrayList<Door> theseDoors = new ArrayList<>();
 
         // TODO: temporary hardcode
+        for (int i = 0; i < doorXs.size(); i++) {
+            if (doorXs.get(i) == 0 || doorXs.get(i) == DIM-1){
+                doorXEnds.add(doorXs.get(i));
+                doorYEnds.add(doorYs.get(i) + DOOR_SIZE);
+            }
+            else{
+                doorXEnds.add(doorXs.get(i) + DOOR_SIZE);
+                doorYEnds.add(doorYs.get(i));
+            }
+        }
 
 
         // Loop through every position in the Room code
@@ -155,46 +176,53 @@ public class RoomManager {
             // Looping through x-positions
             for (int i = 0; i < DIM; i++) {
 
-                int doorXEnd = -1;
-                int doorYEnd = -1;
+                // reset whether the position is a door
+                boolean isDoor = false;
 
-                for (Door thisDoor : room1Doors) {
+                // iterate through the door starting positions
+                for (int k = 0; k < doorXs.size(); k++) {
 
-                    int doorX = thisDoor.getTopDoorFrame().getxPos();
-                    int doorY = DIM - 1;
-
+                    int doorX = doorXs.get(k);
+                    int doorY = doorYs.get(k);
 
                     // Add a Door frame if at right coordinates
                     if (i == doorY && j == doorX) {
-                        thisDoor = getDoor(j, i);
+                        Door thisDoor = getDoor(j, i);
+                        theseDoors.add(thisDoor);
                         code1.get(i).add(thisDoor.getTopDoorFrame());
 
-                        if (doorX == 0 || doorX == DIM - 1) {
-                            doorXEnd = doorX;
-                            doorYEnd = doorY + DOOR_SIZE;
-                        } else {
-                            doorYEnd = doorY;
-                            doorXEnd = doorX + DOOR_SIZE;
-                        }
+                        isDoor = true;
                     }
+
+                }
+                for (int k = 0; k < doorXEnds.size(); k++) {
+
+                    System.out.println(doorXEnds.get(k));
+                    System.out.println(doorYEnds.get(k));
 
                     // Add a Door frame if at right coordinates
-                    else if (i == doorYEnd && j == doorXEnd) {
-                        code1.get(i).add(thisDoor.getBottomDoorFrame());
+                    if (i == doorYEnds.get(k) && j == doorXEnds.get(k)){
+                        code1.get(i).add(theseDoors.get(k).getBottomDoorFrame());
+                        isDoor = true;
                     }
 
                     // Add a Door fade if at right coordinates
-                    else if (i == doorY && doorX != 0 && j > doorX && j < doorXEnd) {
-                        code1.get(i).add(thisDoor.getDoorways().get(j - doorX - 1));
+                    else if (i == doorYEnds.get(k) && doorXEnds.get(k) != 0 && j > doorXs.get(k) && j < doorXEnds.get(k)) {
+                        code1.get(i).add(theseDoors.get(k).getDoorways().get(j - doorXs.get(k) - 1));
+                        isDoor = true;
                     }
 
                     // Add a Door fade if at right coordinates
-                    else if (j == doorX && doorY != 0 && i > doorY && i < doorYEnd) {
-                        code1.get(i).add(thisDoor.getDoorways().get(i - doorY - 1));
+                    else if (j == doorXEnds.get(k) && doorYEnds.get(k) != 0 && i > doorYs.get(k) && i < doorYEnds.get(k)) {
+                        code1.get(i).add(theseDoors.get(k).getDoorways().get(i - doorYs.get(k) - 1));
+                        isDoor = true;
                     }
 
+                }
+
+                if (!isDoor) {
                     // Add a Wall around the square border otherwise
-                    else if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
+                    if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
                         Wall thisWall = getWall(j, i);
                         code1.get(i).add(thisWall);
                     }
@@ -202,9 +230,8 @@ public class RoomManager {
                     else {
                         code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
                                 GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
-                    }
+                    };
                 }
-
             }
         }
     }
