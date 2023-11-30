@@ -27,10 +27,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
-import org.cscigroup3project.MVC.model.gameObject.Door;
-import org.cscigroup3project.MVC.model.gameObject.DoorFrame;
-import org.cscigroup3project.MVC.model.gameObject.GameObject;
-import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.gameObject.*;
 import org.cscigroup3project.MVC.model.player.Direction;
 import org.cscigroup3project.MVC.view.GameView;
 
@@ -115,8 +112,6 @@ public class GameController {
      */
     private void initBindings() {
 
-        //TODO fix the bounding box error for non-player objects (keys, for now)
-
         // Bind the PlayerView's position and image to the Player's x, y, and image properties
         theView.getPlayerView().translateXProperty().bind(theModel.getPlayer().getxProperty());
         theView.getPlayerView().translateYProperty().bind(theModel.getPlayer().getyProperty());
@@ -177,7 +172,7 @@ public class GameController {
      */
     private void checkCollisions(KeyEvent event) {
         checkWalls(event);
-        checkDoorFrames(event);
+        checkDoors(event);
     }
 
     /**
@@ -198,12 +193,28 @@ public class GameController {
      * Check for collisions with door frames
      * @param event the key event that triggered the collision check
      */
-    private void checkDoorFrames(KeyEvent event) {
-        for (DoorFrame doorFrame : theModel.getRoomManager().getActiveRoom().getDoors()) {
+    private void checkDoors(KeyEvent event) {
+        // check for collisions with door frames
+        for (DoorFrame doorFrame : theModel.getRoomManager().getActiveRoom().getDoorFrames()) {
             // if the player intersects with a door frame, correct the movement
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                     doorFrame.getBounds().localToParent(doorFrame.getBounds().getBoundsInLocal()))) {
                 collisionCorrection(event);
+            }
+        }
+        // check for collisions with LOCKED doorways ONLY
+        for (Doorway doorway : theModel.getRoomManager().getActiveRoom().getDoorways()){
+
+            // if the player intersects with a LOCKED door frame, correct the movement
+            if (doorway.isLocked()) {
+                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                        doorway.getBounds().localToParent(doorway.getBounds().getBoundsInLocal()))) {
+                    collisionCorrection(event);
+                }
+            }
+            // otherwise, transport to a new room!
+            else {
+
             }
         }
     }

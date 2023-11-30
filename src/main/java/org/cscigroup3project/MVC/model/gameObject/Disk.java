@@ -26,6 +26,20 @@ import org.cscigroup3project.MVC.model.gameObject.objectInterface.Storable;
 import java.util.ArrayList;
 
 /**
+ * Enumeration describing the current state of the {@link Player}.
+ */
+enum DiskSate{
+    /** The {@link Disk} is Pink */
+    PINK,
+
+    /** The {@link Disk} is Red */
+    RED,
+
+    /** The {@link Disk} is Scratched */
+    SCRATCHED,
+}
+
+/**
  * Class that represents disks, containing a music file, that can be picked up, equipped, and used by the {@link Player}.
  */
 public class Disk extends GameObject implements Storable {
@@ -59,5 +73,12 @@ public class Disk extends GameObject implements Storable {
     @Override
     public void deploy(int x, int y) {
 
+    }
+
+    /**
+     * @return the name of the disk
+     */
+    public String getName() {
+        return name;
     }
 }

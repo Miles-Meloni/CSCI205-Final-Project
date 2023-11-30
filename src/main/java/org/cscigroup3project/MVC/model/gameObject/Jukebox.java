@@ -28,6 +28,8 @@ import java.util.ArrayList;
  * Simple Jukebox class that controls the music of the game
  */
 public class Jukebox extends GameObject implements Interactible {
+    /** the current disk in the jukebox*/
+    Disk disk;// = new Disk(1,1, )
     /**
      * Constructs a jukebox
      * @param x - the x coordinate of the jukebox's location
