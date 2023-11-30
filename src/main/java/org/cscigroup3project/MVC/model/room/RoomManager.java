@@ -45,7 +45,6 @@ public class RoomManager {
     /** The active {@link Room} to show the user */
     private Room activeRoom;
 
-    //TODO discuss this
     /** ArrayList for wall images, for now */
     private ArrayList<Image> wallSprites;
 
@@ -61,25 +60,30 @@ public class RoomManager {
      * Creates a RoomManager object.
      */
     public RoomManager() {
-        rooms = new ArrayList<>();
 
-        //TODO maybe refactor elsewhere?
+        // add the sprites for the walls
         wallSprites = new ArrayList<>();
+        addWallSprites();
 
-        File dir = new File("src/main/resources/cscigroup3project/roomTiles/wallTiles/");
-        File[] directoryListing = dir.listFiles();
-        if (directoryListing != null){
-            for (File child : directoryListing
-            ) {
-                if (child.getName().contains("Wall")){
-                    wallSprites.add(new Image("cscigroup3project/roomTiles/wallTiles/" + child.getName()));
-                }
-            }
-        }
-
-
+        // add the sprites for the door
         doorSprites = new ArrayList<>();
+        addDoorSprites();
 
+        // add the sprite for the floor
+        floorSprites = new ArrayList<>();
+        floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+
+        // generate the rooms for the game
+        rooms = new ArrayList<>();
+        generateRooms();
+    }
+
+    /**
+     * Adds the door sprites to the {@link ArrayList} of door sprites
+     */
+    private void addDoorSprites() {
+        File dir;
+        File[] directoryListing;
         dir = new File("src/main/resources/cscigroup3project/roomTiles/doorTiles");
         directoryListing = dir.listFiles();
         if (directoryListing != null){
@@ -90,12 +94,22 @@ public class RoomManager {
                 }
             }
         }
+    }
 
-        floorSprites = new ArrayList<>();
-        floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
-
-
-        generateRooms();
+    /**
+     * Adds the wall sprites to the {@link ArrayList} of wall sprites
+     */
+    private void addWallSprites() {
+        File dir = new File("src/main/resources/cscigroup3project/roomTiles/wallTiles/");
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null){
+            for (File child : directoryListing
+            ) {
+                if (child.getName().contains("Wall")){
+                    wallSprites.add(new Image("cscigroup3project/roomTiles/wallTiles/" + child.getName()));
+                }
+            }
+        }
     }
 
     /**
@@ -103,22 +117,37 @@ public class RoomManager {
      */
     private void generateRooms() {
 
-        // TODO: temporary hardcode
-        int doorX = 4;
-        int doorY = DIM - 1;
-
-        int doorXEnd = -1;
-        int doorYEnd = -1;
-
-        Door thisDoor = null;
-
         // Generate the first Room code
         ArrayList<ArrayList<GameObject>> code1 = new ArrayList<>();
+        initializeCode(code1);
+
+        ArrayList<Door> room1Doors = new ArrayList<>();
+        room1Doors.add(new Door(2, 0, GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE));
+        room1Doors.add(new Door(0, 2, GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE));
+
+        generateComponents(code1, room1Doors);
+
+        Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
+        rooms.add(room1);
+
+        //room1 active room by default
+        activeRoom = room1;
+    }
+
+    private void initializeCode(ArrayList<ArrayList<GameObject>> code1) {
         for (int i = 0; i < DIM; i++) {
             code1.add(new ArrayList<>());
         }
+    }
 
-        //TODO clean up this nasty, messy, no good, very bad function / refactor
+    /**
+     * Generates the components of the room
+     * @param code1 the code for the room
+     */
+    private void generateComponents(ArrayList<ArrayList<GameObject>> code1, ArrayList<Door> room1Doors){
+
+        // TODO: temporary hardcode
+
 
         // Loop through every position in the Room code
         // Looping through y-positions
@@ -126,58 +155,66 @@ public class RoomManager {
             // Looping through x-positions
             for (int i = 0; i < DIM; i++) {
 
+                int doorXEnd = -1;
+                int doorYEnd = -1;
 
-                // Add a Door frame if at right coordinates
-                if (i == doorY && j == doorX) {
-                    thisDoor = getDoor(j, i);
-                    code1.get(i).add(thisDoor.getTopDoorFrame());
+                for (Door thisDoor : room1Doors) {
 
-                    if (doorX == 0 || doorX == DIM-1){
-                        doorXEnd = doorX;
-                        doorYEnd = doorY + DOOR_SIZE;
+                    int doorX = thisDoor.getTopDoorFrame().getxPos();
+                    int doorY = DIM - 1;
+
+
+                    // Add a Door frame if at right coordinates
+                    if (i == doorY && j == doorX) {
+                        thisDoor = getDoor(j, i);
+                        code1.get(i).add(thisDoor.getTopDoorFrame());
+
+                        if (doorX == 0 || doorX == DIM - 1) {
+                            doorXEnd = doorX;
+                            doorYEnd = doorY + DOOR_SIZE;
+                        } else {
+                            doorYEnd = doorY;
+                            doorXEnd = doorX + DOOR_SIZE;
+                        }
                     }
-                    else{
-                        doorYEnd = doorY;
-                        doorXEnd = doorX + DOOR_SIZE;
+
+                    // Add a Door frame if at right coordinates
+                    else if (i == doorYEnd && j == doorXEnd) {
+                        code1.get(i).add(thisDoor.getBottomDoorFrame());
                     }
-                }
 
-                // Add a Door frame if at right coordinates
-                else if (i == doorYEnd && j == doorXEnd){
-                    code1.get(i).add(thisDoor.getBottomDoorFrame());
-                }
+                    // Add a Door fade if at right coordinates
+                    else if (i == doorY && doorX != 0 && j > doorX && j < doorXEnd) {
+                        code1.get(i).add(thisDoor.getDoorways().get(j - doorX - 1));
+                    }
 
-                // Add a Door fade if at right coordinates
-                else if (i == doorY && doorX != 0 && j > doorX && j < doorXEnd){
-                    code1.get(i).add(thisDoor.getDoorways().get(j-doorX-1));
-                }
+                    // Add a Door fade if at right coordinates
+                    else if (j == doorX && doorY != 0 && i > doorY && i < doorYEnd) {
+                        code1.get(i).add(thisDoor.getDoorways().get(i - doorY - 1));
+                    }
 
-                // Add a Door fade if at right coordinates
-                else if (j == doorX && doorY != 0 && i > doorY && i < doorYEnd){
-                    code1.get(i).add(thisDoor.getDoorways().get(i-doorY-1));
-                }
-
-                // Add a Wall around the square border otherwise
-                else if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
-                    Wall thisWall = getWall(j, i);
-                    code1.get(i).add(thisWall);
-                }
-                // Add a Floor to the center
-                else {
-                    code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
-                            GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
+                    // Add a Wall around the square border otherwise
+                    else if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
+                        Wall thisWall = getWall(j, i);
+                        code1.get(i).add(thisWall);
+                    }
+                    // Add a Floor to the center
+                    else {
+                        code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                                GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
+                    }
                 }
 
             }
         }
-
-        Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
-        rooms.add(room1);
-
-        //TODO remove this once player position tracked, for testing View
-        activeRoom = room1;
     }
 
+    /**
+     * Gets the wall for the room
+     * @param j the y position
+     * @param i the x position
+     * @return the wall
+     */
     private Wall getWall(int j, int i) {
         Wall thisWall = new Wall((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
                 GRID_SIZE, GRID_SIZE, wallSprites);
@@ -212,6 +249,12 @@ public class RoomManager {
         return thisWall;
     }
 
+    /**
+     * Gets the door for the room
+     * @param j the y position
+     * @param i the x position
+     * @return the door
+     */
     private Door getDoor(int j, int i){
         Door thisDoor = new Door((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
                 GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE);
@@ -258,6 +301,10 @@ public class RoomManager {
         return thisDoor;
     }
 
+    /**
+     * Getter for the {@link ArrayList} of {@link Room}s
+     * @return the {@link ArrayList} of {@link Room}s
+     */
     public Room getActiveRoom() {
         return activeRoom;
     }
