@@ -130,7 +130,7 @@ public class GameView {
         this.textboxPane = new StackPane();
 
         //Initialize a textbox image view and label
-        this.textView = new ImageView("org.cscigroup3project.MVC/textBoxSprite.png");
+        this.textView = new ImageView("textBoxSprite.png");
 
         // TODO make the label get text from a different source
         this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
