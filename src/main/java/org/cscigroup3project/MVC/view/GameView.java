@@ -26,6 +26,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.gameObject.Key;
@@ -130,7 +131,7 @@ public class GameView {
         this.textboxPane = new StackPane();
 
         //Initialize a textbox image view and label
-        this.textView = new ImageView("textBoxSprite.png");
+        this.textView = new ImageView(String.valueOf(GameMain.class.getResource("textBoxSprite.png")));
 
         // TODO make the label get text from a different source
         this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
