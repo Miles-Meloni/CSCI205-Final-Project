@@ -27,8 +27,12 @@ public class Doorway extends GameObject{
 
         private boolean isLocked;
 
-        public Doorway(int x, int y, int w, int h, boolean isLocked, ArrayList<Image> sprites) {
+        public Doorway(int x, int y, int w, int h, ArrayList<Image> sprites) {
             super(x, y, w, h, sprites);
+            this.isLocked = false;
+        }
+
+        void setIsLocked(boolean isLocked){
             this.isLocked = isLocked;
         }
 

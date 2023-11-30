@@ -39,22 +39,41 @@ public class Door {
      * @param w  the width of the {@code bounds}
      * @param h the height of the {@code bounds}
      */
-    public Door(int minX, int minY, int w, int h, ArrayList<Image> sprites, int doorSize) {
+    public Door(int minX, int minY, int w, int h, ArrayList<Image> sprites, int doorSize, DoorType doorType) {
 
         this.topDoorFrame = new DoorFrame(minX, minY, w, h, sprites);
 
         doorways = new ArrayList<>();
 
-        for (int i = 1; i < doorSize; i++){
-            Doorway doorway = new Doorway(minX, minY + GRID_SIZE*(i), w, h, false, sprites);
-            doorways.add(doorway);
-        }
 
-        if (minX == 0){
+        //TODO: SIDE WALL VS TOP/BOTTOM WALL
+        if (doorType == DoorType.HORIZONTAL){
             this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE*(doorSize), minY, w, h, sprites);
+            for (int i = 1; i < doorSize; i++){
+                Doorway doorway = new Doorway(minX + GRID_SIZE*(i), minY, w, h, sprites);
+                doorways.add(doorway);
+            }
         }
         else {
             this.bottomDoorFrame = new DoorFrame(minX, minY + GRID_SIZE*(doorSize), w, h, sprites);
+            for (int i = 1; i < doorSize; i++){
+                Doorway doorway = new Doorway(minX, minY + GRID_SIZE*(i), w, h, sprites);
+                doorways.add(doorway);
+            }
+        }
+
+    }
+
+
+    public void lockDoor(){
+        for (Doorway doorway : doorways){
+            doorway.setIsLocked(true);
+        }
+    }
+
+    public void unlockDoor(){
+        for (Doorway doorway : doorways){
+            doorway.setIsLocked(false);
         }
     }
 
