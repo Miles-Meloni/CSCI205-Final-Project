@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.gameObject.Disk;
 import org.cscigroup3project.MVC.model.gameObject.Key;
 import org.cscigroup3project.MVC.model.gameObject.Wall;
@@ -70,11 +71,11 @@ public class GameModel {
 
         // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
-        keySprite.add(new Image("org.cscigroup3project.MVC/keyAndLockSprites/Key.png"));
+        keySprite.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
         this.key1 = new Key(0,0, keySprite, "key1");
 
         // Create the key for the application
-        keySprite.add(0, new Image("org.cscigroup3project.MVC/keyAndLockSprites/Key.png"));
+        keySprite.add(0, new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
         this.key2 = new Key(50,50, keySprite, "key2");
 
         this.roomManager.getActiveRoom().addObject(key1);
