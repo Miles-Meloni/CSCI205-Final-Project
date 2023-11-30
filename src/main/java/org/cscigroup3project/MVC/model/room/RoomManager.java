@@ -20,6 +20,7 @@
 package org.cscigroup3project.MVC.model.room;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.gameObject.*;
 
 import java.io.File;
@@ -68,7 +69,7 @@ public class RoomManager {
 
         // add the sprite for the floor
         floorSprites = new ArrayList<>();
-        floorSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/Floor.png"));
+        floorSprites.add(new Image(GameMain.class.getResourceAsStream("roomTiles/Floor.png")));
 
         // generate the rooms for the game
         rooms = new ArrayList<>();
