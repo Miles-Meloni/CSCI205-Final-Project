@@ -98,7 +98,7 @@ public class RoomManager {
             for (File child : directoryListing
             ) {
                 if (child.getName().contains("Door")){
-                    doorSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/doorTiles/" + child.getName()));
+                    doorSprites.add(new Image(GameMain.class.getResourceAsStream("roomTiles/doorTiles/" + child.getName())));
                 }
             }
         }
