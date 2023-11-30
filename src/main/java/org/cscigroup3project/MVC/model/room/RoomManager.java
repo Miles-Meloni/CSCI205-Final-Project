@@ -114,7 +114,7 @@ public class RoomManager {
             for (File child : directoryListing
             ) {
                 if (child.getName().contains("Wall")){
-                    wallSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/wallTiles/" + child.getName()));
+                    wallSprites.add(new Image(GameMain.class.getResourceAsStream("roomTiles/wallTiles/" + child.getName())));
                 }
             }
         }
