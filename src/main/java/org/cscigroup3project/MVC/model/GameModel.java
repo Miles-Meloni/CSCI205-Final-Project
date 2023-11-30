@@ -63,18 +63,18 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current Player for the game with position and name
-        this.player = new Player(new int[]{0,0}, "DemoPlayer", "cscigroup3project/Sprites/PS");
+        this.player = new Player(new int[]{0,0}, "DemoPlayer", "org.cscigroup3project.MVC/Sprites/PS");
 
         // Create the roomManager for the application
         this.roomManager = new RoomManager();
 
         // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
-        keySprite.add(new Image("cscigroup3project/keyAndLockSprites/Key.png"));
+        keySprite.add(new Image("org.cscigroup3project.MVC/keyAndLockSprites/Key.png"));
         this.key1 = new Key(0,0, keySprite, "key1");
 
         // Create the key for the application
-        keySprite.add(0, new Image("cscigroup3project/keyAndLockSprites/Key.png"));
+        keySprite.add(0, new Image("org.cscigroup3project.MVC/keyAndLockSprites/Key.png"));
         this.key2 = new Key(50,50, keySprite, "key2");
 
         this.roomManager.getActiveRoom().addObject(key1);

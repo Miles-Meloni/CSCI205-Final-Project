@@ -68,7 +68,7 @@ public class RoomManager {
 
         // add the sprite for the floor
         floorSprites = new ArrayList<>();
-        floorSprites.add(new Image("cscigroup3project/roomTiles/Floor.png"));
+        floorSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/Floor.png"));
 
         // generate the rooms for the game
         rooms = new ArrayList<>();
@@ -97,7 +97,7 @@ public class RoomManager {
             for (File child : directoryListing
             ) {
                 if (child.getName().contains("Door")){
-                    doorSprites.add(new Image("cscigroup3project/roomTiles/doorTiles/" + child.getName()));
+                    doorSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/doorTiles/" + child.getName()));
                 }
             }
         }
@@ -113,7 +113,7 @@ public class RoomManager {
             for (File child : directoryListing
             ) {
                 if (child.getName().contains("Wall")){
-                    wallSprites.add(new Image("cscigroup3project/roomTiles/wallTiles/" + child.getName()));
+                    wallSprites.add(new Image("org.cscigroup3project.MVC/roomTiles/wallTiles/" + child.getName()));
                 }
             }
         }

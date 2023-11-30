@@ -54,7 +54,7 @@ public class GameObject {
         this.sprites = sprites;
 
         if (sprites == null){
-            this.sprite = new Image("cscigroup3project/AmogusTest.png");
+            this.sprite = new Image("org.cscigroup3project.MVC/AmogusTest.png");
         }
         else {
             this.sprite = this.sprites.get(0);
@@ -70,7 +70,7 @@ public class GameObject {
         this.sprites = sprites;
 
         if (sprites == null){
-            this.sprite = new Image("cscigroup3project/AmogusTest.png");
+            this.sprite = new Image("org.cscigroup3project.MVC/AmogusTest.png");
         }
         else {
             this.sprite = this.sprites.get(0);
