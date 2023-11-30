@@ -71,7 +71,7 @@ public class GameObject {
         this.sprites = sprites;
 
         if (sprites == null){
-            this.sprite = new Image("org.cscigroup3project.MVC/AmogusTest.png");
+            this.sprite = new Image(GameMain.class.getResourceAsStream("AmogusTest.png"));
         }
         else {
             this.sprite = this.sprites.get(0);
