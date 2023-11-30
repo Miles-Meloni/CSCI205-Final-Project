@@ -20,10 +20,7 @@
 package org.cscigroup3project.MVC.model.room;
 
 import javafx.scene.image.Image;
-import org.cscigroup3project.MVC.model.gameObject.Door;
-import org.cscigroup3project.MVC.model.gameObject.Doorway;
-import org.cscigroup3project.MVC.model.gameObject.GameObject;
-import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.gameObject.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -172,9 +169,9 @@ public class RoomManager {
 
         // Loop through every position in the Room code
         // Looping through y-positions
-        for (int j = 0; j < DIM; j++) {
+        for (int i = 0; i < DIM; i++) {
             // Looping through x-positions
-            for (int i = 0; i < DIM; i++) {
+            for (int j = 0; j < DIM; j++) {
 
                 // reset whether the position is a door
                 boolean isDoor = false;
@@ -186,10 +183,10 @@ public class RoomManager {
                     int doorY = doorYs.get(k);
 
                     // Add a Door frame if at right coordinates
-                    if (i == doorY && j == doorX) {
-                        Door thisDoor = getDoor(j, i);
+                    if (j == doorY && i == doorX) {
+                        Door thisDoor = getDoor(i, j);
                         theseDoors.add(thisDoor);
-                        code1.get(i).add(thisDoor.getTopDoorFrame());
+                        code1.get(j).add(thisDoor.getTopDoorFrame());
 
                         isDoor = true;
                     }
@@ -197,24 +194,23 @@ public class RoomManager {
                 }
                 for (int k = 0; k < doorXEnds.size(); k++) {
 
-                    System.out.println(doorXEnds.get(k));
-                    System.out.println(doorYEnds.get(k));
 
                     // Add a Door frame if at right coordinates
-                    if (i == doorYEnds.get(k) && j == doorXEnds.get(k)){
-                        code1.get(i).add(theseDoors.get(k).getBottomDoorFrame());
+                    if (j == doorYEnds.get(k) && i == doorXEnds.get(k)){
+                        code1.get(j).add(theseDoors.get(k).getBottomDoorFrame());
                         isDoor = true;
                     }
 
                     // Add a Door fade if at right coordinates
-                    else if (i == doorYEnds.get(k) && doorXEnds.get(k) != 0 && j > doorXs.get(k) && j < doorXEnds.get(k)) {
-                        code1.get(i).add(theseDoors.get(k).getDoorways().get(j - doorXs.get(k) - 1));
+                    else if (j == doorYEnds.get(k) && doorXEnds.get(k) != 0 && i > doorXs.get(k) && i < doorXEnds.get(k)) {
+                        code1.get(j).add(theseDoors.get(k).getDoorways().get(i - doorXs.get(k) - 1));
                         isDoor = true;
                     }
 
                     // Add a Door fade if at right coordinates
-                    else if (j == doorXEnds.get(k) && doorYEnds.get(k) != 0 && i > doorYs.get(k) && i < doorYEnds.get(k)) {
-                        code1.get(i).add(theseDoors.get(k).getDoorways().get(i - doorYs.get(k) - 1));
+                    else if (i == doorXEnds.get(k) && doorYEnds.get(k) != 0 && j > doorYs.get(k) && j < doorYEnds.get(k)) {
+                        code1.get(j).add(theseDoors.get(k).getDoorways().get(j - doorYs.get(k) - 1));
+                        System.out.println("ADDING: " + theseDoors.get(k).getDoorways().get(j - doorYs.get(k) - 1).getBounds());
                         isDoor = true;
                     }
 
@@ -222,13 +218,13 @@ public class RoomManager {
 
                 if (!isDoor) {
                     // Add a Wall around the square border otherwise
-                    if ((i==0) || (i==DIM-1) || (j==0) || (j==DIM-1)) {
-                        Wall thisWall = getWall(j, i);
-                        code1.get(i).add(thisWall);
+                    if ((j==0) || (j==DIM-1) || (i==0) || (i==DIM-1)) {
+                        Wall thisWall = getWall(i, j);
+                        code1.get(j).add(thisWall);
                     }
                     // Add a Floor to the center
                     else {
-                        code1.get(i).add(new GameObject((int) (GRID_SIZE*(j-DIM/2.0)),(int) (GRID_SIZE*(i-DIM/2.0)),
+                        code1.get(j).add(new GameObject((int) (GRID_SIZE*(i-DIM/2.0)),(int) (GRID_SIZE*(j-DIM/2.0)),
                                 GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
                     };
                 }
@@ -283,8 +279,15 @@ public class RoomManager {
      * @return the door
      */
     private Door getDoor(int j, int i){
+        DoorType doorType;
+        if (i == 0 || i == DIM-1){
+            doorType = DoorType.VERTICAL;
+        }
+        else {
+            doorType = DoorType.HORIZONTAL;
+        }
         Door thisDoor = new Door((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
-                GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE);
+                GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE, doorType);
 
         if (j ==0){
             thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK_RIGHT);
