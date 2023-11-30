@@ -25,7 +25,7 @@ left the final room and escaped the maze.
 project!
 
 ## 3rd Party Libraries
-JavaFX 
+JavaFX version 21, id 'org.openjfx.javafxplugin' version '0.0.13'
 
 ## Package Structure
 For the creation of this game, strict MVC was followed to keep the 
@@ -43,3 +43,5 @@ a 2D array of sprites to populate a room, the room manager, which
 actually populates the room and determines which room is being visualized,
 and an Enum that holds the types of sprites to be displayed in the 
 room.
+
+## Link to Video
