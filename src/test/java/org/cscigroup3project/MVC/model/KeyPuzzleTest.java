@@ -1,6 +1,7 @@
 package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.gameObject.Key;
 import org.cscigroup3project.MVC.model.player.Inventory;
 import org.cscigroup3project.MVC.model.puzzles.KeyPuzzle;
@@ -27,17 +28,20 @@ class KeyPuzzleTest {
     /** the second player's inventory **/
     private Inventory inventory2 = new Inventory();
     /** the first key puzzle that the test will be solving **/
-    private KeyPuzzle kP1 = new KeyPuzzle(inventory1, k1, k2);
+    private KeyPuzzle kP1;
     /** the second key puzzle that the test will be solving **/
-    private KeyPuzzle kP2 = new KeyPuzzle(inventory2, k1, k2);
+    private KeyPuzzle kP2;
 
     @BeforeEach
     void setUp() {
-        sprites.add(new Image("/org.cscigroup3project.MVC/Sprites/PS1.png"));
-        k1 = new Key(1, 1, sprites, "key1" );
-        k2 = new Key(1, 1, sprites, "key2" );
+        Image sprite = null; // We're not testing sprites here
+        sprites.add(sprite);
+        k1 = new Key(1, 1, sprites, "key1",0);
+        k2 = new Key(1, 1, sprites, "key2",1);
         inventory1.addItem(k1);
         inventory2.addItem(k2);
+        kP1 = new KeyPuzzle(inventory1, k1, k2);
+        kP2 = new KeyPuzzle(inventory2, k1, k2);
     }
 
     @AfterEach
