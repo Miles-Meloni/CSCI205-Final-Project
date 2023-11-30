@@ -24,8 +24,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.gameObject.GameObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -165,8 +167,12 @@ public class Player {
         //Sprite setup:
         images = new ArrayList<>();
         // loop through all 32 sprites
-        for (int i = 1; i <= NUM_SPRITES; i++){
-            Image newSprite = new Image(imageURL + i + ".png");
+        for (int i = 1; i <= NUM_SPRITES; i++) {
+            // Load the Image newSprite from the imageURL + i + ".png" extension, getting the resource
+            // from the GameMain root (resource folder) as an InputStream
+            String filename = imageURL + i + ".png";
+            InputStream in = GameMain.class.getResourceAsStream(filename);
+            Image newSprite = new Image(in);
             images.add(newSprite);
         }
     }

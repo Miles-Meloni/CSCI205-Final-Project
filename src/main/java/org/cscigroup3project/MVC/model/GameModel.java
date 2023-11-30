@@ -63,7 +63,7 @@ public class GameModel {
         this.rooms = new ArrayList<>();
 
         // current Player for the game with position and name
-        this.player = new Player(new int[]{0,0}, "DemoPlayer", "org.cscigroup3project.MVC/Sprites/PS");
+        this.player = new Player(new int[]{0,0}, "DemoPlayer", "Sprites/PS");
 
         // Create the roomManager for the application
         this.roomManager = new RoomManager();
