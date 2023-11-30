@@ -1,5 +1,6 @@
 package org.cscigroup3project.MVC.model;
 
+import org.cscigroup3project.MVC.model.gameObject.GameObject;
 import org.cscigroup3project.MVC.model.player.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InventoryTest {
     //TODO: fix test to use GameObjects now
     private Inventory inventory;
-    private Object item1;
-    private Object item2;
+    private GameObject item1;
+    private GameObject item2;
 
     @BeforeEach
     public void setUp() {
         // Initialize a new inventory and some test items before each test
         inventory = new Inventory();
-        item1 = new Object();
-        item2 = new Object();
+        item1 = new GameObject(0,0,1,1,null);
+        item2 = new GameObject(10,10,10,10,null);
     }
 
     @Test
