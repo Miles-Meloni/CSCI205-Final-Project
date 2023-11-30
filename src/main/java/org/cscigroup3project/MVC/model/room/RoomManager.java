@@ -24,6 +24,7 @@ import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.gameObject.*;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -92,7 +93,7 @@ public class RoomManager {
     private void addDoorSprites() {
         File dir;
         File[] directoryListing;
-        dir = new File("src/main/resources/cscigroup3project/roomTiles/doorTiles");
+        dir = new File("src/main/resources/org/cscigroup3project/MVC/roomTiles/doorTiles");
         directoryListing = dir.listFiles();
         if (directoryListing != null){
             for (File child : directoryListing
@@ -108,12 +109,12 @@ public class RoomManager {
      * Adds the wall sprites to the {@link ArrayList} of wall sprites
      */
     private void addWallSprites() {
-        File dir = new File("src/main/resources/cscigroup3project/roomTiles/wallTiles/");
+        File dir = new File("src/main/resources/org/cscigroup3project/MVC/roomTiles/wallTiles/");
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null){
             for (File child : directoryListing
             ) {
-                if (child.getName().contains("Wall")){
+                if (child.getName().contains("Wall")) {
                     wallSprites.add(new Image(GameMain.class.getResourceAsStream("roomTiles/wallTiles/" + child.getName())));
                 }
             }
