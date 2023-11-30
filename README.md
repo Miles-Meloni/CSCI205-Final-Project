@@ -11,13 +11,13 @@ Semester: Fall, 2023
 * Miles Meloni, Developer, 2026, Computer Science and Engineering
 
 ## Project Information
-A simple 2D game, featuring a curious character who enters into a strange 
-series of rooms and explores his new location. Along the way, he
-must solve a few puzzles by interacting with a series of items that
-litter the floor of the rooms, including peculiar looking keys and
-disks that can be used to unlock various doors as the player moves
-through the maze of rooms. The game ends when he has successfully
-left the final room and escaped the maze.
+A simple 2D game, featuring a curious character, Ticoo, who enters 
+into a strange series of rooms and explores his new location. Along
+the way, he must solve a few puzzles by interacting with a series
+of items that litter the floor of the rooms, including peculiar 
+looking keys and disks that can be used to unlock various doors as
+the player moves through the maze of rooms. The game ends when he
+has successfully left the final room and escaped the maze.
 
 
 ## How to run it
