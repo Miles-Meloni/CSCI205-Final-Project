@@ -20,6 +20,7 @@ package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.room.SpriteType;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GameObject {
         this.sprites = sprites;
 
         if (sprites == null){
-            this.sprite = new Image("org.cscigroup3project.MVC/AmogusTest.png");
+            this.sprite = new Image(GameMain.class.getResourceAsStream("AmogusTest.png"));
         }
         else {
             this.sprite = this.sprites.get(0);
