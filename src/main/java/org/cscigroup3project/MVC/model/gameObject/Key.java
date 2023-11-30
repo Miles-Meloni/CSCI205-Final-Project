@@ -34,10 +34,21 @@ public class Key extends GameObject implements Storable, Interactible {
     /** Name of the key object */
     private String name;
 
+    /**The key display text */
+    private ArrayList<String> TEXT_ARRAY = new ArrayList<>();
+
+
+
     public Key(int x, int y, ArrayList<Image> sprites, String id) {
         super(x, y, 16, 16, sprites, id);
-    }
 
+        //Create the text to be displayed upon interaction
+        TEXT_ARRAY.add(">A key of some sort.");
+        TEXT_ARRAY.add(">It is made of copper and some sort of plastic.");
+        TEXT_ARRAY.add(">You wonder if there's somewhere you can put it.");
+        TEXT_ARRAY.add(">Somewhere other than the floor, that is.");
+        super.setTextArray(TEXT_ARRAY);
+    }
 
     @Override
     public Rectangle getBounds() {

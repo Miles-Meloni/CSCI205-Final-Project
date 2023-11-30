@@ -84,8 +84,11 @@ public class GameController {
         this.theView = theView;
         this.theScene = theScene;
         this.textArray = new ArrayList<>();
-        this.textArray.add("Have some text");
-        this.textArray.add("Have some more");
+        this.textArray.add(">What are you doing?");
+        this.textArray.add(">Don't you want to get out of this dump?");
+        this.textArray.add(">...");
+        this.textArray.add(">Yeah, me too.");
+        this.textArray.add(">Let's get moving, shall we?");
 
         this.selected = new Rectangle(16,16);
         this.selected.setFill(null);
@@ -97,7 +100,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
-        initMusic();
+        //  initMusic();
     }
 
     /**
@@ -160,9 +163,6 @@ public class GameController {
 
         // If the inventory is not open
         else {
-
-            // If a text box is visible, close it
-            if (theView.isTextboxVisible()) { theView.setTextboxVisibility(false); }
 
             // Check for environment actions
             environmentAction(event); }
@@ -234,34 +234,38 @@ public class GameController {
      * @param event the key event that triggered the environmental action
      */
     private void environmentAction(KeyEvent event) {
-        switch (event.getCode()) {
-            case DOWN -> {
-                theModel.getPlayer().move(Direction.DOWN);
-            }
-            case LEFT -> {
-                theModel.getPlayer().move(Direction.LEFT);
-            }
-            case UP -> {
-                theModel.getPlayer().move(Direction.UP);
-            }
-            case RIGHT -> {
-                theModel.getPlayer().move(Direction.RIGHT);
-            }
-            case C -> {
-                GameObject foundObject = findItem();
-                pickUpItem(foundObject);
-            }
-            case E -> {
-                toggleInventory();
-            }
-            case Q -> {
+        //if there's already text on screen, the only thing the player can do is move to the next screen
+        if (theView.isTextboxVisible()){updateTextbox(null);}
+        //otherwise, text acts as normal
+        else{
+            switch (event.getCode()) {
+                case DOWN -> {
+                    theModel.getPlayer().move(Direction.DOWN);
+                }
+                case LEFT -> {
+                    theModel.getPlayer().move(Direction.LEFT);
+                }
+                case UP -> {
+                    theModel.getPlayer().move(Direction.UP);
+                }
+                case RIGHT -> {
+                    theModel.getPlayer().move(Direction.RIGHT);
+                }
+                case C -> {
+                    GameObject foundObject = findItem();
+                    pickUpItem(foundObject);
+                }
+                case E -> {
+                    toggleInventory();
+                }
+                case Q -> {
 
-                // If the text box is visible, close it
-                if (theView.isTextboxVisible()) { theView.setTextboxVisibility(false); }
+                    //select the nearby object (if applicable) and proceed to the update textbox method
+                    GameObject foundObject = findItem();
+                    updateTextbox(foundObject);
 
-                // If the text box is not visible, show it, find the item, and show its text
-                else { GameObject foundObject = findItem(); updateTextbox(foundObject); }
-            } //TODO for full functionality get boxes from user
+                } //TODO for full functionality get boxes from user
+            }
         }
     }
 
@@ -345,10 +349,26 @@ public class GameController {
      */
     private void updateTextbox(GameObject foundObject) {
 
-        // If the foundObject is not null, show the text box, set the text from the foundObject
-        if (foundObject != null) {
+        //If there already is text, update it by displaying the next line
+        if (!textArray.isEmpty()){
             theView.setTextboxVisibility(true);
-            theView.setTextboxText(foundObject.getId());
+
+            //Update text and remove from array
+            theView.setTextboxText(textArray.get(0));
+            textArray.remove(0);
+        }
+        // If there is no current text and foundObject is not null, show the text box, set the text from the foundObject
+        else if (foundObject != null) {
+            theView.setTextboxVisibility(true);
+            textArray.addAll(foundObject.getTextArray());
+
+            //Update text and remove from array
+            theView.setTextboxText(textArray.get(0));
+            textArray.remove(0);
+        }
+        //if there's no text, don't do anything
+        else {
+            theView.setTextboxVisibility(false);
         }
     }
 

@@ -35,6 +35,10 @@ public class GameObject {
     protected int width;
     protected int height;
 
+    //The array of text displayed when an object is interacted with.
+    // If object is not interactive, the array is left blank.
+    protected ArrayList<String> textArray;
+
     /** the current sprite */
     private Image sprite;
 
@@ -49,8 +53,7 @@ public class GameObject {
         this.height = h;
         this.sprites = sprites;
 
-        //TODO change later - testing for view
-        if (sprites == null || sprites.isEmpty()){
+        if (sprites == null){
             this.sprite = new Image("cscigroup3project/AmogusTest.png");
         }
         else {
@@ -140,5 +143,13 @@ public class GameObject {
 
     public String getId() {
         return id;
+    }
+
+    public void setTextArray(ArrayList<String> textArray) {
+        this.textArray = textArray;
+    }
+
+    public ArrayList<String> getTextArray() {
+        return textArray;
     }
 }

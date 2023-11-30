@@ -56,7 +56,7 @@ public class Player {
     private final int DIFF = 10;
 
     /** The reach of the Player */
-    private final int REACH = 10;
+    private final int REACH = 6;
 
     /** Store the position of the Player */
     private int xPos;
