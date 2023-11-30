@@ -19,6 +19,7 @@
 
 package org.cscigroup3project.MVC.controller;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.media.*;
 import javafx.scene.input.KeyEvent;

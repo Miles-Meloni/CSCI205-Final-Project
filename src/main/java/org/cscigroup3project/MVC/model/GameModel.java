@@ -21,9 +21,7 @@ package org.cscigroup3project.MVC.model;
 
 import javafx.scene.image.Image;
 import org.cscigroup3project.MVC.GameMain;
-import org.cscigroup3project.MVC.model.gameObject.Disk;
-import org.cscigroup3project.MVC.model.gameObject.Key;
-import org.cscigroup3project.MVC.model.gameObject.Wall;
+import org.cscigroup3project.MVC.model.gameObject.*;
 import org.cscigroup3project.MVC.model.player.Player;
 import org.cscigroup3project.MVC.model.room.Room;
 import org.cscigroup3project.MVC.model.room.RoomManager;
@@ -51,8 +49,14 @@ public class GameModel {
     private Key key1;
     private Key key2;
 
+    /** Our lock for the key puzzle */
+    private Lock lock;
+
     /** The {@link RoomManager} for the game */
     private RoomManager roomManager;
+
+    /** Array which keeps track of the room objects */
+    private ArrayList<GameObject> allObjectsArray;
 
     /**
      * Create a new GameModel object with any number of {@link Room} objects (and their contained
@@ -69,17 +73,37 @@ public class GameModel {
         // Create the roomManager for the application
         this.roomManager = new RoomManager();
 
+        //Create the objects array for the application
+        this.allObjectsArray = new ArrayList<>();
+
         // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
         keySprite.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
-        this.key1 = new Key(0,0, keySprite, "key1");
+        this.key1 = new Key(50,50, keySprite, "key1", 0);
+
+        //add key to object array and room
+        allObjectsArray.add(key1);
+        this.roomManager.getActiveRoom().addObject(key1);
 
         // Create the key for the application
         keySprite.add(0, new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
-        this.key2 = new Key(50,50, keySprite, "key2");
+        this.key2 = new Key(-50,-50, keySprite, "key2",1);
 
-        this.roomManager.getActiveRoom().addObject(key1);
+        //add key to object array and room
+        allObjectsArray.add(key2);
         this.roomManager.getActiveRoom().addObject(key2);
+
+        //create the lock in a similar manner to the keys
+        ArrayList<Image> lockSprites = new ArrayList<Image>();
+        lockSprites.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Lock_0.png")));
+        lockSprites.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Lock_1.png")));
+        lockSprites.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Lock_2.png")));
+
+        //add key to object array and room
+        this.lock = new Lock(0, -120, lockSprites);
+        allObjectsArray.add(lock);
+
+        this.roomManager.getActiveRoom().addObject(lock);
     }
 
     /** Getters for the {@link Player}, {@link RoomManager}, {@link Key} objects */
@@ -92,4 +116,7 @@ public class GameModel {
         return roomManager;
     }
 
+    public ArrayList<GameObject> getAllObjectsArray() {
+        return allObjectsArray;
+    }
 }

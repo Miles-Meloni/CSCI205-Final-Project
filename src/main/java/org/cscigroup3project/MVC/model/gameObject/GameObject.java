@@ -46,6 +46,10 @@ public class GameObject {
     /** all sprites which can be used by the object*/
     private ArrayList<Image> sprites;
 
+    /** Used when there are multiple items that would otherwise be interchangeable,
+     * to keep the game from seeing them as interchangeable. Defaults to zero for other items. */
+    protected int duplicateID;
+
     public GameObject (int x, int y, int w, int h, ArrayList<Image> sprites){
         this.id = "";
         this.xPos = x;
@@ -53,6 +57,7 @@ public class GameObject {
         this.width = w;
         this.height = h;
         this.sprites = sprites;
+        this.duplicateID = 0;
 
         if (sprites == null){
             this.sprite = new Image(GameMain.class.getResourceAsStream("AmogusTest.png"));
@@ -69,6 +74,7 @@ public class GameObject {
         this.width = w;
         this.height = h;
         this.sprites = sprites;
+        this.duplicateID = 0;
 
         if (sprites == null){
             this.sprite = new Image(GameMain.class.getResourceAsStream("AmogusTest.png"));
@@ -152,5 +158,13 @@ public class GameObject {
 
     public ArrayList<String> getTextArray() {
         return textArray;
+    }
+
+    public int getDuplicateID() {
+        return duplicateID;
+    }
+
+    public void setDuplicateID(int duplicateID) {
+        this.duplicateID = duplicateID;
     }
 }

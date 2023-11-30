@@ -34,13 +34,16 @@ public class Key extends GameObject implements Storable, Interactible {
     /** Name of the key object */
     private String name;
 
+    /** key ID, used to stop keys from being conflated by the inventory system*/
+
     /**The key display text */
     private ArrayList<String> TEXT_ARRAY = new ArrayList<>();
 
 
 
-    public Key(int x, int y, ArrayList<Image> sprites, String id) {
+    public Key(int x, int y, ArrayList<Image> sprites, String id, int duplicateID) {
         super(x, y, 16, 16, sprites, id);
+        super.setDuplicateID(duplicateID);
 
         //Create the text to be displayed upon interaction
         TEXT_ARRAY.add(">A key of some sort.");

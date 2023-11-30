@@ -71,7 +71,7 @@ public class GameView {
     /** The {@link ImageView} representing a textbox */
     private ImageView textView;
 
-    /** Container for all ImageViews in the program */
+    /** Container for all ImageViews in the program (save for the player and textboxes)*/
     private ArrayList<ImageView> allViews;
 
     /** The {@link javafx.scene.control.Label} representing textbox text */
@@ -107,38 +107,27 @@ public class GameView {
         this.root.getChildren().add(roomPane);
 
 
-        // Initialize the key view
-        this.keyView1 = new ImageView();
-        this.keyView2 = new ImageView();
-
-        this.allViews.add(keyView1);
-        this.allViews.add(keyView2);
-
-
-        this.root.getChildren().add(keyView1);
-        this.root.getChildren().add(keyView2);
-
+        // Initialize the object views for gameObjects
+        for (GameObject currentObject :theModel.getAllObjectsArray()){
+            ImageView currentObjectView = new ImageView();
+            this.allViews.add(currentObjectView);
+            this.root.getChildren().add(currentObjectView);
+        }
 
         // Initialize a PlayerView, add it to the root
         this.playerView = new ImageView();
         this.root.getChildren().add(playerView);
-        this.allViews.add(playerView);
 
         //Initialize the overlay pane
         this.overlayPane = new BorderPane();
-
         //Initialize textbox pane
         this.textboxPane = new StackPane();
-
         //Initialize a textbox image view and label
         this.textView = new ImageView(String.valueOf(GameMain.class.getResource("textBoxSprite.png")));
-
-        // TODO make the label get text from a different source
-        this.textLabel = new Label("The Fitnessgram pacer test is a multi stage aerobic");
+        this.textLabel = new Label("");
 
         this.textboxPane.getChildren().add(textView);
         this.textboxPane.getChildren().add(textLabel);
-        this.allViews.add(textView);
 
         //Set the textbox pane to be the bottom pane in the overlay
         this.overlayPane.setBottom(textboxPane);
@@ -163,12 +152,28 @@ public class GameView {
         this.playerView.setTranslateX(theModel.getPlayer().getxPos());
         this.playerView.setTranslateY(theModel.getPlayer().getyPos());
 
-        // Style the imageview of the key view
+        // Style the all game objects (items in the allview container) with their sprite
+        for (int i = 0; i < allViews.size(); i++) {
+            //set sprite of view
+            this.allViews.get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
+
+            //set the x and y coordinates of the view
+            this.allViews.get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
+            this.allViews.get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
+        }
+
+        /*
         this.keyView1.setImage(theModel.getKeys()[0].getSprite());
         this.keyView2.setImage(theModel.getKeys()[1].getSprite());
 
+
+        this.keyView1.setTranslateX(theModel.getKeys()[0].getxPos());
+        this.keyView1.setTranslateY(theModel.getKeys()[0].getyPos());
+
         this.keyView2.setTranslateX(theModel.getKeys()[1].getxPos());
         this.keyView2.setTranslateY(theModel.getKeys()[1].getyPos());
+
+         */
 
         // TODO no more magic?
         // adjust for top row height
