@@ -61,7 +61,7 @@ public class GameMain extends Application {
 
         // Initialize the Scene and set its size
         Scene scene = new Scene(theView.getRoot(), 600, 400);
-        scene.getStylesheets().add("org.cscigroup3project.MVC/gameStyling.css");
+        scene.getStylesheets().add("gameStyling.css");
 
         // Initialize the GameController
         this.theController = new GameController(this.theModel, this.theView, scene);
