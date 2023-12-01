@@ -19,7 +19,6 @@
 
 package org.cscigroup3project.MVC.controller;
 
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.media.*;
 import javafx.scene.input.KeyEvent;
@@ -29,6 +28,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.model.gameObject.*;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Interactible;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Storable;
 import org.cscigroup3project.MVC.model.player.Direction;
 import org.cscigroup3project.MVC.view.GameView;
 
@@ -264,7 +265,7 @@ public class GameController {
                     theModel.getPlayer().move(Direction.RIGHT);
                 }
                 case C -> {
-                    GameObject foundObject = findItem();
+                    GameObject foundObject = findStorableItem();
                     pickUpItem(foundObject);
                 }
                 case E -> {
@@ -273,7 +274,7 @@ public class GameController {
                 case Q -> {
 
                     //select the nearby object (if applicable) and proceed to the update textbox method
-                    GameObject foundObject = findItem();
+                    GameObject foundObject = findInteractibleItem();
                     updateTextbox(foundObject);
 
                 } //TODO for full functionality get boxes from user
@@ -389,8 +390,7 @@ public class GameController {
      *
      * @return foundObject, the item the Player can pick up
      */
-    private GameObject findItem(){
-
+    private GameObject findStorableItem(){
         // Set up a variable to contain the GameObject, if we find one
         GameObject foundObject = null;
 
@@ -406,9 +406,47 @@ public class GameController {
             GameObject currentObject = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
             index++;
 
-            // check for intersection; if there, pick it up!
-            if (theModel.getPlayer().getReach().getBoundsInLocal().intersects(
+            // check for intersection; if it's there and it implements storable
+            if (currentObject instanceof Storable
+                    &
+                    theModel.getPlayer().getReach().getBoundsInLocal().intersects(
                     currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal()))) {
+
+                foundObject = currentObject;
+                found = true;
+            }
+        }
+
+        // Return the found GameObject
+        return foundObject;
+    }
+
+    /**
+     * Find an item in range, if it exists, among all items in the active room.
+     *
+     * @return foundObject, the item the Player can talk to
+     */
+    private GameObject findInteractibleItem(){
+        // Set up a variable to contain the GameObject, if we find one
+        GameObject foundObject = null;
+
+        // Set up tracking variables to see if we need to exit the loop
+        boolean found = false;
+        int index = 0;
+
+        // While loop because we only want to pick up a single item.
+        // Continue while a GameObject is not found, and we still have items to search for
+        while (!found && index < theModel.getRoomManager().getActiveRoom().getItemObjects().size()){
+
+            // Set the current object and increment index
+            GameObject currentObject = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
+            index++;
+
+            // check for intersection; if it's there and it implements storable
+            if (currentObject instanceof Interactible
+                    &
+                    theModel.getPlayer().getReach().getBoundsInLocal().intersects(
+                            currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal()))) {
 
                 foundObject = currentObject;
                 found = true;

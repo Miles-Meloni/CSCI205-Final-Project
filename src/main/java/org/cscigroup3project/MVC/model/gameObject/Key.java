@@ -31,9 +31,6 @@ import java.util.ArrayList;
  */
 public class Key extends GameObject implements Storable, Interactible {
 
-    /** Name of the key object */
-    private String name;
-
     /** key ID, used to stop keys from being conflated by the inventory system*/
 
     /**The key display text */

@@ -52,6 +52,12 @@ public class GameModel {
     /** Our lock for the key puzzle */
     private Lock lock;
 
+    /** Our npcs and interactive items*/
+    private Talker jazzNpc;
+    private Talker hideNpc;
+    private Talker dogPicture;
+
+
     /** The {@link RoomManager} for the game */
     private RoomManager roomManager;
 
@@ -99,19 +105,49 @@ public class GameModel {
         lockSprites.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Lock_1.png")));
         lockSprites.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Lock_2.png")));
 
-        //add key to object array and room
         this.lock = new Lock(0, -120, lockSprites);
-        allObjectsArray.add(lock);
 
+        //add lock to object array and room
+        allObjectsArray.add(lock);
         this.roomManager.getActiveRoom().addObject(lock);
+
+        //create an npc
+        ArrayList<Image> jazzNpcSprite = new ArrayList<Image>();
+        jazzNpcSprite.add(new Image(GameMain.class.getResourceAsStream("npc_jazz.png")));
+        ArrayList<String> jazzNpcText = new ArrayList<String>();
+        jazzNpcText.add("\"It's important to stick to your routines when things get tough.\"");
+        jazzNpcText.add("\"That's why I'm Jazzercising during armageddon.\"");
+        jazzNpcText.add("\"Besides, if I don't my trainer will kill me.\"");
+        jazzNpcText.add("\"You know how it is.\"");
+
+        this.jazzNpc = new Talker(90, -100, 31, 42, jazzNpcSprite, jazzNpcText);
+
+        //add npc to object array and room
+        allObjectsArray.add(jazzNpc);
+        this.roomManager.getActiveRoom().addObject(jazzNpc);
+
+        //create another npc
+        ArrayList<Image> hideNpcSprite = new ArrayList<Image>();
+        hideNpcSprite.add(new Image(GameMain.class.getResourceAsStream("npc_hide.png")));
+        ArrayList<String> hideNpcText = new ArrayList<String>();
+        hideNpcText.add("\"I lost my house. This is my new house.\"");
+        hideNpcText.add("\"You can come inside if you want.\"");
+        hideNpcText.add("\"If you can fit.\"");
+
+        this.hideNpc = new Talker(-90, -20, 32, 32, hideNpcSprite, hideNpcText);
+
+        //add npc to object array and room
+        allObjectsArray.add(hideNpc);
+        this.roomManager.getActiveRoom().addObject(hideNpc);
+
+
+
+
     }
 
     /** Getters for the {@link Player}, {@link RoomManager}, {@link Key} objects */
     public Player getPlayer() { return player; }
 
-    public Key[] getKeys() {
-        return new Key[]{key1,key2};
-    }
     public RoomManager getRoomManager(){
         return roomManager;
     }

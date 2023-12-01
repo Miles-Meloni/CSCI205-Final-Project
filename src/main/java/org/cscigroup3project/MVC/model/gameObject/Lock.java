@@ -25,9 +25,6 @@ import java.util.ArrayList;
 
 public class Lock extends GameObject implements Interactible {
 
-    /** Name of the key object */
-    private String name;
-
     /**The display text when there is no keys, one key, and two keys, respectively*/
     private ArrayList<String> TEXT_ARRAY_0 = new ArrayList<>();
     private ArrayList<String> TEXT_ARRAY_1 = new ArrayList<>();
