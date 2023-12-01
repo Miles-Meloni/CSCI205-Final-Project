@@ -62,7 +62,7 @@ public class GameModel {
     private RoomManager roomManager;
 
     /** Array which keeps track of the room objects */
-    private ArrayList<GameObject> allObjectsArray;
+    private ArrayList<ArrayList<GameObject>> allObjectsArray;
 
     /**
      * Create a new GameModel object with any number of {@link Room} objects (and their contained
@@ -80,7 +80,7 @@ public class GameModel {
         this.roomManager = new RoomManager();
 
         //Create the objects array for the application
-        this.allObjectsArray = new ArrayList<>();
+        this.allObjectsArray = new ArrayList<ArrayList<GameObject>>();
 
         // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
@@ -88,7 +88,7 @@ public class GameModel {
         this.key1 = new Key(50,50, keySprite, "key1", 0);
 
         //add key to object array and room
-        allObjectsArray.add(key1);
+        allObjectsArray.get(0).add(key1);
         this.roomManager.getActiveRoom().addObject(key1);
 
         // Create the key for the application
@@ -96,7 +96,7 @@ public class GameModel {
         this.key2 = new Key(-50,-50, keySprite, "key2",1);
 
         //add key to object array and room
-        allObjectsArray.add(key2);
+        allObjectsArray.get(0).add(key2);
         this.roomManager.getActiveRoom().addObject(key2);
 
         //create the lock in a similar manner to the keys
@@ -108,7 +108,7 @@ public class GameModel {
         this.lock = new Lock(0, -120, lockSprites);
 
         //add lock to object array and room
-        allObjectsArray.add(lock);
+        allObjectsArray.get(0).add(lock);
         this.roomManager.getActiveRoom().addObject(lock);
 
         //create an npc
@@ -123,7 +123,7 @@ public class GameModel {
         this.jazzNpc = new Talker(90, -100, 31, 42, jazzNpcSprite, jazzNpcText);
 
         //add npc to object array and room
-        allObjectsArray.add(jazzNpc);
+        allObjectsArray.get(0).add(jazzNpc);
         this.roomManager.getActiveRoom().addObject(jazzNpc);
 
         //create another npc
@@ -137,7 +137,7 @@ public class GameModel {
         this.hideNpc = new Talker(-90, -100, 32, 32, hideNpcSprite, hideNpcText);
 
         //add npc to object array and room
-        allObjectsArray.add(hideNpc);
+        allObjectsArray.get(0).add(hideNpc);
         this.roomManager.getActiveRoom().addObject(hideNpc);
 
         //create dog picture
@@ -152,7 +152,7 @@ public class GameModel {
         this.dogPicture = new TalkerNoCollisions(-70, -130, 24, 28, dogPicSprite, dogPicText);
 
         //add npc to object array and room
-        allObjectsArray.add(dogPicture);
+        allObjectsArray.get(0).add(dogPicture);
         this.roomManager.getActiveRoom().addObject(dogPicture);
 
 
@@ -167,7 +167,7 @@ public class GameModel {
         return roomManager;
     }
 
-    public ArrayList<GameObject> getAllObjectsArray() {
+    public ArrayList<ArrayList<GameObject>> getAllObjectsArray() {
         return allObjectsArray;
     }
 }
