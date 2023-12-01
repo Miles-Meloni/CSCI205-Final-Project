@@ -37,11 +37,14 @@ import org.cscigroup3project.MVC.view.GameView;
 import java.io.File;
 import java.util.ArrayList;
 
+import static org.cscigroup3project.MVC.view.GameView.DIM;
+
 /**
  * The class implementing the logic and user interactions for the created game.
  */
 public class GameController {
 
+    private static final int GRID_SIZE = 16;
     /** The {@link GameModel} for our app */
     private final GameModel theModel;
 
@@ -240,15 +243,33 @@ public class GameController {
         // check for collisions with LOCKED doorways ONLY
         for (Doorway doorway : theModel.getRoomManager().getActiveRoom().getDoorways()){
 
-            // if the player intersects with a LOCKED door frame, correct the movement
-            if (doorway.isLocked()) {
-                if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
-                        doorway.getBounds().localToParent(doorway.getBounds().getBoundsInLocal()))) {
+            if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
+                    doorway.getBounds().localToParent(doorway.getBounds().getBoundsInLocal()))) {
+
+                // doorway locked, correct movement
+                if (doorway.isLocked()){
                     collisionCorrection(event);
                 }
-            }
-            // otherwise, transport to a new room!
-            else {
+
+                // doorway unlocked, move to next room
+                else {
+                    theModel.getRoomManager().moveToNextRoom(doorway);
+                    theView.updateRoom(theModel.getRoomManager().getActiveRoomIndex());
+
+                    // depending on where the player is coming from, set the player's position
+                    if (doorway.getxPos() <= (DIM / 2 - 1)*-1*GRID_SIZE){
+                        theModel.getPlayer().setxPos((DIM / 2) * GRID_SIZE - theModel.getPlayer().getWidth());
+                    }
+                    else if (doorway.getxPos() >= (DIM / 2 - 1)*GRID_SIZE){
+                        theModel.getPlayer().setxPos((DIM / 2 - 2) * -1 * GRID_SIZE);
+                    }
+                    else if (doorway.getyPos() >= ((DIM / 2) - 1) * GRID_SIZE){
+                        theModel.getPlayer().setyPos((DIM / 2 - 2) * -1 * GRID_SIZE);
+                    }
+                    else if (doorway.getyPos() <= ((DIM / 2) - 1) * -1 * GRID_SIZE){
+                        theModel.getPlayer().setyPos((DIM / 2) * GRID_SIZE - theModel.getPlayer().getHeight());
+                    }
+                }
 
             }
         }
@@ -299,7 +320,9 @@ public class GameController {
                 }
                 case C -> {
                     GameObject foundObject = findStorableItem();
-                    pickUpItem(foundObject);
+                    if (foundObject != null) {
+                        pickUpItem(foundObject);
+                    }
                 }
                 case E -> {
                     toggleInventory();
@@ -366,9 +389,7 @@ public class GameController {
                     if (theModel.getPlayer().getInventoryTracker() < 0) {
                         theModel.getPlayer().setInventoryTracker(0);
                     }
-                    else {
-                        updateItemSelection(selected);
-                    }
+                    updateItemSelection(selected);
                 }
             }
         }
@@ -379,6 +400,9 @@ public class GameController {
      * @param selection the selection to be changed in the inventory
      */
     private void updateItemSelection(Rectangle selection) {
+        if (theModel.getPlayer().getInventory().isEmpty()) {
+            return;
+        }
         StackPane pane = (StackPane) theView.getInventoryPane().getChildren().get(theModel.getPlayer().getInventoryTracker());
 
         pane.getChildren().remove(unselected);
@@ -476,7 +500,7 @@ public class GameController {
             index++;
 
             // check for intersection; if it's there and it implements storable
-            if (currentObject instanceof Interactible
+            if (currentObject != null && currentObject instanceof Interactible
                     &
                     theModel.getPlayer().getReach().getBoundsInLocal().intersects(
                             currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal()))) {
@@ -516,7 +540,7 @@ public class GameController {
         theView.getInventoryPane().getChildren().add(imagePane);
 
         // if the image matches, turn off visibility
-        for (ImageView imgView : theView.getAllViews()){
+        for (ImageView imgView : theView.getAllViews().get(theModel.getRoomManager().getActiveRoomIndex())){
             if (imgView.getImage() == object.getSprite()){
                 imgView.setVisible(false);
             }
@@ -540,7 +564,7 @@ public class GameController {
         theModel.getRoomManager().getActiveRoom().addObject(droppedItem);
 
         // if the image matches, move the translation and set to visible
-        for (ImageView imgView : theView.getAllViews()){
+        for (ImageView imgView : theView.getAllViews().get(theModel.getRoomManager().getActiveRoomIndex())){
             if (imgView.getImage() == droppedItem.getSprite()){
                 imgView.setTranslateX(droppedItem.getxPos());
                 imgView.setTranslateY(droppedItem.getyPos());

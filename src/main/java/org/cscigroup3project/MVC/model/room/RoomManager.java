@@ -74,8 +74,28 @@ public class RoomManager {
 
         // generate the rooms for the game
         rooms = new ArrayList<>();
+        generateRooms();
+    }
 
-        // Door sizes for room 1 here
+    private void generateRooms() {
+        // generate the first room
+        generateRoom0();
+
+        // generate the second room
+        generateRoom1();
+
+        // generate the third room
+        generateRoom2();
+
+        //room1 active room by default
+        activeRoom = rooms.get(0);
+    }
+
+    /**
+     * Generates the first room
+     */
+    private void generateRoom0() {
+        // Door sizes for room 0 here
         ArrayList<Integer> doorXs = new ArrayList<>();
         doorXs.add(5);
         doorXs.add(DIM-1);
@@ -83,9 +103,43 @@ public class RoomManager {
         ArrayList<Integer> doorYs = new ArrayList<>();
         doorYs.add(DIM-1);
         doorYs.add(8);
-
-        generateRooms(doorXs, doorYs);
+        generateRoom(doorXs, doorYs);
     }
+
+    /**
+     * Generates the second room
+     */
+    private void generateRoom1(){
+        // Door sizes for room 1 here
+        ArrayList<Integer> doorXs = new ArrayList<>();
+        doorXs.add(5);
+        doorXs.add(9);
+
+        ArrayList<Integer> doorYs = new ArrayList<>();
+        doorYs.add(0);
+        doorYs.add(DIM-1);
+        generateRoom(doorXs, doorYs);
+    }
+
+    /**
+     * Generates the third room
+     */
+    private void generateRoom2(){
+        // Door sizes for room 2 here
+        ArrayList<Integer> doorXs = new ArrayList<>();
+        doorXs.add(0);
+        doorXs.add(3);
+
+        ArrayList<Integer> doorYs = new ArrayList<>();
+        doorYs.add(8);
+        doorYs.add(DIM-1);
+        generateRoom(doorXs, doorYs);
+    }
+
+    public void moveToNextRoom(Doorway doorway){
+        this.activeRoom = rooms.get(doorway.getNextRoom());
+    }
+
 
     /**
      * Adds the door sprites to the {@link ArrayList} of door sprites
@@ -124,7 +178,7 @@ public class RoomManager {
     /**
      * Generates {@link Room} objects
      */
-    private void generateRooms(ArrayList<Integer> doorXs, ArrayList<Integer> doorYs) {
+    private void generateRoom(ArrayList<Integer> doorXs, ArrayList<Integer> doorYs) {
 
         // Generate the first Room code
         ArrayList<ArrayList<GameObject>> code1 = new ArrayList<>();
@@ -135,8 +189,6 @@ public class RoomManager {
         Room room1 = new Room(code1); // pass in code1 once Room constructor is updated
         rooms.add(room1);
 
-        //room1 active room by default
-        activeRoom = room1;
     }
 
 
@@ -212,7 +264,6 @@ public class RoomManager {
                     // Add a Door fade if at right coordinates
                     else if (i == doorXEnds.get(k) && doorYEnds.get(k) != 0 && j > doorYs.get(k) && j < doorYEnds.get(k)) {
                         code1.get(j).add(theseDoors.get(k).getDoorways().get(j - doorYs.get(k) - 1));
-                        System.out.println("ADDING: " + theseDoors.get(k).getDoorways().get(j - doorYs.get(k) - 1).getBounds());
                         isDoor = true;
                     }
 
@@ -243,7 +294,7 @@ public class RoomManager {
     private Wall getWall(int j, int i) {
         Wall thisWall = new Wall((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
                 GRID_SIZE, GRID_SIZE, wallSprites);
-        ;
+
 
         if (j ==0){
 
@@ -306,6 +357,8 @@ public class RoomManager {
 
             for (Doorway doorway : thisDoor.getDoorways()) {
                 doorway.setSprite(SpriteType.FRONT);
+                //TODO: HARDCODE FOR TESTING
+                doorway.setNextRoom(2);
             }
 
             thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_RIGHT);
@@ -316,6 +369,8 @@ public class RoomManager {
 
             for (Doorway doorway : thisDoor.getDoorways()) {
                 doorway.setSprite(SpriteType.LEFT);
+                //TODO: HARDCODE FOR TESTING
+                doorway.setNextRoom(0);
             }
 
             thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_LEFT);
@@ -326,6 +381,8 @@ public class RoomManager {
 
             for (Doorway doorway : thisDoor.getDoorways()) {
                 doorway.setSprite(SpriteType.RIGHT);
+                //TODO: HARDCODE FOR TESTING
+                doorway.setNextRoom(1);
             }
 
             thisDoor.getBottomDoorFrame().setSprite(SpriteType.FRONT_RIGHT);
@@ -339,5 +396,21 @@ public class RoomManager {
      */
     public Room getActiveRoom() {
         return activeRoom;
+    }
+
+    /**
+     * Getter for the index of the active {@link Room}
+     * @return the index of the active {@link Room}
+     */
+    public int getActiveRoomIndex() {
+        return rooms.indexOf(activeRoom);
+    }
+
+    /**
+     * Getter for the {@link ArrayList} of {@link Room}s
+     * @return the {@link ArrayList} of {@link Room}s
+     */
+    public ArrayList<Room> getRooms() {
+        return rooms;
     }
 }
