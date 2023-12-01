@@ -21,8 +21,13 @@ has successfully left the final room and escaped the maze.
 
 
 ## How to run it
-*IMPORTANT - Update this with information about how to build and run your
-project!
+First, if you are using GitBash or another Git-based terminal,
+make sure to clone the project onto your local machine using:
+    "git clone csci205_final_project"
+Alternatively, from our GitLab page you can simply click the "Clone" button.
+After the project has been loaded onto your device, run it using:
+    "./gradlew run"
+and you should be straight to playing!
 
 ## 3rd Party Libraries
 JavaFX version 21, id 'org.openjfx.javafxplugin' version '0.0.13'
