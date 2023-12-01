@@ -28,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.model.gameObject.*;
+import org.cscigroup3project.MVC.model.gameObject.objectInterface.Collidable;
 import org.cscigroup3project.MVC.model.gameObject.objectInterface.Interactible;
 import org.cscigroup3project.MVC.model.gameObject.objectInterface.Storable;
 import org.cscigroup3project.MVC.model.player.Direction;
@@ -175,6 +176,7 @@ public class GameController {
     private void checkCollisions(KeyEvent event) {
         checkWalls(event);
         checkDoors(event);
+        checkObjects(event);
     }
 
     /**
@@ -186,6 +188,37 @@ public class GameController {
             // if the player intersects with a wall, correct the movement
             if (theModel.getPlayer().getBounds().getBoundsInLocal().intersects(
                     wall.getBounds().localToParent(wall.getBounds().getBoundsInLocal()))) {
+                collisionCorrection(event);
+            }
+        }
+    }
+
+    /**
+     * Check for collisions with objects with the collidable interface
+     * @param event the key event that triggered the collision check
+     */
+    private void checkObjects(KeyEvent event) {
+        // Set up a variable to contain the GameObject, if we find one
+        GameObject foundObject = null;
+
+        // Set up tracking variables to see if we need to exit the loop
+        boolean found = false;
+        int index = 0;
+
+        // While loop because we only want to pick up a single item.
+        // Continue while a GameObject is not found, and we still have items to search for
+        while (!found && index < theModel.getRoomManager().getActiveRoom().getItemObjects().size()){
+
+            // Set the current object and increment index
+            GameObject currentObject = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
+            index++;
+
+            // check for intersection; if it's there and it implements storable
+            if (currentObject instanceof Collidable
+                    &
+                    theModel.getPlayer().getBounds().intersects(
+                            currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal())))
+            {
                 collisionCorrection(event);
             }
         }
@@ -386,7 +419,7 @@ public class GameController {
     }
 
     /**
-     * Find an item in range, if it exists, among all items in the active room.
+     * Find an item in range that is storable, if it exists, among all items in the active room.
      *
      * @return foundObject, the item the Player can pick up
      */
@@ -422,7 +455,7 @@ public class GameController {
     }
 
     /**
-     * Find an item in range, if it exists, among all items in the active room.
+     * Find an item in range that is interactible, if it exists, among all items in the active room.
      *
      * @return foundObject, the item the Player can talk to
      */

@@ -134,7 +134,7 @@ public class GameModel {
         hideNpcText.add("\"You can come inside if you want.\"");
         hideNpcText.add("\"If you can fit.\"");
 
-        this.hideNpc = new Talker(-90, -20, 32, 32, hideNpcSprite, hideNpcText);
+        this.hideNpc = new Talker(0, 40, 32, 32, hideNpcSprite, hideNpcText);
 
         //add npc to object array and room
         allObjectsArray.add(hideNpc);
