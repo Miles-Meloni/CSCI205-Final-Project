@@ -55,7 +55,7 @@ public class GameModel {
     /** Our npcs and interactive items*/
     private Talker jazzNpc;
     private Talker hideNpc;
-    private Talker dogPicture;
+    private TalkerNoCollisions dogPicture;
 
 
     /** The {@link RoomManager} for the game */
@@ -134,11 +134,26 @@ public class GameModel {
         hideNpcText.add("\"You can come inside if you want.\"");
         hideNpcText.add("\"If you can fit.\"");
 
-        this.hideNpc = new Talker(0, 40, 32, 32, hideNpcSprite, hideNpcText);
+        this.hideNpc = new Talker(-90, -100, 32, 32, hideNpcSprite, hideNpcText);
 
         //add npc to object array and room
         allObjectsArray.add(hideNpc);
         this.roomManager.getActiveRoom().addObject(hideNpc);
+
+        //create dog picture
+        ArrayList<Image> dogPicSprite = new ArrayList<Image>();
+        dogPicSprite.add(new Image(GameMain.class.getResourceAsStream("dogPoster.png")));
+        ArrayList<String> dogPicText = new ArrayList<String>();
+        dogPicText.add(">Another propaganda poster.");
+        dogPicText.add(">It appears to be of some sort of idyllic scene, meant to inspire the will to fight...");
+        dogPicText.add(">Wait, this is just a picture of somebody's pet.");
+        dogPicText.add(">How did this even get here?");
+
+        this.dogPicture = new TalkerNoCollisions(-70, -130, 24, 28, dogPicSprite, dogPicText);
+
+        //add npc to object array and room
+        allObjectsArray.add(dogPicture);
+        this.roomManager.getActiveRoom().addObject(dogPicture);
 
 
 

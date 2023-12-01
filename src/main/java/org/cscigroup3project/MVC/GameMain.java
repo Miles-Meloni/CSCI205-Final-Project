@@ -67,7 +67,7 @@ public class GameMain extends Application {
         this.theController = new GameController(this.theModel, this.theView, scene);
 
         // Set the title, Scene, and display it!
-        primaryStage.setTitle("Basic Game Sim");
+        primaryStage.setTitle("ADVANCED Game Sim");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

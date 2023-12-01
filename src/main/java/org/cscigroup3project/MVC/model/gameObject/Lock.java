@@ -23,7 +23,7 @@ import org.cscigroup3project.MVC.model.gameObject.objectInterface.Interactible;
 
 import java.util.ArrayList;
 
-public class Lock extends GameObject implements Interactible {
+public class Lock extends StorageObject implements Interactible {
 
     /**The display text when there is no keys, one key, and two keys, respectively*/
     private ArrayList<String> TEXT_ARRAY_0 = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Lock extends GameObject implements Interactible {
 
 
     public Lock(int x, int y, ArrayList<Image> sprites) {
-        super(x, y, 16, 16, sprites);
+        super(x, y, 16, 16, sprites, null);
 
         //Create the text to be displayed upon interaction
         TEXT_ARRAY_0.add(">It appears to be a lock of some sort.");

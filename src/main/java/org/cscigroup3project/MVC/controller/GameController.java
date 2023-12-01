@@ -86,8 +86,7 @@ public class GameController {
         this.textArray = new ArrayList<>();
         this.textArray.add(">What are you doing?");
         this.textArray.add(">Don't you want to get out of this dump?");
-        this.textArray.add(">...");
-        this.textArray.add(">Yeah, me too.");
+        this.textArray.add(">Well so do I.");
         this.textArray.add(">Let's get moving, shall we?");
 
         this.selected = new Rectangle(16,16);
@@ -97,6 +96,8 @@ public class GameController {
         this.unselected = new Rectangle(16,16);
         this.unselected.setFill(null);
         this.unselected.setStroke(Color.TRANSPARENT);
+
+        theView.setTextboxVisibility(true);
 
         initBindings();
         initEventHandlers();
@@ -157,7 +158,10 @@ public class GameController {
     public void handleKeyPress(KeyEvent event) {
 
         // If the inventory is open, check for inventory actions
-        if (theView.getInventoryPane().isVisible()) { inventoryAction(event); }
+        if (theView.getSingleInventoryPane().isVisible()) { singleInventoryAction(event); }
+
+        //if the double inventory is open, check for double inventory actions
+        else if (theView.getDoubleInventoryPane().isVisible()) { doubleInventoryAction(event); }
 
         // If the inventory is not open
         else {
@@ -302,7 +306,7 @@ public class GameController {
                     pickUpItem(foundObject);
                 }
                 case E -> {
-                    toggleInventory();
+                    toggleSingleInventory();
                 }
                 case Q -> {
 
@@ -311,6 +315,15 @@ public class GameController {
                     updateTextbox(foundObject);
 
                 } //TODO for full functionality get boxes from user
+
+                case Z ->{
+
+                    //select nearby object if applicable and proceed to opening the dual inventory combo
+                    StorageObject foundObject = findStorageItem();
+                    if (foundObject != null) {
+                        toggleDoubleInventory(foundObject);
+                    }
+                }
             }
         }
     }
@@ -319,13 +332,13 @@ public class GameController {
      * Handle inventory actions, such as item selection, dropping, and toggling
      * @param event the key event that triggered the inventory action
      */
-    private void inventoryAction(KeyEvent event) {
+    private void singleInventoryAction(KeyEvent event) {
         // select item in inventory based on up and down arrows
         // highlight item with white box if selected, starting with first item
         switch (event.getCode()) {
             // toggle inventory with E
             case E -> {
-                toggleInventory();
+                toggleSingleInventory();
             }
             // select item in inventory with down arrow
             case DOWN -> {
@@ -354,6 +367,66 @@ public class GameController {
                 }
             }
             // drop item if C is pressed
+            case C -> {
+                // only execute if the inventory is not empty
+                if (!theModel.getPlayer().getInventory().isEmpty()){
+
+                    updateItemSelection(unselected);
+
+                    // drop an item and adjust the inventory tracker
+                    dropItem();
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() - 1);
+                    if (theModel.getPlayer().getInventoryTracker() < 0) {
+                        theModel.getPlayer().setInventoryTracker(0);
+                    }
+                    else {
+                        updateItemSelection(selected);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Handle double inventory actions, such as item selection, switching, and toggling
+     * @param event the key event that triggered the inventory action
+     */
+    private void doubleInventoryAction(KeyEvent event) {
+        // select item in inventory based on up and down arrows
+        // highlight item with white box if selected, starting with first item
+        //if column is switched then it goes up to the top of the other inventory
+        switch (event.getCode()) {
+            // toggle inventory with E
+            case Z -> {
+                toggleDoubleInventory(null);
+            }
+            // select item in inventory with down arrow
+            case DOWN -> {
+                if (!theModel.getPlayer().getInventory().isEmpty()) {
+
+                    updateItemSelection(unselected);
+
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() + 1);
+                    if (theModel.getPlayer().getInventoryTracker() >= theModel.getPlayer().getInventory().size()) {
+                        theModel.getPlayer().setInventoryTracker(0);
+                    }
+
+                    updateItemSelection(selected);
+
+                }
+            }
+            // select item in inventory based on up arrow
+            case UP -> {
+                if (!theModel.getPlayer().getInventory().isEmpty()) {
+                    updateItemSelection(unselected);
+                    theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventoryTracker() - 1);
+                    if (theModel.getPlayer().getInventoryTracker() < 0) {
+                        theModel.getPlayer().setInventoryTracker(theModel.getPlayer().getInventory().size() - 1);
+                    }
+                    updateItemSelection(selected);
+                }
+            }
+            // switch item's storage if C is pressed
             case C -> {
                 // only execute if the inventory is not empty
                 if (!theModel.getPlayer().getInventory().isEmpty()){
@@ -452,6 +525,42 @@ public class GameController {
 
         // Return the found GameObject
         return foundObject;
+    }
+
+    /**
+     * Find a storage item in range, if it exists, among all items in the active room.
+     *
+     * @return foundObject, the item the Player can pick up
+     */
+    private StorageObject findStorageItem(){
+        // Set up a variable to contain the GameObject, if we find one
+        GameObject foundObject = null;
+
+        // Set up tracking variables to see if we need to exit the loop
+        boolean found = false;
+        int index = 0;
+
+        // While loop because we only want to pick up a single item.
+        // Continue while a GameObject is not found, and we still have items to search for
+        while (!found && index < theModel.getRoomManager().getActiveRoom().getItemObjects().size()){
+
+            // Set the current object and increment index
+            GameObject currentObject = theModel.getRoomManager().getActiveRoom().getItemObjects().get(index);
+            index++;
+
+            // check for intersection; if it's there and it implements storable
+            if (currentObject instanceof StorageObject
+                    &
+                    theModel.getPlayer().getReach().getBoundsInLocal().intersects(
+                            currentObject.getBounds().localToParent(currentObject.getBounds().getBoundsInLocal()))) {
+
+                foundObject = currentObject;
+                found = true;
+            }
+        }
+
+        // Return the found GameObject
+        return (StorageObject) foundObject;
     }
 
     /**
@@ -555,12 +664,25 @@ public class GameController {
     /**
      * Turn the inventory on or off, based on current state
      */
-    private void toggleInventory(){
-        if (theView.getInventoryPane().isVisible()){
-            theView.getInventoryPane().setVisible(false);
+    private void toggleSingleInventory(){
+        if (theView.getSingleInventoryPane().isVisible() || theView.getDoubleInventoryPane().isVisible()){
+            theView.getSingleInventoryPane().setVisible(false);
         }
         else {
-            theView.getInventoryPane().setVisible(true);
+            theView.getSingleInventoryPane().setVisible(true);
+        }
+    }
+
+    /**
+     * Turn the inventory on or off, based on current state
+     */
+    private void toggleDoubleInventory(StorageObject objectInventory){
+        if (theView.getSingleInventoryPane().isVisible()|| theView.getDoubleInventoryPane().isVisible()){
+            theView.getDoubleInventoryPane().setVisible(false);
+        }
+        else {
+            theView.getDoubleInventoryPane().setVisible(true);
+            //theView.getDoubleInventoryPane().setObjectInventory(objectInventory);
         }
     }
 }
