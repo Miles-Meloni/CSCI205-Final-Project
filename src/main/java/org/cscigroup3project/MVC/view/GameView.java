@@ -43,6 +43,7 @@ public class GameView {
 
     /** The size of our grid */
     private static final int GRID_SIZE = 16;
+    public static int DIM = 16;
 
     /** The {@link GameModel} for the game */
     private GameModel theModel;
@@ -50,8 +51,10 @@ public class GameView {
     /** A {@link StackPane} root for the view */
     private StackPane root;
 
-    /** A {@link GridPane} for the room */
-    private GridPane roomPane;
+    private StackPane allRoomPanes;
+
+    /** The {@link GridPane} for the rooms */
+    private ArrayList<GridPane> roomPanes;
 
     /** A {@link javafx.scene.layout.BorderPane} for the overlays */
     private BorderPane overlayPane;
@@ -83,11 +86,13 @@ public class GameView {
     /** The {@link ImageView} representing a textbox */
     private ImageView textView;
 
-    /** Container for all ImageViews in the program (save for the player and textboxes)*/
-    private ArrayList<ImageView> allViews;
+    /** Container for all ImageViews in the program */
+    private ArrayList<ArrayList<ImageView>> allViews;
 
     /** The {@link javafx.scene.control.Label} representing textbox text */
     private Label textLabel;
+
+    private final int INITIAL_ROOM = 0;
 
 
     /**
@@ -111,18 +116,25 @@ public class GameView {
 
         allViews = new ArrayList<>();
 
-        // Initialize the room display GridPane
-        this.roomPane = new GridPane();
-        this.roomPane.setAlignment(Pos.CENTER);
 
-        drawActiveRoom(theModel.getRoomManager());
-        this.root.getChildren().add(roomPane);
+        this.roomPanes = new ArrayList<>();
+
+
+        this.allRoomPanes = new StackPane();
+        for (int i = 0; i < theModel.getRoomManager().getRooms().size(); i++) {
+            allViews.add(new ArrayList<>());
+            drawRoom(theModel.getRoomManager().getRooms().get(i));
+            allRoomPanes.getChildren().add(roomPanes.get(i));
+        }
+
+        this.root.getChildren().add(allRoomPanes);
 
 
         // Initialize the object views for gameObjects
         for (GameObject currentObject :theModel.getAllObjectsArray()){
             ImageView currentObjectView = new ImageView();
-            this.allViews.add(currentObjectView);
+            //TODO: ".get(0)" hard coded for now, will need to change later
+            this.allViews.get(0).add(currentObjectView);
             this.root.getChildren().add(currentObjectView);
         }
 
@@ -168,6 +180,8 @@ public class GameView {
         this.doubleInventoryPane.getChildren().add(objectInventoryPane);
         this.doubleInventoryPane.setVisible(false);
         root.getChildren().add(doubleInventoryPane);
+
+        updateRoom(INITIAL_ROOM);
     }
 
     /**
@@ -184,17 +198,18 @@ public class GameView {
 
         // Style the all game objects (items in the allview container) with their sprite
         for (int i = 0; i < allViews.size(); i++) {
+            //TODO: ".get(0)" hard coded for now, will need to change later
             //set sprite of view
-            this.allViews.get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
+            this.allViews.get(0).get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
 
             //set the x and y coordinates of the view
-            this.allViews.get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
-            this.allViews.get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
+            this.allViews.get(0).get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
+            this.allViews.get(0).get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
         }
 
         // TODO no more magic?
         // adjust for top row height
-        this.roomPane.setTranslateY(-26);
+        this.allRoomPanes.setTranslateY(-26);
 
         //shade all inventory boxes
         this.doubleInventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.8)));
@@ -240,40 +255,39 @@ public class GameView {
         this.singleInventoryPane.setSpacing(8);
     }
 
-    /**
-     * Draws the active {@link Room} to the {@link GameView#roomPane}
-     * @param roomManager the {@link RoomManager} to get the active {@link Room} from
-     */
-    private void drawActiveRoom(RoomManager roomManager){
-        Room activeRoom = roomManager.getActiveRoom();
-        if (activeRoom != null){
-            drawRoom(activeRoom);
-        }
-    }
+
 
     /**
-     * Draws a {@link Room} to the {@link GameView#roomPane}
+     * Draws a {@link Room} to the {@link GameView#allRoomPanes}
      * @param room the {@link Room} to be drawn
      */
     private void drawRoom(Room room){
+
+        GridPane roomPane = new GridPane();
+
         int i = 0;
         for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
             int j = 0;
             for (GameObject gameObject : arrGO) {
-                drawGameObject(gameObject, i, j);
+                drawGameObject(roomPane, gameObject, i, j);
                 j++;
             }
             i++;
         }
+
+        roomPane.setAlignment(Pos.CENTER);
+        roomPanes.add(roomPane);
     }
 
     /**
-     * Draws a {@link GameObject} to the {@link GameView#roomPane}
+     * Draws a {@link GameObject} to the {@link GameView#allRoomPanes}
+     *
+     * @param roomPane
      * @param gameObject the {@link GameObject} to be drawn
-     * @param i the x position of the {@link GameObject}
-     * @param j the y position of the {@link GameObject}
+     * @param i          the x position of the {@link GameObject}
+     * @param j          the y position of the {@link GameObject}
      */
-    private void drawGameObject(GameObject gameObject, int i, int j){;
+    private void drawGameObject(GridPane roomPane, GameObject gameObject, int i, int j){;
 
         // adjust for the top row
         int trueHeight = gameObject.getHeight();
@@ -305,6 +319,28 @@ public class GameView {
         boolean visbility = textboxPane.isVisible();
         return visbility;
     }
+
+    public void updateRoom(int i){
+
+        for (int j = 0; j < theModel.getRoomManager().getRooms().size(); j++) {
+            if (j == i) {
+                allRoomPanes.getChildren().get(j).setVisible(true);
+                allRoomPanes.getChildren().get(j).setManaged(true);
+                for (int k = 0; k < allViews.get(j).size(); k++) {
+                    allViews.get(j).get(k).setVisible(true);
+                    allViews.get(j).get(k).setManaged(true);
+                }
+            } else {
+                allRoomPanes.getChildren().get(j).setVisible(false);
+                allRoomPanes.getChildren().get(j).setManaged(false);
+                for (int k = 0; k < allViews.get(j).size(); k++) {
+                    allViews.get(j).get(k).setVisible(false);
+                    allViews.get(j).get(k).setManaged(false);
+                }
+            }
+        }
+    }
+
 
     /**
      * @return the root
@@ -340,7 +376,7 @@ public class GameView {
         return doubleInventoryPane;
     }
 
-    public ArrayList<ImageView> getAllViews() {
+    public ArrayList<ArrayList<ImageView>> getAllViews() {
         return allViews;
     }
 

@@ -52,7 +52,7 @@ public class Player {
 
     /** The dimensions of the Player */
     private final int WIDTH = 37;
-    private final int HEIGHT = 33;
+    private final int HEIGHT = 32;
 
     /** The difference between Player sprite and collision box */
     private final int DIFF = 10;
@@ -307,6 +307,21 @@ public class Player {
         setImage(images.get(spriteVal));
     }
 
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+        xProperty.set(this.xPos);
+        bounds.setX(this.xPos + WIDTH * -1 / 2.0);
+        reach.setX(this.xPos + WIDTH * -1 / 2.0 - REACH);
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+        yProperty.set(this.yPos);
+        bounds.setY(this.yPos + WIDTH * -1 / 2.0 + DIFF);
+        reach.setY(this.yPos + WIDTH * -1 / 2.0 - REACH);
+
+    }
+
     /**
      * Move the player up by one {@code MOVE_SPEED} and update the corresponding property.
      */
@@ -481,5 +496,9 @@ public class Player {
     /**Getter for player SPRITE height*/
     public int getHeight() {
         return HEIGHT;
+    }
+
+    public int getMoveSpeed(){
+        return MOVE_SPEED;
     }
 }

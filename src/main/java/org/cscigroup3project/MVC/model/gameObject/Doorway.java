@@ -20,27 +20,39 @@ package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.model.room.Room;
 
 import java.util.ArrayList;
 
 public class Doorway extends GameObject{
 
         private boolean isLocked;
+        private int nextRoom;
 
         public Doorway(int x, int y, int w, int h, ArrayList<Image> sprites) {
             super(x, y, w, h, sprites);
             this.isLocked = false;
+            this.nextRoom = -1;
         }
 
-        void setIsLocked(boolean isLocked){
+        public void setIsLocked(boolean isLocked){
             this.isLocked = isLocked;
         }
 
-        public Rectangle getBounds(){
-            return super.getBounds();
+        public boolean isLocked() {
+        return isLocked;
+    }
+
+        public void setNextRoom(int nextRoom) {
+            this.nextRoom = nextRoom;
         }
 
-        public boolean isLocked() {
-            return isLocked;
+        public int getNextRoom() {
+            return nextRoom;
         }
+
+
+        public Rectangle getBounds(){
+        return super.getBounds();
+    }
 }
