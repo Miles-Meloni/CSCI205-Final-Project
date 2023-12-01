@@ -121,7 +121,8 @@ public class GameView {
         // Initialize the object views for gameObjects
         for (GameObject currentObject :theModel.getAllObjectsArray()){
             ImageView currentObjectView = new ImageView();
-            this.allViews.add(currentObjectView);
+            //TODO: ".get(0)" hard coded for now, will need to change later
+            this.allViews.get(0).add(currentObjectView);
             this.root.getChildren().add(currentObjectView);
         }
 
@@ -167,12 +168,13 @@ public class GameView {
 
         // Style the all game objects (items in the allview container) with their sprite
         for (int i = 0; i < allViews.size(); i++) {
+            //TODO: ".get(0)" hard coded for now, will need to change later
             //set sprite of view
-            this.allViews.get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
+            this.allViews.get(0).get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
 
             //set the x and y coordinates of the view
-            this.allViews.get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
-            this.allViews.get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
+            this.allViews.get(0).get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
+            this.allViews.get(0).get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
         }
 
         /*
@@ -218,7 +220,6 @@ public class GameView {
             i++;
         }
 
-        //TODO center the second room
         roomPane.setAlignment(Pos.CENTER);
         roomPanes.add(roomPane);
     }

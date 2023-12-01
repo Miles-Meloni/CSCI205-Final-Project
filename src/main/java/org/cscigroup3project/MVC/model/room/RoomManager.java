@@ -347,6 +347,8 @@ public class RoomManager {
 
             for (Doorway doorway : thisDoor.getDoorways()) {
                 doorway.setSprite(SpriteType.BACK);
+                //TODO: HARDCODE FOR TESTING
+                doorway.setNextRoom(0);
             }
 
             thisDoor.getBottomDoorFrame().setSprite(SpriteType.BACK_LEFT);

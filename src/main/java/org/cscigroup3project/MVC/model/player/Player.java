@@ -317,8 +317,8 @@ public class Player {
     public void setyPos(int yPos) {
         this.yPos = yPos;
         yProperty.set(this.yPos);
-        bounds.setY(this.yPos + DIFF);
-        reach.setY(this.yPos - REACH);
+        bounds.setY(this.yPos + WIDTH * -1 / 2.0 + DIFF);
+        reach.setY(this.yPos + WIDTH * -1 / 2.0 - REACH);
 
     }
 
