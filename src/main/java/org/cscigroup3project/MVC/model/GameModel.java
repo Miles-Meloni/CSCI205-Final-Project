@@ -96,16 +96,16 @@ public class GameModel {
         this.key1 = new Key(50,50, keySprite, "key1", 0);
 
         //add key to object array and room
-        allObjectsArray.get(0).add(key1);
-        this.roomManager.getActiveRoom().addObject(key1);
+        allObjectsArray.get(1).add(key1);
+        this.roomManager.getRoom(1).addObject(key1);
 
         // Create the key for the application
         keySprite.add(0, new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
         this.key2 = new Key(-50,-50, keySprite, "key2",1);
 
         //add key to object array and room
-        allObjectsArray.get(0).add(key2);
-        this.roomManager.getActiveRoom().addObject(key2);
+        allObjectsArray.get(2).add(key2);
+        this.roomManager.getRoom(2).addObject(key2);
 
         //create the lock in a similar manner to the keys
         ArrayList<Image> lockSprites = new ArrayList<Image>();
@@ -117,7 +117,7 @@ public class GameModel {
 
         //add lock to object array and room
         allObjectsArray.get(0).add(lock);
-        this.roomManager.getActiveRoom().addObject(lock);
+        this.roomManager.getRoom(0).addObject(lock);
 
         //create an npc
         ArrayList<Image> jazzNpcSprite = new ArrayList<Image>();
@@ -131,8 +131,8 @@ public class GameModel {
         this.jazzNpc = new Talker(90, -100, 31, 42, jazzNpcSprite, jazzNpcText);
 
         //add npc to object array and room
-        allObjectsArray.get(0).add(jazzNpc);
-        this.roomManager.getActiveRoom().addObject(jazzNpc);
+        allObjectsArray.get(2).add(jazzNpc);
+        this.roomManager.getRoom(2).addObject(jazzNpc);
 
         //create another npc
         ArrayList<Image> hideNpcSprite = new ArrayList<Image>();
@@ -146,7 +146,7 @@ public class GameModel {
 
         //add npc to object array and room
         allObjectsArray.get(0).add(hideNpc);
-        this.roomManager.getActiveRoom().addObject(hideNpc);
+        this.roomManager.getRoom(0).addObject(hideNpc);
 
         //create dog picture
         ArrayList<Image> dogPicSprite = new ArrayList<Image>();
@@ -171,7 +171,7 @@ public class GameModel {
 
         //add npc to object array and room
         allObjectsArray.get(1).add(glitter);
-        this.roomManager.getActiveRoom().addObject(glitter);
+        this.roomManager.getRoom(1).addObject(glitter);
 
 
 

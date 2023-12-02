@@ -655,6 +655,10 @@ public class GameController {
             }
         }
 
+        //remove image of the object from the room it was assigned to
+        int currRoom = theModel.getRoomManager().getActiveRoomIndex();
+        theView.getAllViews().get(currRoom).remove(object.getImageOfObject());
+
     }
 
     /**
@@ -671,6 +675,10 @@ public class GameController {
 
         // add the item to the room and add the image to the view
         theModel.getRoomManager().getActiveRoom().addObject(droppedItem);
+
+        //set the visuals of the object to those of the current room
+        int currRoom = theModel.getRoomManager().getActiveRoomIndex();
+        theView.getAllViews().get(currRoom).add(droppedItem.getImageOfObject());
 
         // if the image matches, move the translation and set to visible
         for (ImageView imgView : theView.getAllViews().get(theModel.getRoomManager().getActiveRoomIndex())){

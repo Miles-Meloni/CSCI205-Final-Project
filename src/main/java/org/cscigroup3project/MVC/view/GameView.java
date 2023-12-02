@@ -127,6 +127,7 @@ public class GameView {
             allRoomPanes.getChildren().add(roomPanes.get(i));
         }
 
+        //add the rooms to the view
         this.root.getChildren().add(allRoomPanes);
 
 
@@ -135,7 +136,10 @@ public class GameView {
             ArrayList<GameObject> currentRoomArray = theModel.getAllObjectsArray().get(i);
             if (currentRoomArray.size() != 0){
                 for (GameObject currentObject : currentRoomArray) {
+                    //for each object: create a view, add it to the list of views,
+                    // assign it to the object, and add the object to the root
                     ImageView currentObjectView = new ImageView();
+                    currentObject.setImageOfObject(currentObjectView);
                     this.allViews.get(i).add(currentObjectView);
                     this.root.getChildren().add(currentObjectView);
                 }
@@ -224,7 +228,7 @@ public class GameView {
         this.doubleInventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.8)));
         this.singleInventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.8)));
 
-        //stroke and shade the inner boxes
+        //stroke and shade the inner boxes with corresponding colors
         Color invPink = new Color(1,0,0.5,1.0);
         Color invGreen = new Color(0, 1, 0.5, 1);
         this.inventoryPane.setBorder(new Border(new BorderStroke(invPink, invPink, invPink, invPink,
@@ -275,9 +279,9 @@ public class GameView {
         GridPane roomPane = new GridPane();
 
         int i = 0;
-        for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
+        for (ArrayList<GameObject> arrayGameObject : room.getBaseObjects()) {
             int j = 0;
-            for (GameObject gameObject : arrGO) {
+            for (GameObject gameObject : arrayGameObject) {
                 drawGameObject(roomPane, gameObject, i, j);
                 j++;
             }
