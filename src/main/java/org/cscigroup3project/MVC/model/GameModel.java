@@ -57,6 +57,9 @@ public class GameModel {
     private Talker hideNpc;
     private TalkerNoCollisions dogPicture;
 
+    /** Decorative objects */
+    private GameObject glitter;
+
 
     /** The {@link RoomManager} for the game */
     private RoomManager roomManager;
@@ -159,6 +162,18 @@ public class GameModel {
         //add npc to object array and room
         allObjectsArray.get(0).add(dogPicture);
         this.roomManager.getActiveRoom().addObject(dogPicture);
+
+        //create glitter
+        ArrayList<Image> glitterSprite = new ArrayList<Image>();
+        glitterSprite.add(new Image(GameMain.class.getResourceAsStream("Glitter.png")));
+
+        this.glitter = new GameObject(-64,-58,96,96,glitterSprite);
+
+        //add npc to object array and room
+        allObjectsArray.get(1).add(glitter);
+        this.roomManager.getActiveRoom().addObject(glitter);
+
+
 
     }
 
