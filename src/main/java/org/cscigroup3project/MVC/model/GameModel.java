@@ -104,8 +104,8 @@ public class GameModel {
         this.key2 = new Key(-50,-50, keySprite, "key2",1);
 
         //add key to object array and room
-        allObjectsArray.get(2).add(key2);
-        this.roomManager.getRoom(2).addObject(key2);
+        allObjectsArray.get(0).add(key2);
+        this.roomManager.getRoom(0).addObject(key2);
 
         //create the lock in a similar manner to the keys
         ArrayList<Image> lockSprites = new ArrayList<Image>();

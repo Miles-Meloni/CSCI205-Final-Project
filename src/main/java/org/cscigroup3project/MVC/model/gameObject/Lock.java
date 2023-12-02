@@ -45,7 +45,7 @@ public class Lock extends StorageObject implements Interactible {
         TEXT_ARRAY_1.add(">Maybe it needs another key.");
 
         TEXT_ARRAY_2.add(">The lock is unlocked.");
-        TEXT_ARRAY_2.add(">Now it's basically just a weird piece of metal.");
+        TEXT_ARRAY_2.add(">You can leave it alone now.");
     }
 
     /**
@@ -55,5 +55,15 @@ public class Lock extends StorageObject implements Interactible {
     @Override
     public void react() {
 
+    }
+
+    /**
+     * Checks to make sure only a key can be put in the inventory
+     * @param object - the object that will be stored.
+     * @return - whether that object is a key or not
+     */
+    @Override
+    public boolean isAccepted(GameObject object){
+        return object instanceof Key;
     }
 }

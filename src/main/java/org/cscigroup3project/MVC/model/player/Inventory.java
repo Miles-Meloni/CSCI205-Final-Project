@@ -87,4 +87,11 @@ public class Inventory {
     public boolean isEmpty() {
         return items.isEmpty();
     }
+
+    /**
+     * Get object without removing it from the inventory
+     * @param index the index of the object to be removed
+     * @return the object that was selected
+     */
+    public GameObject getItem(int index) {return items.get(index);}
 }
