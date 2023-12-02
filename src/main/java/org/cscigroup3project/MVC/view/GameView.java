@@ -114,13 +114,13 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
-        allViews = new ArrayList<>();
-
+        this.allViews = new ArrayList<>();
 
         this.roomPanes = new ArrayList<>();
 
-
         this.allRoomPanes = new StackPane();
+
+        //Create an arraylist for each room
         for (int i = 0; i < theModel.getRoomManager().getRooms().size(); i++) {
             allViews.add(new ArrayList<>());
             drawRoom(theModel.getRoomManager().getRooms().get(i));
@@ -133,11 +133,12 @@ public class GameView {
         // Initialize the object views for gameObjects
         for (int i = 0; i < theModel.getAllObjectsArray().size(); i++) {
             ArrayList<GameObject> currentRoomArray = theModel.getAllObjectsArray().get(i);
-            for (GameObject currentObject : currentRoomArray) {
-                ImageView currentObjectView = new ImageView();
-                //TODO: ".get(0)" hard coded for now, will need to change later
-                this.allViews.get(i).add(currentObjectView);
-                this.root.getChildren().add(currentObjectView);
+            if (currentRoomArray.size() != 0){
+                for (GameObject currentObject : currentRoomArray) {
+                    ImageView currentObjectView = new ImageView();
+                    this.allViews.get(i).add(currentObjectView);
+                    this.root.getChildren().add(currentObjectView);
+                }
             }
         }
 

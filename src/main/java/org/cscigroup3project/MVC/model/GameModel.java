@@ -82,6 +82,11 @@ public class GameModel {
         //Create the objects array for the application
         this.allObjectsArray = new ArrayList<ArrayList<GameObject>>();
 
+        //Add an array for the object array for each room
+        for (int i = 0; i< roomManager.getRooms().size(); i++){
+            allObjectsArray.add(new ArrayList<>());
+        }
+
         // NOTE: separate key sprites used to avoid confusion in GameController image removal
         ArrayList<Image> keySprite = new ArrayList<Image>();
         keySprite.add(new Image(GameMain.class.getResourceAsStream("keyAndLockSprites/Key.png")));
@@ -154,9 +159,6 @@ public class GameModel {
         //add npc to object array and room
         allObjectsArray.get(0).add(dogPicture);
         this.roomManager.getActiveRoom().addObject(dogPicture);
-
-
-
 
     }
 
