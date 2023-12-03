@@ -7,7 +7,7 @@ Semester: Fall, 2023
 ## Team Information
 * Abigail Motter, Scrum Master, 2025, Animal Behavior
 * Hunter Gehman, Developer, 2026, Computer Engineering
-* Keeler Thomas, Project Owner, 2025, Biomedical Engineering and Computer Science
+* Keeler Thomas, Project Owner, 2026, Biomedical Engineering and Computer Science
 * Miles Meloni, Developer, 2026, Computer Science and Engineering
 
 ## Project Information
