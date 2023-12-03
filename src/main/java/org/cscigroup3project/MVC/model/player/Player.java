@@ -307,16 +307,30 @@ public class Player {
         setImage(images.get(spriteVal));
     }
 
+    /**
+     * Set the x position of the player.
+     *
+     * @param xPos The direction to set for the player.
+     */
     public void setxPos(int xPos) {
         this.xPos = xPos;
         xProperty.set(this.xPos);
+
+        // correct coordinates in the same way the constructor did
         bounds.setX(this.xPos + WIDTH * -1 / 2.0);
         reach.setX(this.xPos + WIDTH * -1 / 2.0 - REACH);
     }
 
+    /**
+     * Set the y position of the player.
+     *
+     * @param yPos The direction to set for the player.
+     */
     public void setyPos(int yPos) {
         this.yPos = yPos;
         yProperty.set(this.yPos);
+
+        // correct coordinates in the same way the constructor did
         bounds.setY(this.yPos + WIDTH * -1 / 2.0 + DIFF);
         reach.setY(this.yPos + WIDTH * -1 / 2.0 - REACH);
 

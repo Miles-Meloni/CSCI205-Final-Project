@@ -278,6 +278,7 @@ public class GameView {
 
         GridPane roomPane = new GridPane();
 
+        // draw every game object in the room
         int i = 0;
         for (ArrayList<GameObject> arrayGameObject : room.getBaseObjects()) {
             int j = 0;
@@ -288,6 +289,7 @@ public class GameView {
             i++;
         }
 
+        // center the room
         roomPane.setAlignment(Pos.CENTER);
         roomPanes.add(roomPane);
     }

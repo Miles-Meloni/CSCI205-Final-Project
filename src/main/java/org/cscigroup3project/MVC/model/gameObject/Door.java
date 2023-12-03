@@ -24,7 +24,7 @@ import org.cscigroup3project.MVC.model.gameObject.GameObject;
 
 import java.util.ArrayList;
 
-public class Door {
+public class Door extends GameObject{
 
     private DoorFrame topDoorFrame;
     private DoorFrame bottomDoorFrame;
@@ -41,27 +41,30 @@ public class Door {
      */
     public Door(int minX, int minY, int w, int h, ArrayList<Image> sprites, int doorSize, DoorType doorType) {
 
+        super(minX, minY, w, h, sprites);
         this.topDoorFrame = new DoorFrame(minX, minY, w, h, sprites);
 
         doorways = new ArrayList<>();
 
+        generateDoor(minX, minY, w, h, sprites, doorSize, doorType);
 
-        //TODO: SIDE WALL VS TOP/BOTTOM WALL
+    }
+
+    private void generateDoor(int minX, int minY, int w, int h, ArrayList<Image> sprites, int doorSize, DoorType doorType) {
         if (doorType == DoorType.HORIZONTAL){
-            this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE*(doorSize), minY, w, h, sprites);
+            this.bottomDoorFrame = new DoorFrame(minX + GRID_SIZE* doorSize, minY, w, h, sprites);
             for (int i = 1; i < doorSize; i++){
                 Doorway doorway = new Doorway(minX + GRID_SIZE*(i), minY, w, h, sprites);
                 doorways.add(doorway);
             }
         }
         else {
-            this.bottomDoorFrame = new DoorFrame(minX, minY + GRID_SIZE*(doorSize), w, h, sprites);
+            this.bottomDoorFrame = new DoorFrame(minX, minY + GRID_SIZE* doorSize, w, h, sprites);
             for (int i = 1; i < doorSize; i++){
                 Doorway doorway = new Doorway(minX, minY + GRID_SIZE*(i), w, h, sprites);
                 doorways.add(doorway);
             }
         }
-
     }
 
 
