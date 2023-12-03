@@ -350,6 +350,8 @@ public class GameController {
 
                 } //TODO for full functionality get boxes from user
 
+                //TODO implement stable version of interactive inventory
+                /*
                 case Z ->{
 
                     //select nearby object if applicable and proceed to opening the dual inventory combo
@@ -358,6 +360,7 @@ public class GameController {
                         toggleDoubleInventory(foundObject);
                     }
                 }
+                 */
             }
         }
     }
