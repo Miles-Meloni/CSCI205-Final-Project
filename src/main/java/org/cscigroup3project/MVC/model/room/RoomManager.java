@@ -87,7 +87,7 @@ public class RoomManager {
         // generate the third room
         generateRoom2();
 
-        //room1 active room by default
+        //room0 active room by default
         activeRoom = rooms.get(0);
     }
 
@@ -415,4 +415,11 @@ public class RoomManager {
     public ArrayList<Room> getRooms() {
         return rooms;
     }
+
+    /**
+     * Getter for a room in the rooms array
+     * @param roomNum - the room in the array to get
+     * @returnthe room in question
+     */
+    public Room getRoom(int roomNum) {return rooms.get(roomNum);}
 }

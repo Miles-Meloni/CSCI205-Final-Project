@@ -19,6 +19,7 @@
 
 package org.cscigroup3project.MVC.view;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -61,15 +62,26 @@ public class GameView {
     /** A {@link javafx.scene.layout.StackPane} for the textbox */
     private StackPane textboxPane;
 
-    /** A {@link javafx.scene.layout.VBox} for storing the inventory */
+    /** A {@link javafx.scene.layout.HBox} for storing the single inventory view */
+    private HBox singleInventoryPane;
+
+    /** A {@link javafx.scene.layout.HBox} for storing the double inventory view */
+    private HBox doubleInventoryPane;
+
+    /** A {@link javafx.scene.layout.VBox} for storing the player inventory on its own*/
     private VBox inventoryPane;
 
-    /** The {@link ImageView} representing the player, collected from player object*/
+    /** A {@link javafx.scene.layout.VBox} for storing the player inventory with another inventory*/
+    private VBox playerInventoryPane;
+
+
+    /** A {@link javafx.scene.layout.VBox} for storing the other inventory in the 2 inventory view */
+    private VBox objectInventoryPane;
+
+
+     /** The {@link ImageView} representing the player, collected from player object*/
     private ImageView playerView;
 
-    /** The {@link ImageView} views representing two keys, collected from {@link Key} object */
-    private ImageView keyView1;
-    private ImageView keyView2;
 
     /** The {@link ImageView} representing a textbox */
     private ImageView textView;
@@ -102,28 +114,36 @@ public class GameView {
         // Initialize a StackPane root
         this.root = new StackPane();
 
-        allViews = new ArrayList<>();
-
+        this.allViews = new ArrayList<>();
 
         this.roomPanes = new ArrayList<>();
 
-
         this.allRoomPanes = new StackPane();
+
+        //Create an arraylist for each room
         for (int i = 0; i < theModel.getRoomManager().getRooms().size(); i++) {
             allViews.add(new ArrayList<>());
             drawRoom(theModel.getRoomManager().getRooms().get(i));
             allRoomPanes.getChildren().add(roomPanes.get(i));
         }
 
+        //add the rooms to the view
         this.root.getChildren().add(allRoomPanes);
 
 
         // Initialize the object views for gameObjects
-        for (GameObject currentObject :theModel.getAllObjectsArray()){
-            ImageView currentObjectView = new ImageView();
-            //TODO: ".get(0)" hard coded for now, will need to change later
-            this.allViews.get(0).add(currentObjectView);
-            this.root.getChildren().add(currentObjectView);
+        for (int i = 0; i < theModel.getAllObjectsArray().size(); i++) {
+            ArrayList<GameObject> currentRoomArray = theModel.getAllObjectsArray().get(i);
+            if (currentRoomArray.size() != 0){
+                for (GameObject currentObject : currentRoomArray) {
+                    //for each object: create a view, add it to the list of views,
+                    // assign it to the object, and add the object to the root
+                    ImageView currentObjectView = new ImageView();
+                    currentObject.setImageOfObject(currentObjectView);
+                    this.allViews.get(i).add(currentObjectView);
+                    this.root.getChildren().add(currentObjectView);
+                }
+            }
         }
 
         // Initialize a PlayerView, add it to the root
@@ -132,8 +152,10 @@ public class GameView {
 
         //Initialize the overlay pane
         this.overlayPane = new BorderPane();
+
         //Initialize textbox pane
         this.textboxPane = new StackPane();
+
         //Initialize a textbox image view and label
         this.textView = new ImageView(String.valueOf(GameMain.class.getResource("textBoxSprite.png")));
         this.textLabel = new Label("");
@@ -145,11 +167,27 @@ public class GameView {
         this.overlayPane.setBottom(textboxPane);
         this.root.getChildren().add(overlayPane);
 
-        // set up the inventory pane
+        // set up the solitary player inventory pane
         this.inventoryPane = new VBox();
-        this.inventoryPane.setVisible(false);
 
-        this.root.getChildren().add(inventoryPane);
+        // set up the partnered player inventory pane
+        this.playerInventoryPane = new VBox();
+
+        //set up the object inventory pane
+        this.objectInventoryPane = new VBox();
+
+        //set up the single inventory, and add the player inventory
+        this.singleInventoryPane = new HBox();
+        this.singleInventoryPane.getChildren().add(inventoryPane);
+        this.singleInventoryPane.setVisible(false);
+        root.getChildren().add(singleInventoryPane);
+
+        //set up the double inventory, add both inventories
+        this.doubleInventoryPane = new HBox();
+        this.doubleInventoryPane.getChildren().add(playerInventoryPane);
+        this.doubleInventoryPane.getChildren().add(objectInventoryPane);
+        this.doubleInventoryPane.setVisible(false);
+        root.getChildren().add(doubleInventoryPane);
 
         updateRoom(INITIAL_ROOM);
     }
@@ -168,36 +206,66 @@ public class GameView {
 
         // Style the all game objects (items in the allview container) with their sprite
         for (int i = 0; i < allViews.size(); i++) {
-            //TODO: ".get(0)" hard coded for now, will need to change later
-            //set sprite of view
-            this.allViews.get(0).get(i).setImage(theModel.getAllObjectsArray().get(i).getSprite());
+            ArrayList roomView = allViews.get(i);
+            if (roomView.size() != 0){
+                for (int j = 0; j < roomView.size(); j++) {
+                    //TODO: ".get(0)" hard coded for now, will need to change later
+                    //set sprite of view
+                    this.allViews.get(i).get(j).setImage(theModel.getAllObjectsArray().get(i).get(j).getSprite());
 
-            //set the x and y coordinates of the view
-            this.allViews.get(0).get(i).setTranslateX(theModel.getAllObjectsArray().get(i).getxPos());
-            this.allViews.get(0).get(i).setTranslateY(theModel.getAllObjectsArray().get(i).getyPos());
+                    //set the x and y coordinates of the view
+                    this.allViews.get(i).get(j).setTranslateX(theModel.getAllObjectsArray().get(i).get(j).getxPos());
+                    this.allViews.get(i).get(j).setTranslateY(theModel.getAllObjectsArray().get(i).get(j).getyPos());
+                }
+            }
         }
-
-        /*
-        this.keyView1.setImage(theModel.getKeys()[0].getSprite());
-        this.keyView2.setImage(theModel.getKeys()[1].getSprite());
-
-
-        this.keyView1.setTranslateX(theModel.getKeys()[0].getxPos());
-        this.keyView1.setTranslateY(theModel.getKeys()[0].getyPos());
-
-        this.keyView2.setTranslateX(theModel.getKeys()[1].getxPos());
-        this.keyView2.setTranslateY(theModel.getKeys()[1].getyPos());
-
-         */
 
         // TODO no more magic?
         // adjust for top row height
         this.allRoomPanes.setTranslateY(-26);
 
-        this.inventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.7)));
+        //shade all inventory boxes
+        this.doubleInventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.8)));
+        this.singleInventoryPane.setBackground(Background.fill(new Color(0, 0, 0, 0.8)));
 
-        //Make textbox start out invisible
-        this.setTextboxVisibility(false);
+        //stroke and shade the inner boxes with corresponding colors
+        Color invPink = new Color(1,0,0.5,1.0);
+        Color invGreen = new Color(0, 1, 0.5, 1);
+        this.inventoryPane.setBorder(new Border(new BorderStroke(invPink, invPink, invPink, invPink,
+                BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID,
+                CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
+        this.inventoryPane.setBackground(Background.fill(new Color(1, 0, 0.5, 0.1)));
+
+        this.playerInventoryPane.setBorder(new Border(new BorderStroke(invPink, invPink, invPink, invPink,
+                BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID,
+                CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
+        this.playerInventoryPane.setBackground(Background.fill(new Color(1, 0, 0.5, 0.1)));
+
+        this.objectInventoryPane.setBorder(new Border(new BorderStroke(invGreen, invGreen, invGreen, invGreen,
+                BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID,
+                CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
+        this.objectInventoryPane.setBackground(Background.fill(new Color(0, 1, 0.5, 0.1)));
+
+        //center all inventory boxes
+        this.inventoryPane.setAlignment(Pos.CENTER);
+        this.playerInventoryPane.setAlignment(Pos.CENTER);
+        this.singleInventoryPane.setAlignment(Pos.CENTER);
+        this.doubleInventoryPane.setAlignment(Pos.CENTER);
+        this.objectInventoryPane.setAlignment(Pos.CENTER);
+
+        //Add spacing between inventory boxes
+        Insets inventoryPadding = new Insets(10);
+        this.inventoryPane.setPadding(inventoryPadding);
+        this.playerInventoryPane.setPadding(inventoryPadding);
+        this.objectInventoryPane.setPadding(inventoryPadding);
+
+        this.inventoryPane.setSpacing(4);
+        this.playerInventoryPane.setSpacing(4);
+        this.objectInventoryPane.setSpacing(4);
+
+        //Adds spacing between inventories
+        this.doubleInventoryPane.setSpacing(8);
+        this.singleInventoryPane.setSpacing(8);
     }
 
 
@@ -211,9 +279,9 @@ public class GameView {
         GridPane roomPane = new GridPane();
 
         int i = 0;
-        for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
+        for (ArrayList<GameObject> arrayGameObject : room.getBaseObjects()) {
             int j = 0;
-            for (GameObject gameObject : arrGO) {
+            for (GameObject gameObject : arrayGameObject) {
                 drawGameObject(roomPane, gameObject, i, j);
                 j++;
             }
@@ -253,13 +321,6 @@ public class GameView {
         roomPane.add(objectRect, i%16+8, j%16+8);
     }
 
-    public ImageView getKeyView1() {
-        return keyView1;
-    }
-
-    public ImageView getKeyView2() {
-        return keyView2;
-    }
 
     /** Sets visibility of the textbox */
     public void setTextboxVisibility(boolean visibility){
@@ -310,6 +371,22 @@ public class GameView {
 
     public VBox getInventoryPane() {
         return inventoryPane;
+    }
+
+    public VBox getPlayerInventoryPane() {
+        return playerInventoryPane;
+    }
+
+    public VBox getObjectInventoryPane() {
+        return objectInventoryPane;
+    }
+
+    public HBox getSingleInventoryPane() {
+        return singleInventoryPane;
+    }
+
+    public HBox getDoubleInventoryPane() {
+        return doubleInventoryPane;
     }
 
     public ArrayList<ArrayList<ImageView>> getAllViews() {

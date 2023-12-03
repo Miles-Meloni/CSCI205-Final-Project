@@ -19,6 +19,7 @@
 package org.cscigroup3project.MVC.model.gameObject;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.room.SpriteType;
@@ -45,6 +46,9 @@ public class GameObject {
 
     /** all sprites which can be used by the object*/
     private ArrayList<Image> sprites;
+
+    /** image view of the sprite (only used for non-grid objects, which can change rooms */
+    private ImageView imageOfObject = null;
 
     /** Used when there are multiple items that would otherwise be interchangeable,
      * to keep the game from seeing them as interchangeable. Defaults to zero for other items. */
@@ -166,5 +170,13 @@ public class GameObject {
 
     public void setDuplicateID(int duplicateID) {
         this.duplicateID = duplicateID;
+    }
+
+    public ImageView getImageOfObject() {
+        return imageOfObject;
+    }
+
+    public void setImageOfObject(ImageView imageOfObject) {
+        this.imageOfObject = imageOfObject;
     }
 }

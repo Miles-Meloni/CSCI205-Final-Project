@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Enumeration describing the current state of the {@link Player}.
  */
-enum DiskSate{
+enum DiskState {
     /** The {@link Disk} is Pink */
     PINK,
 
