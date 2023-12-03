@@ -108,18 +108,22 @@ public class GameView {
         this.roomPanes = new ArrayList<>();
 
 
+        // Initialize the room views
         this.allRoomPanes = new StackPane();
+
+        // For each known room, draw it and add it the StackPane of rooms
         for (int i = 0; i < theModel.getRoomManager().getRooms().size(); i++) {
             allViews.add(new ArrayList<>());
             drawRoom(theModel.getRoomManager().getRooms().get(i));
             allRoomPanes.getChildren().add(roomPanes.get(i));
         }
 
+        // Add the room panes to the root
         this.root.getChildren().add(allRoomPanes);
 
 
         // Initialize the object views for gameObjects
-        for (GameObject currentObject :theModel.getAllObjectsArray()){
+        for (GameObject currentObject : theModel.getAllObjectsArray()){
             ImageView currentObjectView = new ImageView();
             //TODO: ".get(0)" hard coded for now, will need to change later
             this.allViews.get(0).add(currentObjectView);
@@ -210,6 +214,7 @@ public class GameView {
 
         GridPane roomPane = new GridPane();
 
+        // draw every game object in the room
         int i = 0;
         for (ArrayList<GameObject> arrGO : room.getBaseObjects()) {
             int j = 0;
@@ -220,6 +225,7 @@ public class GameView {
             i++;
         }
 
+        // center the room
         roomPane.setAlignment(Pos.CENTER);
         roomPanes.add(roomPane);
     }

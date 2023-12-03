@@ -140,9 +140,6 @@ public class GameModel {
         allObjectsArray.add(hideNpc);
         this.roomManager.getActiveRoom().addObject(hideNpc);
 
-
-
-
     }
 
     /** Getters for the {@link Player}, {@link RoomManager}, {@link Key} objects */

@@ -77,6 +77,9 @@ public class RoomManager {
         generateRooms();
     }
 
+    /**
+     * Generates the {@link Room} objects for the game
+     */
     private void generateRooms() {
         // generate the first room
         generateRoom0();
@@ -192,6 +195,10 @@ public class RoomManager {
     }
 
 
+    /**
+     * Initializes the code for the room
+     * @param code1 the code for the room
+     */
     private void initializeCode(ArrayList<ArrayList<GameObject>> code1) {
         for (int i = 0; i < DIM; i++) {
             code1.add(new ArrayList<>());
@@ -208,7 +215,6 @@ public class RoomManager {
         ArrayList<Integer> doorYEnds = new ArrayList<>();
         ArrayList<Door> theseDoors = new ArrayList<>();
 
-        // TODO: temporary hardcode
         for (int i = 0; i < doorXs.size(); i++) {
             if (doorXs.get(i) == 0 || doorXs.get(i) == DIM-1){
                 doorXEnds.add(doorXs.get(i));
@@ -270,18 +276,28 @@ public class RoomManager {
                 }
 
                 if (!isDoor) {
-                    // Add a Wall around the square border otherwise
-                    if ((j==0) || (j==DIM-1) || (i==0) || (i==DIM-1)) {
-                        Wall thisWall = getWall(i, j);
-                        code1.get(j).add(thisWall);
-                    }
-                    // Add a Floor to the center
-                    else {
-                        code1.get(j).add(new GameObject((int) (GRID_SIZE*(i-DIM/2.0)),(int) (GRID_SIZE*(j-DIM/2.0)),
-                                GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
-                    };
+                    addNonDoor(code1, j, i);
                 }
             }
+        }
+    }
+
+    /**
+     * Adds a non-door Object to the room
+     * @param code1 the code for the room
+     * @param j the y position
+     * @param i the x position
+     */
+    private void addNonDoor(ArrayList<ArrayList<GameObject>> code1, int j, int i) {
+        // Add a Wall around the square border otherwise
+        if ((j ==0) || (j ==DIM-1) || (i ==0) || (i ==DIM-1)) {
+            Wall thisWall = getWall(i, j);
+            code1.get(j).add(thisWall);
+        }
+        // Add a Floor to the center
+        else {
+            code1.get(j).add(new GameObject((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
+                    GRID_SIZE, GRID_SIZE, floorSprites)); // floor.png
         }
     }
 
@@ -292,10 +308,23 @@ public class RoomManager {
      * @return the wall
      */
     private Wall getWall(int j, int i) {
+
+        // create the new wall
         Wall thisWall = new Wall((int) (GRID_SIZE*(i -DIM/2.0)),(int) (GRID_SIZE*(j -DIM/2.0)),
                 GRID_SIZE, GRID_SIZE, wallSprites);
 
+        setWallSprite(j, i, thisWall);
+        return thisWall;
+    }
 
+    /**
+     * Sets the sprite for the wall, based on its location in the room
+     * @param j the y position
+     * @param i the x position
+     * @param thisWall the wall
+     */
+    private void setWallSprite(int j, int i, Wall thisWall) {
+        // set the sprite for the wall, based on location
         if (j ==0){
 
             if (i ==0) {
@@ -314,15 +343,16 @@ public class RoomManager {
             else if (i ==DIM-1){
                 thisWall.setSprite(SpriteType.FRONT_RIGHT);
             }
-            else {thisWall.setSprite(SpriteType.FRONT); }
+            else {
+                thisWall.setSprite(SpriteType.FRONT); }
         }
 
         else if (i == 0){
             thisWall.setSprite(SpriteType.LEFT);
         }
 
-        else {thisWall.setSprite(SpriteType.RIGHT);}
-        return thisWall;
+        else {
+            thisWall.setSprite(SpriteType.RIGHT);}
     }
 
     /**
