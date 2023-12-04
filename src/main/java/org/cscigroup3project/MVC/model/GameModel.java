@@ -57,6 +57,8 @@ public class GameModel {
     private Talker hideNpc;
     private TalkerNoCollisions dogPicture;
 
+    private Talker jukebox;
+
     /** Decorative objects */
     private GameObject glitter;
 
@@ -162,6 +164,21 @@ public class GameModel {
         //add npc to object array and room
         allObjectsArray.get(0).add(dogPicture);
         this.roomManager.getActiveRoom().addObject(dogPicture);
+
+        //create jukebox #TODO Replace with working storage item
+        ArrayList<Image> jukeboxSprite = new ArrayList<Image>();
+        jukeboxSprite.add(new Image(GameMain.class.getResourceAsStream("Jukebox.png")));
+        ArrayList<String> jukeboxText = new ArrayList<String>();
+        jukeboxText.add(">A jukebox.");
+        jukeboxText.add(">It seems to be jammed; you can't change the song.");
+        jukeboxText.add(">A shame, really.");
+        jukeboxText.add(">You're getting sick of this one.");
+
+        this.jukebox = new Talker(-90, -115, 32, 32, jukeboxSprite, jukeboxText);
+
+        //add npc to object array and room
+        allObjectsArray.get(2).add(jukebox);
+        this.roomManager.getRoom(2).addObject(jukebox);
 
         //create glitter
         ArrayList<Image> glitterSprite = new ArrayList<Image>();
