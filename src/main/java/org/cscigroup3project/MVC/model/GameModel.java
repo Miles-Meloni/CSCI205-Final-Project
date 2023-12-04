@@ -56,11 +56,16 @@ public class GameModel {
     private Talker jazzNpc;
     private Talker hideNpc;
     private TalkerNoCollisions dogPicture;
-
     private Talker jukebox;
+    private Talker shopGirl;
+    private Talker tvBroken;
+    private Talker glitterGirl;
 
     /** Decorative objects */
     private GameObject glitter;
+
+    /** Collectible objects that don't do anything */
+    private Collectible burger;
 
 
     /** The {@link RoomManager} for the game */
@@ -150,6 +155,34 @@ public class GameModel {
         allObjectsArray.get(0).add(hideNpc);
         this.roomManager.getRoom(0).addObject(hideNpc);
 
+        //create another npc
+        ArrayList<Image> shopNpcSprite = new ArrayList<Image>();
+        shopNpcSprite.add(new Image(GameMain.class.getResourceAsStream("Shopkeeper.png")));
+        ArrayList<String> shopNpcText = new ArrayList<String>();
+        shopNpcText.add("\"Welcome to my store.\"");
+        shopNpcText.add("\"Everything's free, considering it's the end of the world, and money is gone.\"");
+        shopNpcText.add("\"So you can just kinda take things.\"");
+
+        this.shopGirl = new Talker(0, -115, 48, 51, shopNpcSprite, shopNpcText);
+
+        //add npc to object array and room
+        allObjectsArray.get(1).add(shopGirl);
+        this.roomManager.getRoom(1).addObject(shopGirl);
+
+        //create burger
+        ArrayList<Image> burgerSprite = new ArrayList<Image>();
+        burgerSprite.add(new Image(GameMain.class.getResourceAsStream("Burger.png")));
+        ArrayList<String> burgerText = new ArrayList<String>();
+        burgerText.add(">A Hamburger.");
+        burgerText.add(">Well, an alien-equivalent- -of-a-cow-burger, technically.");
+        burgerText.add(">You aren't hungry.");
+
+        this.burger = new Collectible(16, -110, burgerSprite, burgerText);
+
+        //add npc to object array and room
+        allObjectsArray.get(1).add(burger);
+        this.roomManager.getRoom(1).addObject(burger);
+
         //create dog picture
         ArrayList<Image> dogPicSprite = new ArrayList<Image>();
         dogPicSprite.add(new Image(GameMain.class.getResourceAsStream("dogPoster.png")));
@@ -163,7 +196,7 @@ public class GameModel {
 
         //add npc to object array and room
         allObjectsArray.get(0).add(dogPicture);
-        this.roomManager.getActiveRoom().addObject(dogPicture);
+        this.roomManager.getRoom(0).addObject(dogPicture);
 
         //create jukebox #TODO Replace with working storage item
         ArrayList<Image> jukeboxSprite = new ArrayList<Image>();
@@ -180,17 +213,43 @@ public class GameModel {
         allObjectsArray.get(2).add(jukebox);
         this.roomManager.getRoom(2).addObject(jukebox);
 
+        //create broken TV
+        ArrayList<Image> brokenTVSprite = new ArrayList<Image>();
+        brokenTVSprite.add(new Image(GameMain.class.getResourceAsStream("brokenTV.png")));
+        ArrayList<String> brokenTVText = new ArrayList<String>();
+        brokenTVText.add(">A broken television.");
+        brokenTVText.add(">You imagine that if it could work, it would be talking about the weather.");
+        brokenTVText.add(">People love talking about the weather.");
+
+        this.tvBroken = new Talker(70, -130, 48, 32, brokenTVSprite, brokenTVText);
+
+        //add npc to object array and room
+        allObjectsArray.get(0).add(tvBroken);
+        this.roomManager.getRoom(0).addObject(tvBroken);
+
         //create glitter
         ArrayList<Image> glitterSprite = new ArrayList<Image>();
         glitterSprite.add(new Image(GameMain.class.getResourceAsStream("Glitter.png")));
 
         this.glitter = new GameObject(-64,-58,96,96,glitterSprite);
 
-        //add npc to object array and room
+        //add glitter to object array and room
         allObjectsArray.get(1).add(glitter);
         this.roomManager.getRoom(1).addObject(glitter);
 
+        //create another npc
+        ArrayList<Image> glitterKidSprite = new ArrayList<Image>();
+        glitterKidSprite.add(new Image(GameMain.class.getResourceAsStream("GlitterKid.png")));
+        ArrayList<String> glitterKidText = new ArrayList<String>();
+        glitterKidText.add("\"In a few seconds, I turned these boring green tiles....\"");
+        glitterKidText.add("\"Into fancy sparkly tiles!\"");
+        glitterKidText.add("\"Isn't glitter just amazing?\"");
 
+        this.glitterGirl = new Talker(-80, -100, 48, 51, glitterKidSprite, glitterKidText);
+
+        //add npc to object array and room
+        allObjectsArray.get(1).add(glitterGirl);
+        this.roomManager.getRoom(1).addObject(glitterGirl);
 
     }
 
