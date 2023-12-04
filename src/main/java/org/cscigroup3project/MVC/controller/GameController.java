@@ -58,8 +58,7 @@ public class GameController {
      * #TODO remove hardcoding */
     private ArrayList<String> textArray;
 
-    /** The arraylist that looks at our player data, and displays it. */
-    private ArrayList<String> localArray;
+
 
     // TODO: likely needs moved elsewhere
     /** Unselected and selected rectangles for border purposes */
@@ -104,7 +103,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
-        //  initMusic();
+        initMusic();
     }
 
     /**
