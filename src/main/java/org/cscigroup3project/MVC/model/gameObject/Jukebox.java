@@ -29,7 +29,7 @@ import java.util.ArrayList;
  */
 public class Jukebox extends GameObject implements Interactible {
     /** the current disk in the jukebox*/
-    Disk disk;// = new Disk(1,1, )
+    private Disk disk;
     /**
      * Constructs a jukebox
      * @param x - the x coordinate of the jukebox's location

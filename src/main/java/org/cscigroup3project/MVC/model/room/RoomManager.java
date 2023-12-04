@@ -116,11 +116,9 @@ public class RoomManager {
         // Door sizes for room 1 here
         ArrayList<Integer> doorXs = new ArrayList<>();
         doorXs.add(5);
-        doorXs.add(9);
 
         ArrayList<Integer> doorYs = new ArrayList<>();
         doorYs.add(0);
-        doorYs.add(DIM-1);
         generateRoom(doorXs, doorYs);
     }
 
@@ -131,11 +129,9 @@ public class RoomManager {
         // Door sizes for room 2 here
         ArrayList<Integer> doorXs = new ArrayList<>();
         doorXs.add(0);
-        doorXs.add(3);
 
         ArrayList<Integer> doorYs = new ArrayList<>();
         doorYs.add(8);
-        doorYs.add(DIM-1);
         generateRoom(doorXs, doorYs);
     }
 
@@ -373,7 +369,7 @@ public class RoomManager {
                 GRID_SIZE, GRID_SIZE, doorSprites, DOOR_SIZE, doorType);
 
         if (j ==0){
-            thisDoor.getTopDoorFrame().setSprite(SpriteType.BACK_RIGHT);
+            thisDoor.getTopDoorFrame().setSprite(SpriteType.TOP_LEFT);
 
             for (Doorway doorway : thisDoor.getDoorways()) {
                 doorway.setSprite(SpriteType.BACK);
@@ -381,7 +377,7 @@ public class RoomManager {
                 doorway.setNextRoom(0);
             }
 
-            thisDoor.getBottomDoorFrame().setSprite(SpriteType.BACK_LEFT);
+            thisDoor.getBottomDoorFrame().setSprite(SpriteType.TOP_RIGHT);
         }
 
         else if (j == DIM-1){

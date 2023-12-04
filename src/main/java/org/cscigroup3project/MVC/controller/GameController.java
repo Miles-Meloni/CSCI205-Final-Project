@@ -114,7 +114,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
-        initMusic();
+        //initMusic();
     }
 
     /**
