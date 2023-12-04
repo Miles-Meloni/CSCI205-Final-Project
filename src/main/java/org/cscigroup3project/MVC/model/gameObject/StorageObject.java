@@ -33,8 +33,20 @@ public class StorageObject extends GameObject{
         storageObjectInventory = new Inventory(startingInventory);
     }
 
+    /**
+     * The method for whether an object can be put in the inventory.
+     * Default constructor accepts all objects.
+     * @param object - the object that will be stored.
+     * @return - whether the object can 'fit' int the storage object.
+     */
+    public boolean isAccepted(GameObject object){
+        return true;
+    }
+
     public Inventory getStorageObjectInventory() {
         return storageObjectInventory;
     }
+
+
 
 }

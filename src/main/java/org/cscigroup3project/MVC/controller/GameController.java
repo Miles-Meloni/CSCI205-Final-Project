@@ -61,8 +61,11 @@ public class GameController {
 
 
     // TODO: likely needs moved elsewhere
-    /** Unselected and selected rectangles for border purposes */
+    /** Unselected and selected rectangles for border purposes in the inventory */
     private Rectangle unselected, selected;
+
+    /** Unselected and selected rectangles for border purposes in the dual inventory */
+    private Rectangle unselected2, selected2;
 
     // TODO: remove hardcoding
     /** Background audio that plays when game is started*/
@@ -98,6 +101,14 @@ public class GameController {
         this.unselected = new Rectangle(16,16);
         this.unselected.setFill(null);
         this.unselected.setStroke(Color.TRANSPARENT);
+
+        this.selected2 = new Rectangle(16,16);
+        this.selected2.setFill(null);
+        this.selected2.setStroke(Color.WHITE);
+
+        this.unselected2 = new Rectangle(16,16);
+        this.unselected2.setFill(null);
+        this.unselected2.setStroke(Color.TRANSPARENT);
 
         theView.setTextboxVisibility(true);
 
@@ -338,6 +349,8 @@ public class GameController {
 
                 } //TODO for full functionality get boxes from user
 
+                //TODO implement stable version of interactive inventory
+                /*
                 case Z ->{
 
                     //select nearby object if applicable and proceed to opening the dual inventory combo
@@ -346,6 +359,7 @@ public class GameController {
                         toggleDoubleInventory(foundObject);
                     }
                 }
+                 */
             }
         }
     }
@@ -631,21 +645,27 @@ public class GameController {
         theModel.getPlayer().pickUpItem(object);
         theModel.getRoomManager().getActiveRoom().removeObject(object);
 
-        // add the item to the inventory and add the image to the view
+        // add the item to the inventory and the dual inventory, and add the image to the view
         ImageView objectView = new ImageView(object.getSprite());
+        ImageView objectView2 = new ImageView(object.getSprite());
         StackPane imagePane = new StackPane();
+        StackPane imagePane2 = new StackPane();
 
         imagePane.getChildren().add(objectView);
+        imagePane2.getChildren().add(objectView2);
 
 
         if (theModel.getPlayer().getInventory().size() == 1) {
             imagePane.getChildren().add(selected);
+            imagePane2.getChildren().add(selected2);
         }
         else{
             imagePane.getChildren().add(unselected);
+            imagePane2.getChildren().add(unselected2);
         }
 
         theView.getInventoryPane().getChildren().add(imagePane);
+        theView.getPlayerInventoryPane().getChildren().add(imagePane2);
 
         // if the image matches, turn off visibility
         for (ImageView imgView : theView.getAllViews().get(theModel.getRoomManager().getActiveRoomIndex())){
@@ -671,6 +691,8 @@ public class GameController {
 
         // remove the item from the inventory and remove the image from the view
         theView.getInventoryPane().getChildren().remove(theModel.getPlayer().getInventoryTracker());
+        //do the same for the dual inventory
+        theView.getPlayerInventoryPane().getChildren().remove(theModel.getPlayer().getInventoryTracker());
 
         // add the item to the room and add the image to the view
         theModel.getRoomManager().getActiveRoom().addObject(droppedItem);
@@ -707,13 +729,25 @@ public class GameController {
     /**
      * Turn the inventory on or off, based on current state
      */
-    private void toggleDoubleInventory(StorageObject objectInventory){
+    private void toggleDoubleInventory(StorageObject storageObject){
         if (theView.getSingleInventoryPane().isVisible()|| theView.getDoubleInventoryPane().isVisible()){
             theView.getDoubleInventoryPane().setVisible(false);
+            //remove all objects for the view of the other inventory
+            theView.getDoubleInventoryPane().getChildren().removeAll();
+
         }
         else {
             theView.getDoubleInventoryPane().setVisible(true);
-            //theView.getDoubleInventoryPane().setObjectInventory(objectInventory);
+            //add the object's inventory to the view
+            for(int i = 0; i < storageObject.getStorageObjectInventory().size(); i++){
+                ImageView objectView = new ImageView(storageObject.getStorageObjectInventory().getItem(i).getSprite());
+                StackPane imagePane = new StackPane();
+
+                imagePane.getChildren().add(objectView);
+                imagePane.getChildren().add(unselected);
+
+                theView.getInventoryPane().getChildren().add(imagePane);
+            }
         }
     }
 }
