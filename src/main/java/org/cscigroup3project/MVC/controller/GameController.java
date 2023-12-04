@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.cscigroup3project.MVC.GameMain;
 import org.cscigroup3project.MVC.model.*;
 import org.cscigroup3project.MVC.model.gameObject.*;
 import org.cscigroup3project.MVC.model.gameObject.objectInterface.Collidable;
@@ -114,7 +115,7 @@ public class GameController {
 
         initBindings();
         initEventHandlers();
-        //initMusic();
+        initMusic();
     }
 
     /**
@@ -144,7 +145,8 @@ public class GameController {
         // TODO - Remove hard coding
 
         // Get the filepath from the resources folder
-        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
+//        String defaultMusic = "src/main/resources/cscigroup3project/music/PinkDisk.mp3";
+        String defaultMusic = ("music/PinkDisk.mp3");
 
         // Create a File object from the resources URL
         File fileURL = new File(defaultMusic);
@@ -153,7 +155,7 @@ public class GameController {
         String longUrl = fileURL.toURI().toString();
 
         // Create the Media object
-        Media sound = new Media(longUrl);
+        Media sound = new Media(String.valueOf(GameMain.class.getResource("music/PinkDisk.mp3")));
 
         // Set the MediaPlayer with the music
         backgroundPlayer = new MediaPlayer(sound);
